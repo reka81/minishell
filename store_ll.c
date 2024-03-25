@@ -217,7 +217,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
+	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new)
 		return (NULL);
 	while (s1[i])
@@ -400,7 +400,29 @@ void append(t_stack **lst, int *fd, t_int *lor_int)
 
 char *rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 {
-    if (*lst != NULL && ((*lst)->type == 1 || (*lst)->type == 2 || (*lst)->type == 0))
+     if ((*lst) != NULL && ((*lst)->type == 1 || (*lst)->type == 2))
+    {
+        if((*lst)->next)
+        {
+            if ((*lst)->next->type == 6)
+            {
+                lor_int->str[lor_int->z] = (*lst)->value;
+                lor_int->z++;
+            }
+            else
+            {
+                lor_int->str[lor_int->z] = ft_strjoin((*lst)->value, (*lst)->next->value);
+                lor_int->z++;
+                (*lst) = (*lst)->next;
+            }
+        }
+        else
+        {
+            lor_int->str[lor_int->z] = (*lst)->value;
+            lor_int->z++;
+        }
+    }
+    else if (*lst != NULL && (*lst)->type == 0)
     {
         lor_int->str[lor_int->z] = (*lst)->value;
         lor_int->z++;

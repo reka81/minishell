@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/03/23 10:31:13 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:59:22 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ void tokenization(t_stack **a, char *l)
 			flag_for_white = 1;
 		}
 		str[j] = '\0';
+		if(str[0] == '\0')
+		{
+			// printf("ss\n");
+			free(str);
+		}
 		if(flag_for_white)
 		{
 			ft_lstadd_back(a, ft_lstnew(str, quote_flag));
@@ -96,9 +101,9 @@ void tokenization(t_stack **a, char *l)
 		}
 		j = 0;
 		// free(str);
-		str = malloc(ft_strlen1(l));
 		if(l[i] == '>' || l[i] == '<')
 		{
+			str = malloc(ft_strlen1(l));
 			while(l[i] == '>' || l[i] == '<')
 			{
 				operator = l[i];
@@ -284,8 +289,13 @@ int main(int ac, char **av, char **env)
 			flaging_expandables(a);
 			expanding(a);
 			filling_env(env, environment);
-			final_linked = ft_store(a);
 			int i = 0;
+			// while(a)
+			// {
+			// 	printf("%s----%d\n", a->value, a->type);
+			// 	a = a->next;
+			// }
+			final_linked = ft_store(a);
 			while(final_linked)
 			{
 				i = 0;
@@ -294,7 +304,6 @@ int main(int ac, char **av, char **env)
 					printf("%s\n", final_linked->value[i]);
 					i++;
 				}
-				printf("|\n");
 				final_linked = final_linked->next;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/03/23 02:54:50 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:49:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,11 @@ int double_pipe(char *str)
         }
         else if (str[i] == '>')
         {
+            if(i == 0)
+            {
+                printf("bash: syntax error\n");
+                return(1);
+            }
             if(str[i + 1] == '<')
             {
                 printf("bash: syntax error\n");
