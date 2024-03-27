@@ -254,6 +254,7 @@ void	ft_putstr_fd(char *s, int fd)
 	}
     write(fd, "\n", 1);
 }
+
 int num_herdog(t_stack *lol)
 {
     t_stack *tmp = lol;

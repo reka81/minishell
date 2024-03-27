@@ -66,5 +66,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strcmp(char *s1, char *s2);
+int ft_isdigit(int c);
+void execution(t_env *environment, t_hxh *final_linked);
 
 #endif 

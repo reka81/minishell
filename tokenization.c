@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/03/24 22:59:22 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/03/26 08:30:50 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void expanding(t_stack *a)
 	while(a)
 	{
 		i = 0;
-		// printf("%d\n", a->should_be_exp);
 		if((a->type == 1 || a->type == 0) && a->should_be_exp != 1)
 		{
 			str2 = malloc(100);
@@ -157,10 +156,8 @@ void expanding(t_stack *a)
 			str2[i] = '\0';
 			if(a->value[i] == '$')
 			{
-				// printf("%s\n", str2);
 				while(a->value[i])
 				{
-					// printf("%s\n", str2);
 					str = malloc(ft_strlen1(a->value) + 1);
 					d = 0;
 					j = ft_strlen1(str2);
@@ -175,22 +172,34 @@ void expanding(t_stack *a)
 						i++;
 					}
 					str2[j] = '\0';
+					if(ft_isdigit(a->value[i]) || a->type == 1 || a->type == 2)
+					{
+						if(ft_isdigit(a->value[i]))	
+							i++;
+						free(str2);
+						str2 = malloc(100);
+						j = 0;
+						while(a->value[i])
+						{
+							str2[j] = a->value[i];
+							j++;
+							i++;
+							if(a->value[i - 1] == '$')
+								break;
+						}
+						str2[j] = '\0';
+					}
 					j = 0;
 					while(a->value[i] && !cmp_delim(a->value[i]))
 					{
-						if(!dollar_flag)
-							return;
 						str[j] = a->value[i];
 						i++;
 						j++;
 					}
 					str[j] = '\0';
 					char *user = getenv(str);
-					// printf("%s\n", str);
 					j = ft_strlen1(str2);
 					j -= 1;
-					// j += 1;
-					// printf("%d\n", j);
 					if (user)
 					{
 						while(user[d])
@@ -199,9 +208,9 @@ void expanding(t_stack *a)
 							d++;
 							j++;
 						}
-						// return;
 					}
-					str2[j] = '\0';
+					if(d > 0)	
+						str2[j] = '\0';
 					j = ft_strlen1(str2);
 					while(a->value[i])
 					{
@@ -215,23 +224,20 @@ void expanding(t_stack *a)
 						j++;
 					}
 					str2[j] = '\0';
-					// printf("%s\n", str2);
 					free(str);
-					// free(user);
 				}
    				if (str2 != NULL)
         		{
 					free(a->value);
 					a->value = str2;
 				}
-				// free(str2);
 			}
 		}
 		a = a->next;
 	}	
 }
 
-void filling_env(char **env, t_env *environment)
+void filling_env(char **env, t_env **environment)
 {
 	int i;
 	int j;
@@ -254,6 +260,7 @@ void filling_env(char **env, t_env *environment)
 		variable[j] = '\0';
 		j = 0;
 		value = malloc(strlen(env[i]) + 1);
+		e++;
 		while(env[i][e])
 		{
 			value[j] = env[i][e];
@@ -261,7 +268,7 @@ void filling_env(char **env, t_env *environment)
 			e++;
 		}
 		value[j] = '\0';
-		ft_lstadd_back2(&environment, ft_lstnew2(variable, value));
+		ft_lstadd_back2(environment, ft_lstnew2(variable, value));
 		i++;
 		
 	}
@@ -278,34 +285,36 @@ int main(int ac, char **av, char **env)
 	
 	(void) ac;
 	(void) av;
+	environment = NULL;
+	filling_env(env, &environment);
 	while(1)
 	{
 		a = NULL;
-		environment = NULL;
 		l = readline ("~$ :");
 		if(!parentheses(l) && !double_pipe(l) && !ds_quotes(l) && !ft_pars(l))
 		{
 			tokenization(&a, l);
 			flaging_expandables(a);
 			expanding(a);
-			filling_env(env, environment);
-			int i = 0;
 			// while(a)
 			// {
 			// 	printf("%s----%d\n", a->value, a->type);
 			// 	a = a->next;
 			// }
+			// printf("%s\n", environment->value);
+			int i = 0;
 			final_linked = ft_store(a);
-			while(final_linked)
-			{
-				i = 0;
-				while(final_linked->value[i])
-				{	
-					printf("%s\n", final_linked->value[i]);
-					i++;
-				}
-				final_linked = final_linked->next;
-			}
+			// while(final_linked)
+			// {
+			// 	while(final_linked->value[i])
+			// 	{
+			// 		printf("%s--", final_linked->value[i]);
+			// 		i++;
+			// 	}
+			// 	printf("\n");
+			// 	final_linked = final_linked->next;
+			// }
+			execution(environment, final_linked);
 		}
 	}
 }

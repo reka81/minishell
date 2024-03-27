@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/03/24 21:49:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/03/25 07:00:32 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int ft_pars(char *str)
 {
-    int len = strlen(str) - 1;
+    int len;
     int i;
-
+    
+    len = strlen(str) - 1;
+    if(len < 0)
+        len  = 0;
     if(str[0] == ' ')
     {
         i = 0;
@@ -109,7 +112,7 @@ int double_pipe(char *str)
                     while(str[j] && str[j] == ' ')
                     {
                         if(str[j + 1] == '|')
-                        {
+                        { 
                             printf("bash: syntax error\n");
                             return(1);
                         }
