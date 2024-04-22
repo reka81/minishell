@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/03/26 08:30:50 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:45:17 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void tokenization(t_stack **a, char *l)
 		{
 			if(l[i] == '"')
 			{
+				if(j > 0)
+					break;
 				i++;
 				while(l[i] != '"')
 				{
@@ -59,6 +61,8 @@ void tokenization(t_stack **a, char *l)
 			}
 			if(l[i] == '\'')
 			{
+				if(j > 0)
+					break;
 				i++;
 				while(l[i] != '\'')
 				{
@@ -84,9 +88,14 @@ void tokenization(t_stack **a, char *l)
 		}
 		if(flag_for_white)
 		{
-			ft_lstadd_back(a, ft_lstnew(str, quote_flag));
-			quote_flag = 0;
-			flag_for_white = 0;
+			if(quote_flag != 0 || str[0]  != '$')
+			{
+				ft_lstadd_back(a, ft_lstnew(str, quote_flag));
+				quote_flag = 0;
+				flag_for_white = 0;
+			}
+			else
+				free(str);
 		}
 		if(l[i] == '|')
 		{
@@ -138,6 +147,7 @@ void expanding(t_stack *a)
 	int j = 0;
 	int d = 0;
 	int e = 0;
+	int k = 0;
 	int flag = 1;
 	int dollar_flag = 0;
 	
@@ -156,6 +166,7 @@ void expanding(t_stack *a)
 			str2[i] = '\0';
 			if(a->value[i] == '$')
 			{
+				e = 0;
 				while(a->value[i])
 				{
 					str = malloc(ft_strlen1(a->value) + 1);
@@ -170,9 +181,11 @@ void expanding(t_stack *a)
 						str2[j] = a->value[i];
 						j++;
 						i++;
+						e++;
 					}
 					str2[j] = '\0';
-					if(ft_isdigit(a->value[i]) || a->type == 1 || a->type == 2)
+					k = ft_strlen1(str2);
+					if(ft_isdigit(a->value[i]))
 					{
 						if(ft_isdigit(a->value[i]))	
 							i++;
@@ -190,18 +203,22 @@ void expanding(t_stack *a)
 						str2[j] = '\0';
 					}
 					j = 0;
-					while(a->value[i] && !cmp_delim(a->value[i]))
-					{
-						str[j] = a->value[i];
-						i++;
-						j++;
+					if(dollar_flag)
+					{	
+						while(a->value[i] && !cmp_delim(a->value[i]))
+						{
+							str[j] = a->value[i];
+							i++;
+							j++;
+						}
 					}
 					str[j] = '\0';
 					char *user = getenv(str);
 					j = ft_strlen1(str2);
-					j -= 1;
+					j -= e;
 					if (user)
 					{
+						str2[j] = '\0';
 						while(user[d])
 						{
 							str2[j] = user[d];
@@ -212,6 +229,11 @@ void expanding(t_stack *a)
 					if(d > 0)	
 						str2[j] = '\0';
 					j = ft_strlen1(str2);
+					if(k == j)
+					{
+						j -= e;
+						str2[j] = '\0';
+					}
 					while(a->value[i])
 					{
 						if(a->value[i] == '$')
@@ -274,6 +296,7 @@ void filling_env(char **env, t_env **environment)
 	}
 }
 
+
 int main(int ac, char **av, char **env)
 {
 	char *l;
@@ -282,17 +305,43 @@ int main(int ac, char **av, char **env)
 	t_hxh	*final_linked = NULL;
 	t_env	*environment = NULL;
 	int i = 1;
+	char **envi2;
+	int exit_status;
 	
 	(void) ac;
 	(void) av;
 	environment = NULL;
 	filling_env(env, &environment);
+	l = NULL;
+	exit_status = 0;
+	// rl_replace_line();
+	int save_fd = dup(STDIN_FILENO);
+	envi2 = store_env_2darr(environment);
+	setup_signal_handlers();
 	while(1)
 	{
 		a = NULL;
-		l = readline ("~$ :");
-		if(!parentheses(l) && !double_pipe(l) && !ds_quotes(l) && !ft_pars(l))
+		if(!isatty(STDIN_FILENO))
 		{
+			dup2(save_fd, STDIN_FILENO);
+			//close(save_fd)
+		}
+		l = readline ("~$ :");
+		if (!l)
+		{
+			printf("exit");
+			break ;
+		}
+		if (l[0] == '\0')
+		{
+			// printf("ss\n");
+			free(l);
+			l = NULL;
+		}
+		if(l)
+		{
+			if(!parentheses(l) && !double_pipe(l) && !ds_quotes(l) && !ft_pars(l))
+			{
 			tokenization(&a, l);
 			flaging_expandables(a);
 			expanding(a);
@@ -314,7 +363,11 @@ int main(int ac, char **av, char **env)
 			// 	printf("\n");
 			// 	final_linked = final_linked->next;
 			// }
-			execution(environment, final_linked);
+			// char * hh = look_for_path(final_linked->value[0], getenv("PATH"));
+			// printf("%s", hh);
+			// exit(1);
+			execution(environment, final_linked, envi2, exit_status);
+			}
 		}
 	}
 }
