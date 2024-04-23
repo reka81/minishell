@@ -17,6 +17,19 @@ int    ft_cheak_n(char *str)
     }
     return (2);
 }
+int    ft_strdigit(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] >= '0' && str[i] <= '9')
+            return (1);
+        i++;
+    }
+    return (0);
+}
 
 void    ft_echo(t_hxh *lst)
 {
@@ -42,11 +55,22 @@ void    ft_echo(t_hxh *lst)
 }
 void    ft_exit(t_hxh *lst)
 {
-    int    i;
-
     if (!ft_strcmp(lst->value[0], "exit"))
     {
-        exit(0);
+        if (lst->value[1])
+        {
+            if (ft_strdigit(lst->value[1]) == 1)
+            {
+                exit(atoi(lst->value[1]));
+            }
+            else
+            {
+                printf("bash: exit: %s: numeric argument required", lst->value[1]);
+                exit(255);
+            }
+        }
+        else
+            exit(0);
     }
 }
 
