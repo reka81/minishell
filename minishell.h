@@ -23,7 +23,8 @@ typedef struct s_hxh
     char    **value;   
     struct s_hxh   *next;
     int     output;
-    int     input;  
+    int     input;
+    int     flag;
 }    t_hxh;
 
 typedef struct s_env
@@ -67,7 +68,7 @@ void	ft_putchar_fd(char c, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 int	ft_strcmp(char *s1, char *s2);
 int ft_isdigit(int c);
-void execution(t_env *environment, t_hxh *final_linked ,char **env, int exit_status);
+void execution(t_env *environment, t_hxh *final_linked ,char **env, int *exit_status);
 int	ft_lstsize(t_hxh *lst);
 int    ft_cheak_n(char *str);
 void    ft_echo(t_hxh *lst);
@@ -79,5 +80,7 @@ char	*look_for_path(char *cmd, char *path);
 void setup_signal_handlers();
 char **store_env_2darr(t_env *environment);
 char *ft_get_env(char *var, t_env *enviroment);
+char *new_var_woutequal(char *variable);
+char	*ft_itoa(int n);
 
 #endif 

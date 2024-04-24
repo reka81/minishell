@@ -6,27 +6,61 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/22 18:57:08 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:16:25 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ff()
+int check_if_pls2(char *str)
 {
-	  int fd;
-    char path[256];
-    
-    for(fd = 0; fd < 2500; fd++) {
-        if (fcntl(fd, F_GETFD) != -1) {
-            if (fcntl(fd, F_GETPATH, path) != -1) {
-                dprintf(2, "File descriptor %d is referencing: %s\n", fd, path);
-            } else {
-                dprintf(2, "File descriptor %d is not associated with an open file.\n", fd);
-            }
-        }
-    }
+	int j = 0;
+	while(str[j] != '=' && str[j])
+	{
+		if(str[j] == '+')
+			return(1);
+		j++;
+	}
+	return(0);
 }
+
+char *new_var_woutpls(char *variable)
+{
+	char *new = malloc(ft_strlen1(variable) + 1);
+	int i = 0;
+	while(variable[i] != '+' && variable[i])
+	{
+		new[i] = variable[i];
+		i++;
+	}
+	new[i] = '\0';
+	return(new);
+}
+char *new_var_woutequal(char *variable)
+{
+	char *new = malloc(ft_strlen1(variable) + 1);
+	int i = 0;
+	while(variable[i] != '=' && variable[i])
+	{
+		new[i] = variable[i];
+		i++;
+	}
+	new[i] = '\0';
+	return(new);
+}
+int check_if_pls(char **str)
+{
+	int i = 0;
+	int j = 0;
+	while(str[i][j] != '=' && str[i][j])
+	{
+		if(str[i][j] == '+')
+			return(1);
+		j++;
+	}
+	return(0);
+}
+
 
 void	ft_putstr_fd2(char *s, int fd)
 {
@@ -57,8 +91,8 @@ int	check_if_value(char **str)
 {
 	int j = 0;
 	int i = 0;
-	
-	while(str[i][j])	
+
+	while(str[i][j])
 	{	
 		if(str[i][j] == '=')
 			return(1);
@@ -72,18 +106,22 @@ void	afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp)
 	char *value;
 	int j;
 	int i;
-	
+
 	j = 0;
 	i = 0;
 	variable = malloc(strlen(final_linked->value[0]) + 1);
-	while(final_linked->value[0][i] && final_linked->value[0][i] != '=')
+	while(final_linked->value[0][i] && final_linked->value[0][i] != '=' && final_linked->value[0][i] != '+')
 	{
 		variable[i] = final_linked->value[0][i];
 		i++;
 	}
 	variable[i] = '\0';
 	if(i > 0)
+	{
+		if(final_linked->value[0][i] == '+')
+			i++;
 		i++;
+	}
 	j = 0;
 	value = malloc(strlen(final_linked->value[0]) + 1);
 	while(final_linked->value[0][i])
@@ -96,12 +134,31 @@ void	afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp)
 	tmp = check_if_var(environment, variable);
 	if(tmp)
 	{
-		free(tmp->value);
-		tmp->value = value;
+		if(!check_if_pls(final_linked->value))
+		{	
+			free(tmp->value);
+			tmp->value = value;
+		}
+		else
+		{
+			tmp->value = ft_strjoin(tmp->value, value);
+		}
 	}
 	else
 		free(value);
 	free(variable);
+}
+int check_if_equal(char *str)
+{
+	int i = 0;
+	
+	while(str[i])
+	{
+		if(str[i] == '=')
+			return(1);
+		i++;
+	}
+	return(0);
 }
 void no_args_export(t_env *environment, t_hxh *final_linked)
 {
@@ -114,9 +171,13 @@ void no_args_export(t_env *environment, t_hxh *final_linked)
 		}
 		if(environment->value)
 		{
-			ft_putstr_fd2("= \"", final_linked->output);
+			if(check_if_equal(environment->variable))
+				ft_putstr_fd2(" \"", final_linked->output);
 			ft_putstr_fd2(environment->value , final_linked->output);
-			ft_putstr_fd2("\"\n", final_linked->output);
+			if(check_if_equal(environment->variable))
+				ft_putstr_fd2("\"\n", final_linked->output);
+			else
+				ft_putstr_fd2("\n", final_linked->output);
 		}
 		environment = environment->next;
 	}
@@ -127,7 +188,7 @@ void setting_var_and_val(char **variable, char **value, t_hxh *final_linked, int
 	int j;
 	
 	i = 0;
-	*variable = malloc(strlen(final_linked->value[d]) + 1);
+	*variable = malloc(strlen(final_linked->value[d]) + 2);
 	while(final_linked->value[d][i] && final_linked->value[d][i] != '=')
 	{
 		variable[0][i] = final_linked->value[d][i];
@@ -137,11 +198,16 @@ void setting_var_and_val(char **variable, char **value, t_hxh *final_linked, int
 	j = 0;
 	if(i > 0 && final_linked->value[1][i])	
 	{
+		if(final_linked->value[d][i] == '=')
+			variable[0][i] = final_linked->value[d][i];
 		i++;
+		variable[0][i] = '\0';
 	}
 	*value = malloc(strlen(final_linked->value[d]) + 1);
 	while(final_linked->value[d][i])
 	{
+		if(final_linked->value[d][i - 1] == '\0')
+			break;
 		value[0][j] = final_linked->value[d][i];
 		j++;
 		i++;
@@ -151,9 +217,15 @@ void setting_var_and_val(char **variable, char **value, t_hxh *final_linked, int
 void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *environment)
 {
 	t_env *tmp;
+	char *new = NULL;
 	
-	if(variable[0] == '\0')
+	if(value[0] == '\0' && check_if_pls2(variable) || ft_isdigit(variable[0]))
 	{
+		printf("bash: export: `%s': not a valid identifier\n", variable);
+	}
+	else if(variable[0] == '\0')
+	{
+		printf("hh\n");
 		printf("bash: export: %s :not a valid identifier\n", value);
 		if(final_linked->value[2])
 			printf("bash: export: %s :not a valid identifier\n", final_linked->value[2]);
@@ -161,14 +233,23 @@ void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *e
 	}
 	else
 	{
-		tmp = check_if_var(environment, variable);
+		new = new_var_woutpls(variable);
+		tmp = check_if_var(environment, new);
 		if(!tmp)
 			ft_lstadd_back2(&environment, ft_lstnew2(variable, value));
 		else
 		{
-			free(tmp->value);
-			tmp->value = value;
+			if(check_if_pls2(variable))
+			{
+				tmp->value = ft_strjoin(tmp->value, value);
+			}
+			else
+			{			
+				free(tmp->value);
+				tmp->value = value;
+			}
 		}
+		free(new);
 	}
 }
 void export(t_hxh *final_linked, t_env *environment, char *variable, char *value)
@@ -178,14 +259,16 @@ void export(t_hxh *final_linked, t_env *environment, char *variable, char *value
 
 	d = 1;
 	if(check_if_value(final_linked->value))
+	{
 		afterwards_assignment(final_linked, environment, tmp);
+	}
 	else if(!final_linked->value[1])
 		no_args_export(environment, final_linked);
 	else
 	{
 		d = 1;
-		while(final_linked->value[d])	
-		{	
+		while(final_linked->value[d])
+		{
 			setting_var_and_val(&variable, &value ,final_linked ,d);
 			normal_exporting(variable, value, final_linked, environment);
 			d++;
@@ -205,8 +288,7 @@ char **fill_args(t_hxh *final_linked)
 	arg[i] = NULL;
 	return(arg);
 }
-
-int execute_cmds(t_hxh *final_linked, int i,char **env, t_env *environment)
+int execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 {
 	int fd[2];
 	char **arg = NULL;
@@ -243,13 +325,12 @@ int execute_cmds(t_hxh *final_linked, int i,char **env, t_env *environment)
 		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
-		// waitpid(pid, &ex, 0);
 	}
 	ex++;
 	return (pid);
 }
 
-void execution(t_env *environment, t_hxh *final_linked, char **env, int exit_status)
+void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_status)
 {
 	char *value;
 	char *variable;
@@ -275,8 +356,8 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int exit_sta
 		{
 			while(environment)
 			{
-				if(environment->value[0] != '\0' && environment->variable[0] != '\0')
-					printf("%s=%s\n", environment->variable, environment->value);
+				if(environment->value[0] != '\0' && environment->variable[0] != '\0'  || check_if_equal(environment->variable))
+					printf("%s%s\n", environment->variable, environment->value);
 				environment = environment->next;
 			}
 		}
@@ -310,9 +391,12 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int exit_sta
 			if(pid == 0)
 			{
 				path =look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+				// printf("%s\n", path);
 				execve(path , final_linked->value, env);
+				perror("execve");
+				exit(1);
 			}
-			waitpid(pid, &exit_status, 0);
+			waitpid(pid, exit_status, 0);
 		}
 	}
 	else
@@ -324,7 +408,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int exit_sta
 		dup2(final_linked->input, 0);
 		while(a > 1)
 		{	
-			pid_tab[i] = execute_cmds(final_linked, exit_status, env, environment);
+			pid_tab[i] = execute_cmds(final_linked, env, environment);
 			final_linked = final_linked->next;
 			a--;
 			i++;
@@ -345,7 +429,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int exit_sta
 			while(i < num_of_elems)
 			{
 				// printf("%d\n", pid_tab[i]);
-				waitpid(pid_tab[i], &exit_status, 0);
+				waitpid(pid_tab[i], exit_status, 0);
 				i++;
 			}
 			// while((wait(NULL) != -1));

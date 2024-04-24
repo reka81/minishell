@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/22 18:45:17 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:21:38 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int cmp_delim(char c)
 	return(0);
 }
 
-void expanding(t_stack *a)
+void expanding(t_stack *a, int exit_status)
 {
 	int i = 0;
 	char *str;
@@ -150,6 +150,7 @@ void expanding(t_stack *a)
 	int k = 0;
 	int flag = 1;
 	int dollar_flag = 0;
+	char *user = NULL;
 	
 	while(a)
 	{
@@ -213,7 +214,10 @@ void expanding(t_stack *a)
 						}
 					}
 					str[j] = '\0';
-					char *user = getenv(str);
+					if(ft_strcmp(str , "?"))
+						user = ft_itoa(exit_status);
+					else
+						user = getenv(str);
 					j = ft_strlen1(str2);
 					j -= e;
 					if (user)
@@ -279,6 +283,8 @@ void filling_env(char **env, t_env **environment)
 			j++;
 			e++;
 		}
+		variable[j] = '=';
+		j++;
 		variable[j] = '\0';
 		j = 0;
 		value = malloc(strlen(env[i]) + 1);
@@ -327,6 +333,7 @@ int main(int ac, char **av, char **env)
 			//close(save_fd)
 		}
 		l = readline ("~$ :");
+		add_history(l);
 		if (!l)
 		{
 			printf("exit");
@@ -344,7 +351,7 @@ int main(int ac, char **av, char **env)
 			{
 			tokenization(&a, l);
 			flaging_expandables(a);
-			expanding(a);
+			expanding(a, exit_status);
 			// while(a)
 			// {
 			// 	printf("%s----%d\n", a->value, a->type);
@@ -366,7 +373,8 @@ int main(int ac, char **av, char **env)
 			// char * hh = look_for_path(final_linked->value[0], getenv("PATH"));
 			// printf("%s", hh);
 			// exit(1);
-			execution(environment, final_linked, envi2, exit_status);
+			execution(environment, final_linked, envi2, &exit_status);
+			printf("%d\n", exit_status);
 			}
 		}
 	}
