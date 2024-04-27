@@ -3,17 +3,20 @@
 int    ft_cheak_n(char *str)
 {
     int    i;
+    int    j;
 
     i = 1;
+    j = 0;
     if (!str)
         return (0);
-    while (str[i])
+    while (str[j])
     {
         if (str[0] != '-' || str[i] != 'n')
         {
             return (1);
         }
         i++;
+        j++;
     }
     return (2);
 }
@@ -39,6 +42,8 @@ void    ft_echo(t_hxh *lst)
     {
         if (ft_strcmp("echo", lst->value[0]) == 0)
         {
+            if(lst->value[1] == NULL)
+                ft_putchar_fd('\n', lst->output);
             i = ft_cheak_n(lst->value[1]);
             while (lst->value[i] && i > 0)
             {
@@ -74,7 +79,48 @@ void    ft_exit(t_hxh *lst)
     }
 }
 
-void    ft_unset(t_hxh *lst, t_env **env)
+int char_nvalid(char c)
+{
+    char *str;
+    int i;
+
+    str = "/*-+!@#$%^=";
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == c)
+        {
+            return (1);
+        }
+        i++;
+    }
+    return (0);
+} 
+
+int not_valid(char **strs)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (strs[i])
+    {
+        j = 0;
+        while (strs[i][j])
+        {
+            if (char_nvalid(strs[i][j]) == 1)
+            {
+                printf("bash: unset: `%s': not a valid identifier\n", strs[i]);
+                return (1);
+            }
+            j++;
+        }
+        i++;
+    }
+    return (0);
+}
+
+void    ft_unset(t_hxh *lst, t_env **env, int *exit_status)
 {
     int        i;
     t_env    *tmp;
@@ -84,6 +130,11 @@ void    ft_unset(t_hxh *lst, t_env **env)
     tmp3 = *env;
     if (ft_strcmp(lst->value[0], "unset") == 0)
     {
+        if (not_valid(lst->value) == 1)
+        {
+            *exit_status = 1;
+            return ;
+        }
         i = 1;
         while (lst->value[i])
         {
@@ -111,7 +162,7 @@ void    ft_unset(t_hxh *lst, t_env **env)
                 (*env) = (*env)->next;
                 // printf("%s--%s\n", lst->value[i], (*env)->variable);
             }
-                i++;
+            i++;
         }
     }
 }

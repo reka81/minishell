@@ -73,7 +73,7 @@ int	ft_lstsize(t_hxh *lst);
 int    ft_cheak_n(char *str);
 void    ft_echo(t_hxh *lst);
 void    ft_exit(t_hxh *lst);
-void    ft_unset(t_hxh *lst, t_env **env);
+void    ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void    ft_putstr_fd1(char *s, int fd);
 char	**ft_split(char const *s, char c);
 char	*look_for_path(char *cmd, char *path);

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/24 16:16:25 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:10:03 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,32 @@ int check_if_pls2(char *str)
 		if(str[j] == '+')
 			return(1);
 		j++;
+	}
+	return(0);
+}
+
+char *ft_strmcpy(char *path, char *value)
+{
+	int i = 0;
+	
+	path = malloc(ft_strlen1(value));
+	while(value[i])
+	{
+		path[i] = value[i];
+		i++;
+	}
+	path[i] = '\0';
+	return(path);
+}
+int is_apath(char *str)
+{
+	int i = 0;
+	
+	while(str[i])
+	{
+		if(str[i] == '/')
+			return(1);
+		i++;
 	}
 	return(0);
 }
@@ -252,6 +278,45 @@ void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *e
 		free(new);
 	}
 }
+void no_args_export2(t_env *environment, t_hxh *final_linked)
+{
+    while(environment)
+    {
+        if(environment->variable)
+        {
+            printf("declare -x ");
+            printf("%s", environment->variable);
+        }
+        if(environment->value)
+        {
+            printf("= \"");
+            printf("%s", environment->value);
+            printf("\"\n");
+        }
+        environment = environment->next;
+    }
+}
+void export2(t_hxh *final_linked, t_env *environment, char *variable, char *value)
+{
+    t_env *tmp;
+    int d;
+
+    d = 1;
+    if(check_if_value(final_linked->value))
+        afterwards_assignment(final_linked, environment, tmp);
+    else if(!final_linked->value[1])
+        no_args_export2(environment, final_linked);
+    else
+    {
+        d = 1;
+        while(final_linked->value[d])    
+        {    
+            setting_var_and_val(&variable, &value ,final_linked ,d);
+            normal_exporting(variable, value, final_linked, environment);
+            d++;
+        }
+    }
+}
 void export(t_hxh *final_linked, t_env *environment, char *variable, char *value)
 {
 	t_env *tmp;
@@ -293,6 +358,8 @@ int execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 	int fd[2];
 	char **arg = NULL;
 	int ex = 0;
+	char *variable;
+	char *value;
 	
 	pipe(fd);
 	int pid = fork();
@@ -316,9 +383,17 @@ int execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
-		execve(path, arg, env);
-		perror("execve1");
-		exit(1);
+		if(!ft_strcmp(arg[0], "export"))
+		{
+			export2(final_linked, environment, variable, value);
+			exit(0);
+		}
+		else
+		{	
+			execve(path, arg, env);
+			perror("execve1");
+			exit(1);
+		}
 	}
 	else
 	{
@@ -337,7 +412,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 	char cwd[1024];
 	char *user;
 	int pid;
-	char *path;
+	char *path = NULL;
 	int *pid_tab;
 	int i;
 	int num_of_elems;
@@ -380,7 +455,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 		else if(!strcmp(final_linked->value[0], "echo"))
 			ft_echo(final_linked);
 		else if(!strcmp(final_linked->value[0], "unset"))
-			ft_unset(final_linked, &environment);
+			ft_unset(final_linked, &environment, exit_status);
 		else if(!strcmp(final_linked->value[0], "exit"))
 			ft_exit(final_linked);
 		else
@@ -388,10 +463,16 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 			dup2(final_linked->input, 0);
 			dup2(final_linked->output , 1);
 			pid = fork();
+			// exit(1);
+			// printf("ss\n");
 			if(pid == 0)
 			{
-				path =look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
-				// printf("%s\n", path);
+				if(is_apath(final_linked->value[0]))
+					path = ft_strmcpy(path, final_linked->value[0]);
+				else
+					path =look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+				
+				printf("%s\n", path);
 				execve(path , final_linked->value, env);
 				perror("execve");
 				exit(1);
@@ -419,7 +500,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 		if (pid == 0)
 		{
 			char *path2 = look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
-			execve(path2, arg, env);	
+			execve(path2, arg, env);
 			perror("execve2");
 			exit(1);
 		}

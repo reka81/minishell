@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/24 16:21:38 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:26:46 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,15 @@ void tokenization(t_stack **a, char *l)
 		}
 		if(flag_for_white)
 		{
-			if(quote_flag != 0 || str[0]  != '$')
-			{
+			// if(quote_flag != 0 || str[0]  != '$')
+			// {
+				// printf("%s\n", str);
 				ft_lstadd_back(a, ft_lstnew(str, quote_flag));
 				quote_flag = 0;
 				flag_for_white = 0;
-			}
-			else
-				free(str);
+			// }
+			// else
+			// 	free(str);
 		}
 		if(l[i] == '|')
 		{
@@ -139,7 +140,7 @@ int cmp_delim(char c)
 	return(0);
 }
 
-void expanding(t_stack *a, int exit_status)
+void expanding(t_stack *a, int exit_status, t_env *environment)
 {
 	int i = 0;
 	char *str;
@@ -149,8 +150,9 @@ void expanding(t_stack *a, int exit_status)
 	int e = 0;
 	int k = 0;
 	int flag = 1;
-	int dollar_flag = 0;
+	int dollar_flag = 50;
 	char *user = NULL;
+	int	exit_to_expand = 0;
 	
 	while(a)
 	{
@@ -175,6 +177,11 @@ void expanding(t_stack *a, int exit_status)
 					j = ft_strlen1(str2);
 					while(cmp_delim(a->value[i]))
 					{
+						if(a->value[i] == '?' && a->value[i - 1] == '$')
+						{
+							exit_to_expand = 1;
+							break;
+						}
 						if(a->value[i] == '$')
 							dollar_flag = 1;
 						else
@@ -204,7 +211,7 @@ void expanding(t_stack *a, int exit_status)
 						str2[j] = '\0';
 					}
 					j = 0;
-					if(dollar_flag)
+					if(dollar_flag == 1)
 					{	
 						while(a->value[i] && !cmp_delim(a->value[i]))
 						{
@@ -212,14 +219,22 @@ void expanding(t_stack *a, int exit_status)
 							i++;
 							j++;
 						}
+						if(a->value[i] == '?' && exit_to_expand == 1)
+						{	
+							str[j] = a->value[i];
+							j++;
+							i++;
+						}
 					}
 					str[j] = '\0';
-					if(ft_strcmp(str , "?"))
+					if(!ft_strcmp(str , "?"))
+					{
 						user = ft_itoa(exit_status);
+					}
 					else
 						user = getenv(str);
 					j = ft_strlen1(str2);
-					j -= e;
+					j -= 1;
 					if (user)
 					{
 						str2[j] = '\0';
@@ -233,11 +248,12 @@ void expanding(t_stack *a, int exit_status)
 					if(d > 0)	
 						str2[j] = '\0';
 					j = ft_strlen1(str2);
-					if(k == j)
-					{
-						j -= e;
-						str2[j] = '\0';
-					}
+					// printf("%d--%d", j, k);
+					// if(k == j)
+					// {
+					// 	j -= e;
+					// 	str2[j] = '\0';
+					// }
 					while(a->value[i])
 					{
 						if(a->value[i] == '$')
@@ -336,7 +352,7 @@ int main(int ac, char **av, char **env)
 		add_history(l);
 		if (!l)
 		{
-			printf("exit");
+			printf("exit\n");
 			break ;
 		}
 		if (l[0] == '\0')
@@ -351,12 +367,13 @@ int main(int ac, char **av, char **env)
 			{
 			tokenization(&a, l);
 			flaging_expandables(a);
-			expanding(a, exit_status);
+			expanding(a, exit_status, environment);
 			// while(a)
 			// {
 			// 	printf("%s----%d\n", a->value, a->type);
 			// 	a = a->next;
 			// }
+			// exit(0);
 			// printf("%s\n", environment->value);
 			int i = 0;
 			final_linked = ft_store(a);
@@ -370,11 +387,12 @@ int main(int ac, char **av, char **env)
 			// 	printf("\n");
 			// 	final_linked = final_linked->next;
 			// }
+			// exit(0);
 			// char * hh = look_for_path(final_linked->value[0], getenv("PATH"));
 			// printf("%s", hh);
 			// exit(1);
 			execution(environment, final_linked, envi2, &exit_status);
-			printf("%d\n", exit_status);
+			// printf("%d\n", exit_status);
 			}
 		}
 	}
