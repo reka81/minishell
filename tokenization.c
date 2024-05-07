@@ -6,12 +6,15 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/26 19:26:46 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:05:47 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
+
+
+int	g_is_in_mini;
 
 void	flaging_expandables(t_stack *a)
 {
@@ -318,6 +321,23 @@ void filling_env(char **env, t_env **environment)
 	}
 }
 
+char *ft_update_pwd(t_env *environment, char *current_path, char *old_path)
+{
+    while (environment != NULL)
+    {
+        if (strcmp("PWD", environment->variable) == 0)
+        {
+            current_path = getcwd(current_path, 100);
+            environment->value = current_path;
+        }
+        if (strcmp("OLDPWD", environment->variable) == 0 && old_path != NULL)
+        {
+            environment->value = old_path;
+        }
+        environment = environment->next;
+    }
+    return (current_path);
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -329,6 +349,9 @@ int main(int ac, char **av, char **env)
 	int i = 1;
 	char **envi2;
 	int exit_status;
+	char *buf = NULL;
+	char *old_path = NULL;
+	char *current_path = NULL;
 	
 	(void) ac;
 	(void) av;
@@ -357,7 +380,6 @@ int main(int ac, char **av, char **env)
 		}
 		if (l[0] == '\0')
 		{
-			// printf("ss\n");
 			free(l);
 			l = NULL;
 		}
@@ -391,7 +413,11 @@ int main(int ac, char **av, char **env)
 			// char * hh = look_for_path(final_linked->value[0], getenv("PATH"));
 			// printf("%s", hh);
 			// exit(1);
+			g_is_in_mini = 1;
 			execution(environment, final_linked, envi2, &exit_status);
+			g_is_in_mini = 0;
+			old_path = buf;
+			buf = ft_update_pwd(environment, current_path, old_path);
 			// printf("%d\n", exit_status);
 			}
 		}

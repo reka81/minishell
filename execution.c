@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/27 16:10:03 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:28:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ char *new_var_woutpls(char *variable)
 		new[i] = variable[i];
 		i++;
 	}
+	if(variable[i] == '+' && variable[i + 1] == '=')
+	{
+		new[i] = '=';
+		i++;
+	}
 	new[i] = '\0';
 	return(new);
 }
@@ -106,8 +111,10 @@ t_env *check_if_var(t_env *environment, char *variable)
 {
 	while(environment)
 	{
-		if(!strcmp(environment->variable, variable))
+		if(strcmp(environment->variable, variable) == 0)
+		{
 			return(environment);
+		}
 		environment = environment->next;
 	}
 	return(NULL);
@@ -240,18 +247,54 @@ void setting_var_and_val(char **variable, char **value, t_hxh *final_linked, int
 	}
 	value[0][j] = '\0';
 }
+int cmp_w_dlm(char c, char s)
+{
+	char *str;
+	int i;
+	int nothing;
+
+	i = 0;
+	str = "/*-+!@#$%^=";
+	while(str[i])
+	{
+		if(str[i] == c)
+		{
+			if(c == '+' && s == '=')
+				nothing = 0;		
+			else
+				return(1);
+		}
+		i++;
+	}
+	return(0);
+}
+int check_if_dlm(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+	{
+		if(str[i + 1] == '\0')
+			return(0);
+		if(cmp_w_dlm(str[i], str[i + 1]))
+			return(1);
+		i++;
+	}
+	return(0);
+}
+
 void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *environment)
 {
 	t_env *tmp;
 	char *new = NULL;
 	
-	if(value[0] == '\0' && check_if_pls2(variable) || ft_isdigit(variable[0]))
+	if(value[0] == '\0' && check_if_pls2(variable) || ft_isdigit(variable[0]) || check_if_dlm(variable))
 	{
 		printf("bash: export: `%s': not a valid identifier\n", variable);
 	}
 	else if(variable[0] == '\0')
 	{
-		printf("hh\n");
 		printf("bash: export: %s :not a valid identifier\n", value);
 		if(final_linked->value[2])
 			printf("bash: export: %s :not a valid identifier\n", final_linked->value[2]);
@@ -262,20 +305,29 @@ void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *e
 		new = new_var_woutpls(variable);
 		tmp = check_if_var(environment, new);
 		if(!tmp)
-			ft_lstadd_back2(&environment, ft_lstnew2(variable, value));
+		{
+			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
+			free(variable);
+		}
 		else
 		{
+			printf("%s\n", variable);
 			if(check_if_pls2(variable))
 			{
+				printf("%s\n", new);
 				tmp->value = ft_strjoin(tmp->value, value);
+				free(variable);
+				free(value);
+				free(new);
 			}
 			else
 			{			
 				free(tmp->value);
 				tmp->value = value;
+				free(variable);
+				free(new);
 			}
 		}
-		free(new);
 	}
 }
 void no_args_export2(t_env *environment, t_hxh *final_linked)
@@ -360,11 +412,16 @@ int execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 	int ex = 0;
 	char *variable;
 	char *value;
+	char *path;
 	
 	pipe(fd);
 	int pid = fork();
 	arg = fill_args(final_linked);
-	char *path = look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+	if(is_apath(final_linked->value[0]))
+		path = ft_strmcpy(path, final_linked->value[0]);
+	else
+		path =look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+	// path = look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
 	if(pid == 0)
 	{
 		close(fd[0]);
@@ -416,6 +473,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 	int *pid_tab;
 	int i;
 	int num_of_elems;
+	char *path2;
 	
 	i = 0;
 	if (final_linked->next == NULL)
@@ -471,8 +529,6 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 					path = ft_strmcpy(path, final_linked->value[0]);
 				else
 					path =look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
-				
-				printf("%s\n", path);
 				execve(path , final_linked->value, env);
 				perror("execve");
 				exit(1);
@@ -488,7 +544,7 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 		pid_tab = malloc(a * 4);
 		dup2(final_linked->input, 0);
 		while(a > 1)
-		{	
+		{
 			pid_tab[i] = execute_cmds(final_linked, env, environment);
 			final_linked = final_linked->next;
 			a--;
@@ -499,7 +555,22 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 		char **arg = fill_args(final_linked);
 		if (pid == 0)
 		{
-			char *path2 = look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+			if(final_linked->input != 0)
+			{
+				dup2(final_linked->input, 0);
+				close(final_linked->input);
+			}
+			if(final_linked->output != 1)
+			{
+				dup2(final_linked->output, 1);
+				close(final_linked->output);
+			}
+			if(is_apath(final_linked->value[0]))
+				path2 = ft_strmcpy(path, final_linked->value[0]);
+			else
+				path2 = look_for_path(final_linked->value[0], ft_get_env("PATH", environment));
+
+			// printf("%s\n", path2);
 			execve(path2, arg, env);
 			perror("execve2");
 			exit(1);

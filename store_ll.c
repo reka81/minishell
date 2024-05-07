@@ -291,13 +291,13 @@ void rederection(t_stack **lst, int *in, int *out, int *fd)
     {
         if ((*lst)->next->type == 6)
         {
-            if (*out == 3)
+            if (*out >= 3)
                 close(*fd);
             *fd = open((*lst)->next->next->value, O_CREAT | O_RDWR , 0644);
         }
         else
         {
-            if (*out == 3)
+            if (*out >= 3)
                 close(*fd);
             *fd = open((*lst)->next->value, O_CREAT | O_RDWR , 0644);
         }
@@ -381,13 +381,13 @@ void append(t_stack **lst, int *fd, t_int *lor_int)
     {
         if ((*lst)->next->type == 6)
         {
-            if (lor_int->out == 3)
+            if (lor_int->out >= 3)
                 close(*fd);
             *fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
         }
         else
         {
-            if (lor_int->out == 3)
+            if (lor_int->out >= 3)
                 close(*fd);
             *fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
         }
