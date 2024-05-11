@@ -46,6 +46,50 @@ typedef struct s_int
     int z;
 }   t_int;
 
+typedef struct s_counter
+{
+    int i;
+    int j;
+    int d;
+    int e;
+    int k;
+}   t_counter;
+
+typedef struct s_forexpand
+{
+    char *user;
+    int exit_to_expand;
+    int dollar_flag;
+    int exit_status;
+}   t_exp;
+
+typedef struct s_numbers
+{
+    int i;
+    int j;
+    int quote_flag;
+    int flag_for_white;
+}   t_numbers;
+
+typedef struct s_main
+{
+    char *buf;
+    char *old_path;
+    char *current_path;
+    char **envi2;
+    int save_fd;
+    char *l;
+}   t_main;
+
+typedef struct s_fillingenv
+{
+    char *value;
+    char *variable;
+    int e;
+    int i;
+    int j;
+}   t_filling_env;
+
 void	ft_lstadd_back(t_stack **lst, t_stack *newnode);
 t_stack	*ft_lstnew(char *content, int quote_type);
 int	ft_strlen1(char *s);
@@ -82,5 +126,18 @@ char **store_env_2darr(t_env *environment);
 char *ft_get_env(char *var, t_env *enviroment);
 char *new_var_woutequal(char *variable);
 char	*ft_itoa(int n);
+void expanding(t_stack *a, int exit_status, t_env *environment);
+int cmp_delim(char c);
+void tokenization(t_stack **a, char *l);
+void	flaging_expandables(t_stack *a);
+int cmp_delim(char c);
+void	filling_env2(t_filling_env *fill, char **env);
+void filling_env(char **env, t_env **environment);
+char *ft_update_pwd(t_env *environment, char *current_path, char *old_path);
+int check_if_equal(char *str);
+void	ft_lstadd_back1(t_hxh **lst, t_hxh *new);
+t_hxh	*ft_lstnew1(char **content, int out, int in);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+size_t	ft_strlen(const char *str);
 
 #endif 

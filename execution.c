@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/02 22:28:39 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:27:15 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,28 @@ void	ft_putstr_fd2(char *s, int fd)
 	}
     // write(fd, " ", 1);
 }
+
+t_env *check_if_var2(t_env *environment, char *variable)
+{
+	char *new = malloc(100);
+	
+	while(environment)
+	{
+		new = new_var_woutequal(environment->variable);
+		if(strcmp(new, variable) == 0)
+		{
+			free(new);
+			return(environment);
+		}
+		free(new);
+		environment = environment->next;
+	}
+	return(NULL);
+}
+
 t_env *check_if_var(t_env *environment, char *variable)
 {
+
 	while(environment)
 	{
 		if(strcmp(environment->variable, variable) == 0)
@@ -133,6 +153,7 @@ int	check_if_value(char **str)
 	}
 	return(0);
 }
+
 void	afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp)
 {
 	char *variable;
@@ -164,7 +185,7 @@ void	afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp)
 		i++;
 	}
 	value[j] = '\0';
-	tmp = check_if_var(environment, variable);
+	tmp = check_if_var2(environment, variable);
 	if(tmp)
 	{
 		if(!check_if_pls(final_linked->value))
@@ -174,6 +195,8 @@ void	afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp)
 		}
 		else
 		{
+			if(!check_if_equal(tmp->variable))
+				tmp->variable = ft_strjoin(tmp->variable, "=");
 			tmp->value = ft_strjoin(tmp->value, value);
 		}
 	}
@@ -311,10 +334,8 @@ void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *e
 		}
 		else
 		{
-			printf("%s\n", variable);
 			if(check_if_pls2(variable))
 			{
-				printf("%s\n", new);
 				tmp->value = ft_strjoin(tmp->value, value);
 				free(variable);
 				free(value);
@@ -355,8 +376,10 @@ void export2(t_hxh *final_linked, t_env *environment, char *variable, char *valu
 
     d = 1;
     if(check_if_value(final_linked->value))
-        afterwards_assignment(final_linked, environment, tmp);
-    else if(!final_linked->value[1])
+	{
+		afterwards_assignment(final_linked, environment, tmp);
+	}
+	else if(!final_linked->value[1])
         no_args_export2(environment, final_linked);
     else
     {
@@ -484,7 +507,9 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 			ft_putstr_fd(cwd, final_linked->output);
 		}
 		else if(!strcmp(final_linked->value[0], "export") || check_if_value(final_linked->value))
+		{
 			export(final_linked, environment, variable, value);
+		}
 		else if(!strcmp(final_linked->value[0], "env"))
 		{
 			while(environment)
@@ -538,7 +563,6 @@ void execution(t_env *environment, t_hxh *final_linked, char **env, int *exit_st
 	}
 	else
 	{
-		
 		int a = ft_lstsize(final_linked);
 		num_of_elems = a;
 		pid_tab = malloc(a * 4);
