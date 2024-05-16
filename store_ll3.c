@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:28:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 21:28:49 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:39:58 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static	int	count_strings(const char *s, char c)
 
 	i = 0;
 	count = 0;
-	if(!s)
-		return(0);
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 	{
 		while (s[i] == c && s[i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/03/25 07:00:32 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/11 22:15:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ int double_pipe(char *str)
 {
     int i = 0;
     int j  = 0;
-    int count = 0;
-    int count1 = 0; 
+
     while (str[i])
     {
         if(str[i] == '|')

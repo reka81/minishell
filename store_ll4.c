@@ -6,13 +6,13 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:30:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 21:30:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:40:08 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_hxh	*ft_lstnew1(char **content, int out, int in)
+t_hxh	*ft_lstnew1(char **content, int out, int in, char *str)
 {
 	t_hxh	*new_node;
 
@@ -20,6 +20,10 @@ t_hxh	*ft_lstnew1(char **content, int out, int in)
 	if (!new_node)
 		return (NULL);
 	new_node->value = content;
+	if(str != NULL)
+		new_node->is_faulty = 2;
+	else
+		new_node->is_faulty = 0;	
 	new_node->output = out;
 	new_node->input = in;
 	new_node->next = NULL;
@@ -34,6 +38,7 @@ t_hxh	*ft_lstlast1(t_hxh *lst)
 		lst = lst->next;
 	return (lst);
 }
+
 void	ft_lstadd_back1(t_hxh **lst, t_hxh *new)
 {
 	if (!lst || !new)
@@ -43,6 +48,7 @@ void	ft_lstadd_back1(t_hxh **lst, t_hxh *new)
 	else
 		*lst = new;
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;

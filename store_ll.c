@@ -6,12 +6,11 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 21:33:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:52:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	ft_putchar_fd(char c, int fd)
 {
@@ -19,6 +18,7 @@ void	ft_putchar_fd(char c, int fd)
 		return ;
 	write(fd, &c, 1);
 }
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
@@ -34,10 +34,13 @@ void	ft_putstr_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-int num_herdog(t_stack *lol)
+int	num_herdog(t_stack *lol)
 {
-	t_stack *tmp = lol;
-	int count = 0;
+	t_stack	*tmp;
+	int		count;
+
+	count = 0;
+	tmp = lol;
 	while (tmp != NULL && ft_strcmp(tmp->value, "|") != 0)
 	{
 		if (ft_strcmp(tmp->value, "<<") == 0)
@@ -49,11 +52,11 @@ int num_herdog(t_stack *lol)
 	return (count);
 }
 
-char *rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
+char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 {
-	if ((*lst) != NULL && ((*lst)->type == 1 || (*lst)->type == 2))
+	if ((*lst) != NULL && ((*lst)->type == 1 || (*lst)->type == 2 || (*lst)->type == 0))
 	{
-		if((*lst)->next)
+		if ((*lst)->next)
 		{
 			if ((*lst)->next->type == 6)
 			{
@@ -62,7 +65,8 @@ char *rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 			}
 			else
 			{
-				lor_int->str[lor_int->z] = ft_strjoin((*lst)->value, (*lst)->next->value);
+				lor_int->str[lor_int->z] = ft_strjoin((*lst)->value,
+						(*lst)->next->value);
 				lor_int->z++;
 				(*lst) = (*lst)->next;
 			}
@@ -73,34 +77,27 @@ char *rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 			lor_int->z++;
 		}
 	}
-	else if (*lst != NULL && (*lst)->type == 0)
-	{
-		lor_int->str[lor_int->z] = (*lst)->value;
-		lor_int->z++;
-	}
 	else if (*lst != NULL && (*lst)->type == 3)
 	{
 		rederection(lst, &lor_int->in, &lor_int->out, &lor_int->fd);
 		chen = infile(lst, &lor_int->fd, &lor_int->in, &lor_int->out);
-		herdog(lst , &lor_int->fd, lor_int, &n);
+		herdog(lst, &lor_int->fd, lor_int, &n);
 		append(lst, &lor_int->fd, lor_int);
 	}
-	return(chen);
+	return (chen);
 }
 
-t_hxh *ft_store(t_stack *lol)
+t_hxh	*ft_store(t_stack *lol)
 {
-	t_hxh *l;
-	char *ll;
-	int i = 0;
-	t_int *lor_int = malloc(sizeof(t_int));
-	int n = 1;
-	char *chen = NULL;
-	t_stack *lst;
+	t_hxh	*l;
+	t_int	*lor_int;
+	t_stack	*lst;
+	t_store	*storing;
 
-	i = 0;
-	n = 1;
-	chen = NULL;
+	storing = malloc(sizeof(t_store));
+	storing->i = 0;
+	storing->n = 1;
+	storing->chen = NULL;
 	lst = lol;
 	l = NULL;
 	lor_int = malloc(sizeof(t_int));
@@ -113,18 +110,32 @@ t_hxh *ft_store(t_stack *lol)
 		lor_int->z = 0;
 		while (lst != NULL && ft_strcmp(lst->value, "|") != 0)
 		{
-			chen = rederection_handling(&lst, n, lor_int, chen);
+			storing->chen = NULL;
+			storing->chen = rederection_handling(&lst, storing->n,
+					lor_int, storing->chen);
 			lst = lst->next;
-			if(lst == NULL)
+			if (storing->chen != NULL)
+			{
+				printf("%s\n", storing->chen);
 				break;
+			}
+			if (lst == NULL)
+				break ;
 		}
 		lor_int->str[lor_int->z] = NULL;
-		ft_lstadd_back1(&l, ft_lstnew1(lor_int->str, lor_int->out, lor_int->in));
-		if(lst == NULL)
-			break;
-		lst = lst->next;
+		ft_lstadd_back1(&l, ft_lstnew1(lor_int->str,
+				lor_int->out, lor_int->in, storing->chen));
+		if (lst == NULL)
+			break ;
+		if(lst &&  ft_strcmp(lst->value, "|") != 0)
+		{    
+			while(lst &&  ft_strcmp(lst->value, "|") != 0)
+				lst = lst->next;
+			if(ft_strcmp(lst->value, "|") == 0)
+				lst = lst->next;
+        }
+        else
+            lst = lst->next;
 	}
-	if (chen != NULL)
-		printf("%s\n",chen);
 	return (l);
 }

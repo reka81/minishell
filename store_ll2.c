@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:27:17 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 21:38:51 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:40:38 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*ft_itoa(int n)
 	s = ft_char(s, number, len);
 	return (s);
 }
+
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -69,6 +70,7 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	i;
@@ -83,6 +85,5 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		}
 		dest[i] = '\0';
 	}
-    return (ft_strlen(src));
+	return (ft_strlen(src));
 }
-	

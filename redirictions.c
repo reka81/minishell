@@ -6,16 +6,17 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 21:32:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:43:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *herdog_delm(t_stack *lst)
+char	*herdog_delm(t_stack *lst)
 {
-	t_stack *tmp = lst;
+	t_stack	*tmp;
 
+	tmp = lst;
 	while (tmp != NULL && ft_strcmp(tmp->value, "|") != 0)
 	{
 		if (ft_strcmp(tmp->value, "<<") == 0)
@@ -28,7 +29,8 @@ char *herdog_delm(t_stack *lst)
 	}
 	return (NULL);
 }
-void rederection(t_stack **lst, int *in, int *out, int *fd)
+
+void	rederection(t_stack **lst, int *in, int *out, int *fd)
 {
 	if (ft_strcmp((*lst)->value, ">") == 0)
 	{
@@ -36,13 +38,13 @@ void rederection(t_stack **lst, int *in, int *out, int *fd)
 		{
 			if (*out >= 3)
 				close(*fd);
-			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR , 0644);
+			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR, 0644);
 		}
 		else
 		{
 			if (*out >= 3)
 				close(*fd);
-			*fd = open((*lst)->next->value, O_CREAT | O_RDWR , 0644);
+			*fd = open((*lst)->next->value, O_CREAT | O_RDWR, 0644);
 		}
 		*out = *fd;
 		if ((*lst)->next->type == 6)
@@ -52,9 +54,11 @@ void rederection(t_stack **lst, int *in, int *out, int *fd)
 	}
 }
 
-char *infile(t_stack **lst, int *fd, int *in, int *out)
+char	*infile(t_stack **lst, int *fd, int *in, int *out)
 {
-	char *chen = NULL;
+	char	*chen;
+
+	chen = NULL;
 	if (ft_strcmp((*lst)->value, "<") == 0)
 	{
 		if ((*lst)->next->type == 6)
@@ -88,11 +92,12 @@ char *infile(t_stack **lst, int *fd, int *in, int *out)
 	}
 	return (chen);
 }
-void herdog(t_stack **lst, int *fd , t_int *lor_int, int *n)
+
+void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n)
 {
-	char *ll = NULL;
+	char	*ll;
 
-
+	ll = NULL;
 	if (ft_strcmp((*lst)->value, "<<") == 0)
 	{
 		lor_int->ten = ft_strjoin("file", ft_itoa(*n));
@@ -106,7 +111,7 @@ void herdog(t_stack **lst, int *fd , t_int *lor_int, int *n)
 				exit(1);
 			lor_int->zz = herdog_delm(*lst);
 			if (ft_strcmp(lor_int->zz, ll) == 0)
-				break;
+				break ;
 			ft_putstr_fd(ll, *fd);
 		}
 		(*n)++;
@@ -118,15 +123,16 @@ void herdog(t_stack **lst, int *fd , t_int *lor_int, int *n)
 	}
 }
 
-void append(t_stack **lst, int *fd, t_int *lor_int)
+void	append(t_stack **lst, int *fd, t_int *lor_int)
 {
-	if(ft_strcmp((*lst)->value, ">>") == 0)  
+	if (ft_strcmp((*lst)->value, ">>") == 0)
 	{
 		if ((*lst)->next->type == 6)
 		{
 			if (lor_int->out >= 3)
 				close(*fd);
-			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND,
+					0644);
 		}
 		else
 		{
@@ -134,7 +140,7 @@ void append(t_stack **lst, int *fd, t_int *lor_int)
 				close(*fd);
 			*fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
 		}
-		lor_int->out  = *fd;
+		lor_int->out = *fd;
 		if ((*lst)->next->type == 6)
 			(*lst) = (*lst)->next->next;
 		else

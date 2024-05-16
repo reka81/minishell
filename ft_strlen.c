@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 11:26:31 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/24 14:17:54 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:07:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	ft_strlen1(char *s)
 {
 	int	i;
-	if(!s)
-		return(0);
+
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] != '\0')
 		i++;
