@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:15:07 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 16:52:32 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:59:33 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strmcpy(char *path, char *value)
 	int	i;
 
 	i = 0;
-	path = malloc(ft_strlen1(value));
+	path = malloc(ft_strlen1(value) + 1);
 	while (value[i])
 	{
 		path[i] = value[i];

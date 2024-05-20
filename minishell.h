@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/16 22:40:41 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:51:15 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <readline/history.h>
 # include <string.h>
 # include <fcntl.h>
+#include <termios.h>
+
 
 typedef struct stack
 {
@@ -28,6 +30,7 @@ typedef struct stack
 	int				type;
 	int				should_be_exp;
 	struct stack	*next;
+	int				did_expand;
 }	t_stack;
 
 typedef struct s_hxh
@@ -38,6 +41,7 @@ typedef struct s_hxh
 	int				input;
 	int				flag;
 	int				is_faulty;
+	int				ambigious;
 }	t_hxh;
 
 typedef struct s_env
@@ -72,6 +76,8 @@ typedef struct s_exec
 
 typedef struct s_exec1
 {
+	// int s1;
+	// int s2;
     char *value;
     char *variable;
     char cwd[1024];
@@ -84,6 +90,7 @@ typedef struct s_exec1
     char **env;
     int a;
     int *exit_status;
+	struct termios my_termios;
 } t_exec1;
 
 typedef struct s_counter
@@ -148,11 +155,11 @@ int		ds_quotes(char *str);
 int		double_pipe(char *str);
 int		parentheses(char *str);
 t_hxh	*ft_store(t_stack *lol);
-char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen);
-void	append(t_stack **lst, int *fd, t_int *lor_int);
-void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n);
-char	*infile(t_stack **lst, int *fd, int *in, int *out);
-void	rederection(t_stack **lst, int *in, int *out, int *fd);
+char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen, int *i);
+void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
+void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n, int *i);
+char	*infile(t_stack **lst, int *fd, int *in, int *out, int *i);
+void	rederection(t_stack **lst, int *in, int *out, int *fd, int *i);
 char	*herdog_delm(t_stack *lst);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
@@ -170,7 +177,7 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void	ft_putstr_fd1(char *s, int fd);
 char	**ft_split(char const *s, char c);
 char	*look_for_path(char *cmd, char *path);
-void	setup_signal_handlers(void);
+void	setup_signal_handlers();
 char	**store_env_2darr(t_env *environment);
 char	*ft_get_env(char *var, t_env *enviroment);
 char	*new_var_woutequal(char *variable);
@@ -185,7 +192,7 @@ void	filling_env(char **env, t_env **environment);
 char	*ft_update_pwd(t_env *environment, char *current_path, char *old_path);
 int		check_if_equal(char *str);
 void	ft_lstadd_back1(t_hxh **lst, t_hxh *new);
-t_hxh	*ft_lstnew1(char **content, int out, int in, char *str);
+t_hxh	*ft_lstnew1(char **content, int out, int in, char *str, int i);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
 int check_if_pls2(char *str);
@@ -232,5 +239,6 @@ void dup_close5(int fd_out, int fd_in);
 void not_builtins(t_hxh *final_linked, t_exec1 *var, t_env *environment, int *exit_status);
 void join_or_not(char *value, char *variable, char *new, t_env *tmp);
 void exp_n_valid(t_hxh *final_linked, char *value);
+void	ctl_c(int a);
 
 #endif 

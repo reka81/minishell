@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/16 22:57:10 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:33:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void clean_final(t_hxh **final_linked)
     tmp2 = *final_linked;
     while (*final_linked)
     {
-        if ((*final_linked)->is_faulty == 2)
+        if ((*final_linked)->is_faulty == 2 || (*final_linked)->ambigious)
         {
             if(i == 0)
             {
@@ -110,7 +110,7 @@ int check_if_faulty(t_hxh *a)
 {
     while(a)
     {
-        if(a->is_faulty == 2)
+        if(a->is_faulty == 2 || a->ambigious == 20)
             return(1);
         a = a->next;
     }
@@ -135,8 +135,11 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 			expanding(a, main_fun->exit_status, environment);
 			while(check_if_null(a))
 				ft_rm_null(&a);
-			if(a->type == 6 && a->next == NULL)
-				freeing_pr(&a);
+			if(a)
+			{	
+				if(a->type == 6 && a->next == NULL)
+					freeing_pr(&a);
+			}
 			if(a)
 			{
 				final_linked = ft_store(a);
@@ -155,6 +158,19 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 			}
 		}
 	}
+}
+
+t_env    *ft_lstnew5(char *variable, char *value)
+{
+    t_env    *s1;
+
+    s1 = malloc(sizeof(t_env));
+    if (!s1)
+        return (NULL);
+    s1->variable = variable;
+    s1->value = value;
+    s1->next = NULL;
+    return (s1);
 }
 
 void	routine(t_stack *a, t_main *main_fun, t_env *environment,
@@ -179,6 +195,72 @@ void	routine(t_stack *a, t_main *main_fun, t_env *environment,
 	}
 }
 
+void    ft_lstadd_back7(t_env **lst, t_env *newnode)
+{
+    t_env    *start;
+
+    if (!lst)
+        return ;
+    start = *lst;
+    if (*lst)
+    {
+        while (start->next)
+            start = start->next;
+        start->next = newnode;
+    }
+    else
+        *lst = newnode;
+}
+
+char *fill(char *str1, char *str2)
+{
+    int i = 0;
+    str1 = malloc(sizeof(char) * strlen(str2) + 1);
+    while (str2[i])
+    {
+        str1[i] = str2[i];
+        i++;
+    }
+    str1[i] = '\0';
+    return (str1);
+}
+
+void fill_env2(t_env **environment)
+{
+    int i = 0;
+    *environment = NULL;
+    char *value = malloc(50);
+    char *variable;
+    while (i < 4)
+    {
+        if (i == 0)
+        {
+            variable = fill(variable ,"PWD=");
+            getcwd(value, 50);
+            ft_lstadd_back7(environment, ft_lstnew5(variable, value));
+        }
+        if (i == 1)
+        {
+            variable = fill(variable, "SHLVL=");
+            value = fill(value, "1");
+            ft_lstadd_back7(environment, ft_lstnew5(variable, value));
+        }
+        if (i == 2)
+        {
+            variable = fill(variable, "_=");
+            value = fill(value, "/usr/bin/env");
+            ft_lstadd_back7(environment, ft_lstnew5(variable, value));
+        }
+        if (i == 3)
+        {
+            variable = fill(variable, "PATH=");
+            value = fill(value, "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+            ft_lstadd_back7(environment, ft_lstnew5(variable, value));
+        }
+        i++;
+    }
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_stack	*a;
@@ -193,6 +275,8 @@ int	main(int ac, char **av, char **env)
 	environment = NULL;
 	main_fun = malloc(sizeof(t_main));
 	filling_env(env, &environment);
+	if(!environment)
+		fill_env2(&environment);
 	main_fun->l = NULL;
 	main_fun->exit_status = 0;
 	main_fun->save_fd = dup(STDIN_FILENO);

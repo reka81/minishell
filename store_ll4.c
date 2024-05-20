@@ -6,13 +6,13 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:30:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/16 22:40:08 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:16:33 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_hxh	*ft_lstnew1(char **content, int out, int in, char *str)
+t_hxh	*ft_lstnew1(char **content, int out, int in, char *str, int i)
 {
 	t_hxh	*new_node;
 
@@ -26,6 +26,7 @@ t_hxh	*ft_lstnew1(char **content, int out, int in, char *str)
 		new_node->is_faulty = 0;	
 	new_node->output = out;
 	new_node->input = in;
+	new_node->ambigious = i;
 	new_node->next = NULL;
 	return (new_node);
 }

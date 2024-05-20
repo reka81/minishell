@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/16 22:43:55 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/17 23:08:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,25 @@ char	*herdog_delm(t_stack *lst)
 	return (NULL);
 }
 
-void	rederection(t_stack **lst, int *in, int *out, int *fd)
+int count_word(char *s)
+{
+	int i;
+	int j;
+
+	if(!s)
+		return(0);
+	j = 0;
+	i = 0;
+	while(s[i])
+	{
+		if(s[i] == ' ')
+			j++;	
+		i++;
+	}
+	return(j);
+}
+
+void rederection(t_stack **lst, int *in, int *out, int *fd, int *i)
 {
 	if (ft_strcmp((*lst)->value, ">") == 0)
 	{
@@ -38,12 +56,22 @@ void	rederection(t_stack **lst, int *in, int *out, int *fd)
 		{
 			if (*out >= 3)
 				close(*fd);
+			if(count_word((*lst)->next->next->value) >= 1)
+			{
+				*i = 1;
+				return ;
+			}
 			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR, 0644);
 		}
 		else
 		{
 			if (*out >= 3)
 				close(*fd);
+			if(count_word((*lst)->next->value) >= 1)
+			{
+				*i = 1;
+				return ;
+			}
 			*fd = open((*lst)->next->value, O_CREAT | O_RDWR, 0644);
 		}
 		*out = *fd;
@@ -54,7 +82,7 @@ void	rederection(t_stack **lst, int *in, int *out, int *fd)
 	}
 }
 
-char	*infile(t_stack **lst, int *fd, int *in, int *out)
+char	*infile(t_stack **lst, int *fd, int *in, int *out, int *i)
 {
 	char	*chen;
 
@@ -67,6 +95,11 @@ char	*infile(t_stack **lst, int *fd, int *in, int *out)
 			{
 				if (*in >= 3)
 					close(*fd);
+				if(count_word((*lst)->next->next->value) >= 1)
+				{	
+					*i = 1;
+					return(NULL);
+				}
 				*fd = open((*lst)->next->next->value, O_RDWR, 0644);
 				*in = *fd;
 			}
@@ -79,6 +112,11 @@ char	*infile(t_stack **lst, int *fd, int *in, int *out)
 			{
 				if (*in >= 3)
 					close(*fd);
+				if(count_word((*lst)->next->value) >= 1)
+				{	
+					*i = 1;
+					return(NULL);
+				}
 				*fd = open((*lst)->next->value, O_RDWR, 0644);
 				*in = *fd;
 			}
@@ -93,7 +131,7 @@ char	*infile(t_stack **lst, int *fd, int *in, int *out)
 	return (chen);
 }
 
-void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n)
+void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n, int *i)
 {
 	char	*ll;
 
@@ -123,7 +161,7 @@ void	herdog(t_stack **lst, int *fd, t_int *lor_int, int *n)
 	}
 }
 
-void	append(t_stack **lst, int *fd, t_int *lor_int)
+void	append(t_stack **lst, int *fd, t_int *lor_int, int *i)
 {
 	if (ft_strcmp((*lst)->value, ">>") == 0)
 	{
@@ -131,6 +169,11 @@ void	append(t_stack **lst, int *fd, t_int *lor_int)
 		{
 			if (lor_int->out >= 3)
 				close(*fd);
+			if(count_word((*lst)->next->next->value) >= 1)
+			{
+				*i = 1;
+				return ;
+			}
 			*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND,
 					0644);
 		}
@@ -138,6 +181,11 @@ void	append(t_stack **lst, int *fd, t_int *lor_int)
 		{
 			if (lor_int->out >= 3)
 				close(*fd);
+			if(count_word((*lst)->next->value) >= 1)
+			{
+				*i = 1;
+				return ;
+			}
 			*fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
 		}
 		lor_int->out = *fd;

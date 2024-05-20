@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/16 22:52:42 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:43:15 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,36 @@ void	ft_putchar_fd(char c, int fd)
 	if (fd < 0)
 		return ;
 	write(fd, &c, 1);
+}
+
+char	*ft_strjoin2(char const *s1, char const *s2)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!new)
+		return (NULL);
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	new[i] = ' ';
+	i++;
+	while (s2[j])
+	{
+		new[i] = s2[j];
+		i++;
+		j++;
+	}
+	new[i] = '\0';
+	return (new);
 }
 
 void	ft_putstr_fd(char *s, int fd)
@@ -52,37 +82,94 @@ int	num_herdog(t_stack *lol)
 	return (count);
 }
 
-char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
+char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen, int *k)
 {
+	int i = 0;
+	char **splitting;
+	int j = 0;
+
 	if ((*lst) != NULL && ((*lst)->type == 1 || (*lst)->type == 2 || (*lst)->type == 0))
 	{
 		if ((*lst)->next)
 		{
 			if ((*lst)->next->type == 6)
 			{
-				lor_int->str[lor_int->z] = (*lst)->value;
-				lor_int->z++;
+				if((*lst)->did_expand == 40)
+				{
+					splitting = ft_split((*lst)->value, ' ');
+					while(splitting[j])
+					{
+						lor_int->str[lor_int->z] = splitting[j];
+						j++;
+						lor_int->z++;
+					}
+				}
+				else
+				{
+					lor_int->str[lor_int->z] = (*lst)->value;
+					lor_int->z++;
+				}
 			}
 			else
 			{
 				lor_int->str[lor_int->z] = ft_strjoin((*lst)->value,
 						(*lst)->next->value);
-				lor_int->z++;
+				if((*lst)->did_expand == 40 || (*lst)->next->did_expand == 40)
+				{
+					lor_int->str = ft_split((lor_int)->str[lor_int->z], ' ');
+					while(lor_int->str[lor_int->z])
+						lor_int->z++;
+				}
+				else
+					lor_int->z++;
 				(*lst) = (*lst)->next;
 			}
 		}
 		else
 		{
-			lor_int->str[lor_int->z] = (*lst)->value;
-			lor_int->z++;
+			if((*lst)->did_expand == 40)
+			{
+				splitting = ft_split((*lst)->value, ' ');
+				while(splitting[j])
+				{
+					lor_int->str[lor_int->z] = splitting[j];
+					lor_int->z++;
+					j++;
+				}
+			}
+			else
+			{
+				lor_int->str[lor_int->z] = (*lst)->value;
+				lor_int->z++;
+			}
 		}
 	}
 	else if (*lst != NULL && (*lst)->type == 3)
 	{
-		rederection(lst, &lor_int->in, &lor_int->out, &lor_int->fd);
-		chen = infile(lst, &lor_int->fd, &lor_int->in, &lor_int->out);
-		herdog(lst, &lor_int->fd, lor_int, &n);
-		append(lst, &lor_int->fd, lor_int);
+		rederection(lst, &lor_int->in, &lor_int->out, &lor_int->fd, &i);
+		if(i == 1)
+		{	
+			*k = 20;
+			return(chen);
+		}
+		chen = infile(lst, &lor_int->fd, &lor_int->in, &lor_int->out, &i);
+		if(i == 1)
+		{
+			*k = 20;
+			return(chen);
+		}
+		herdog(lst, &lor_int->fd, lor_int, &n, &i);
+		if(i == 1)
+		{
+			*k = 20;
+			return(chen);
+		}
+		append(lst, &lor_int->fd, lor_int, &i);
+		if(i == 1)
+		{
+			*k = 20;
+			return(chen);
+		}
 	}
 	return (chen);
 }
@@ -93,6 +180,7 @@ t_hxh	*ft_store(t_stack *lol)
 	t_int	*lor_int;
 	t_stack	*lst;
 	t_store	*storing;
+	int i;
 
 	storing = malloc(sizeof(t_store));
 	storing->i = 0;
@@ -108,12 +196,18 @@ t_hxh	*ft_store(t_stack *lol)
 		lor_int->in = 0;
 		lor_int->fd = 0;
 		lor_int->z = 0;
+		int i = 0;
 		while (lst != NULL && ft_strcmp(lst->value, "|") != 0)
 		{
 			storing->chen = NULL;
 			storing->chen = rederection_handling(&lst, storing->n,
-					lor_int, storing->chen);
+					lor_int, storing->chen, &i);
 			lst = lst->next;
+			if(i == 20)
+			{
+				printf("is an ambigious redirect\n");
+				break;
+			}
 			if (storing->chen != NULL)
 			{
 				printf("%s\n", storing->chen);
@@ -124,16 +218,19 @@ t_hxh	*ft_store(t_stack *lol)
 		}
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int->str,
-				lor_int->out, lor_int->in, storing->chen));
+				lor_int->out, lor_int->in, storing->chen, i));
 		if (lst == NULL)
 			break ;
 		if(lst &&  ft_strcmp(lst->value, "|") != 0)
 		{    
 			while(lst &&  ft_strcmp(lst->value, "|") != 0)
 				lst = lst->next;
-			if(ft_strcmp(lst->value, "|") == 0)
-				lst = lst->next;
-        }
+			if(lst)
+			{
+				if(ft_strcmp(lst->value, "|") == 0)
+					lst = lst->next;
+			}
+		}
         else
             lst = lst->next;
 	}

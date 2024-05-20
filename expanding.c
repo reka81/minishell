@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 19:36:59 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/15 22:55:18 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:56:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,15 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 
 void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
 {
+	int i;
+	
+	i = 0;
 	if (expander->user)
 	{
 		str2[count_num->j] = '\0';
 		while (expander->user[count_num->d])
 		{
+			i = 1;
 			str2[count_num->j] = expander->user[count_num->d];
 			count_num->d++;
 			count_num->j++;
@@ -99,7 +103,7 @@ void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
 	if (count_num->d > 0)
 		str2[count_num->j] = '\0';
 	count_num->j = ft_strlen1(str2);
-	if (count_num->k == count_num->j)
+	if (i == 0)
 	{
 		count_num->j -= count_num->e;
 		str2[count_num->j] = '\0';
@@ -154,6 +158,7 @@ void	rest_of_expanding6(t_counter *count_num, t_stack *a,
 		{
 			free(a->value);
 			a->value = str2;
+			a->did_expand = 40;
 		}
 	}
 }

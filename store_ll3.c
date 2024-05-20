@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:28:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/12 16:39:58 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:37:13 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 
 	str = NULL;
-	str = malloc((count_strings(s, c) + 1) * sizeof(char *));
+	str = malloc((count_strings(s, c) + 1)* 200 * sizeof(char *));
 	if (!str)
 		return (NULL);
 	if (!s)

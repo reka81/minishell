@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 16:51:24 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/12 16:55:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:52:20 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,21 @@ void	ctl_c(int a)
 	(void)a;
 	if (!g_is_in_mini)
 	{
-		rl_replace_line("", 0);
-		write (1, "\n", 1);
-		rl_on_new_line();
-		rl_redisplay();
+		if(a == SIGINT)
+		{
+			rl_replace_line("", 0);
+			write (1, "\n", 1);
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 }
 
-void	setup_signal_handlers(void)
+void	setup_signal_handlers()
 {
 	rl_catch_signals = 0;
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, ctl_c);
+	// signal(SIGQUIT, ctl_c);
+	
 }

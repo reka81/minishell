@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI8.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 18:42:02 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:26:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 	fd_in = dup(0);
 	dup2(final_linked->input, 0);
 	dup2(final_linked->output, 1);
+	tcgetattr(STDIN_FILENO, &var->my_termios);
 	var->pid = fork();
 	if (var->pid == 0)
 	{
+		signal(SIGQUIT, ctl_c);
 		if (is_apath(final_linked->value[0]))
 			var->path = ft_strmcpy(var->path, final_linked->value[0]);
 		else
@@ -48,8 +50,24 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 		perror("execve");
 		exit(1);
 	}
-	waitpid(var->pid, exit_status, 0);
-	dup_close5(fd_out, fd_in);
+	else
+	{
+		waitpid(var->pid, exit_status, 0);
+		if(WIFSIGNALED(*exit_status))
+		{
+			if(WTERMSIG(*exit_status) == 2)
+				printf("\n");
+			if(WTERMSIG(*exit_status) == 3)
+			{
+				printf("Quit: 3\n");
+				tcsetattr(STDIN_FILENO, TCSANOW, &var->my_termios);
+			}
+			*exit_status = 128 + WTERMSIG(*exit_status);	
+		}
+		else
+			*exit_status = WEXITSTATUS(*exit_status);
+		dup_close5(fd_out, fd_in);
+	}
 }
 
 void	join_or_not(char *value, char *variable, char *new, t_env *tmp)
