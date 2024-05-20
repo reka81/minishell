@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:15:07 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/17 18:59:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strmcpy(char *path, char *value)
 	int	i;
 
 	i = 0;
-	path = malloc(ft_strlen1(value) + 1);
+	path = zyalloc(ft_strlen1(value) + 1);
 	while (value[i])
 	{
 		path[i] = value[i];
@@ -60,7 +60,7 @@ char	*new_var_woutpls(char *variable)
 	char	*new;
 	int		i;
 
-	new = malloc(ft_strlen1(variable) + 1);
+	new = zyalloc(ft_strlen1(variable) + 1);
 	i = 0;
 	while (variable[i] != '+' && variable[i])
 	{
@@ -81,7 +81,7 @@ char	*new_var_woutequal(char *variable)
 	char	*new;
 	int		i;
 
-	new = malloc(ft_strlen1(variable) + 1);
+	new = zyalloc(ft_strlen1(variable) + 1);
 	i = 0;
 	while (variable[i] != '=' && variable[i])
 	{

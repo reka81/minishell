@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 18:43:15 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strjoin2(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	new = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new)
 		return (NULL);
 	while (s1[i])
@@ -182,16 +182,16 @@ t_hxh	*ft_store(t_stack *lol)
 	t_store	*storing;
 	int i;
 
-	storing = malloc(sizeof(t_store));
+	storing = zyalloc(sizeof(t_store));
 	storing->i = 0;
 	storing->n = 1;
 	storing->chen = NULL;
 	lst = lol;
 	l = NULL;
-	lor_int = malloc(sizeof(t_int));
+	lor_int = zyalloc(sizeof(t_int));
 	while (lst != NULL)
 	{
-		lor_int->str = malloc(sizeof(char *) * 100);
+		lor_int->str = zyalloc(sizeof(char *) * 100);
 		lor_int->out = 1;
 		lor_int->in = 0;
 		lor_int->fd = 0;

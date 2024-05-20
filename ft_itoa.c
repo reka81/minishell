@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 11:54:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/04/24 16:20:07 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_itoa(int n)
 		num *= -1;
 		digits++;
 	}
-	str_num = (char *)malloc(sizeof(char) * (digits + 1));
+	str_num = (char *)zyalloc(sizeof(char) * (digits + 1));
 	if (!str_num)
 		return (NULL);
 	*(str_num + digits) = 0;

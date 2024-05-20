@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 22:49:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/10 21:55:34 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_stack	*ft_lstnew(char *content, int quote_type)
 {
 	t_stack	*s1;
 
-	s1 = (t_stack *)malloc(sizeof(t_stack));
+	s1 = (t_stack *)zyalloc(sizeof(t_stack));
 	if (!s1)
 		return (NULL);
 	s1->value = content;

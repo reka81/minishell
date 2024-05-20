@@ -2,7 +2,7 @@
 
 char **store_env_2darr(t_env *environment)
 {
-    char **strs = malloc(1000);
+    char **strs = zyalloc(1000);
     int i = 0;
     while (environment != NULL)
     {
@@ -22,11 +22,11 @@ char *ft_get_env(char *var, t_env *enviroment)
         new = new_var_woutequal(enviroment->variable);
         if (ft_strcmp(var, new) == 0)
         {
-            free(new);
+            // free(new);
             return (enviroment->value);
         }
         enviroment = enviroment->next;
     }
-    free(new);
+    // free(new);
     return (NULL);
 }

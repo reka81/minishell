@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:30:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 15:39:22 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	filling_env2(t_filling_env *fill, char **env)
 {
 	fill->e = 0;
 	fill->j = 0;
-	fill->variable = malloc(strlen(env[fill->i]) + 1);
+	fill->variable = zyalloc(strlen(env[fill->i]) + 1);
 	while (env[fill->i][fill->e] && env[fill->i][fill->e] != '=')
 	{
 		fill->variable[fill->j] = env[fill->i][fill->e];
@@ -63,13 +63,13 @@ void	filling_env(char **env, t_env **environment)
 {
 	t_filling_env	*fill;
 
-	fill = malloc(sizeof(t_filling_env));
+	fill = zyalloc(sizeof(t_filling_env));
 	fill->i = 0;
 	while (env[fill->i])
 	{
 		filling_env2(fill, env);
 		fill->j = 0;
-		fill->value = malloc(strlen(env[fill->i]) + 1);
+		fill->value = zyalloc(strlen(env[fill->i]) + 1);
 		fill->e++;
 		while (env[fill->i][fill->e])
 		{

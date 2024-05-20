@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:54:53 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 18:45:22 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	setting_var_and_val(char **variable,
 	int	j;
 
 	i = 0;
-	*variable = malloc(strlen(final_linked->value[d]) + 2);
+	*variable = zyalloc(strlen(final_linked->value[d]) + 2);
 	store_var1(final_linked, variable, &i, &d);
 	variable[0][i] = '\0';
 	j = 0;
@@ -62,7 +62,7 @@ void	setting_var_and_val(char **variable,
 		i++;
 		variable[0][i] = '\0';
 	}
-	*value = malloc(strlen(final_linked->value[d]) + 1);
+	*value = zyalloc(strlen(final_linked->value[d]) + 1);
 	while (final_linked->value[d][i])
 	{
 		if (i > 0 && final_linked->value[d][i - 1] == '\0') // here

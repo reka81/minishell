@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 15:46:59 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 	fd_in = dup(0);
 	var->a = ft_lstsize(final_linked);
 	var->num_of_elems = var->a;
-	var->pid_tab = malloc(var->a * 4);
+	var->pid_tab = zyalloc(var->a * 4);
 	dup2(final_linked->input, 0);
 	while (var->a > 1)
 	{
@@ -123,7 +123,7 @@ void	execution(t_env **environment, t_hxh *final_linked,
 {
 	t_exec1	*var;
 
-	var = malloc(sizeof(t_exec1));
+	var = zyalloc(sizeof(t_exec1));
 	var->i = 0;
 	var->path = NULL;
 	var->env = env;

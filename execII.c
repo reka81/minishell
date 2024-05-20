@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:47:42 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 15:48:27 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_rm_equal(char *str)
 	int		i;
 	char	*nw_str;
 
-	nw_str = malloc(strlen(str) + 1);
+	nw_str = zyalloc(strlen(str) + 1);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 	{
@@ -90,13 +90,13 @@ void    ft_unset_v1(t_env **env, t_hxh *lst, int i, t_env *tmp3)
         if (ft_strcmp(lst->value[i], str1) == 0)
         {
             tmp3 = tmp3->next;
-            free_env(*env);
+            // free_env(*env);
             *env = tmp3;
         }
         else if (ft_strcmp(lst->value[i], str) == 0)
         {
             tmp1 = (*env)->next;
-            free_env(*env);
+            // free_env(*env);
             *env = tmp;
             (*env)->next = tmp1;
         }

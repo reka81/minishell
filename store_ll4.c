@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:30:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 18:16:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_hxh	*ft_lstnew1(char **content, int out, int in, char *str, int i)
 {
 	t_hxh	*new_node;
 
-	new_node = malloc(sizeof(t_hxh));
+	new_node = zyalloc(sizeof(t_hxh));
 	if (!new_node)
 		return (NULL);
 	new_node->value = content;
@@ -70,7 +70,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	new = (char *)zyalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new)
 		return (NULL);
 	while (s1[i])

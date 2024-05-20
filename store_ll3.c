@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:28:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/17 18:37:13 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static	char	**fill_words(char **str, const char *s, char c, int count)
 			len++;
 		if (len != 0)
 		{
-			str[i] = malloc((len + 1) * sizeof(char));
+			str[i] = zyalloc((len + 1) * sizeof(char));
 			if (!str[i])
 				return (ft_free(str, i));
 			ft_strlcpy(str[i], (s + j), len + 1);
@@ -75,7 +75,7 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 
 	str = NULL;
-	str = malloc((count_strings(s, c) + 1)* 200 * sizeof(char *));
+	str = zyalloc((count_strings(s, c) + 1)* 200 * sizeof(char *));
 	if (!str)
 		return (NULL);
 	if (!s)

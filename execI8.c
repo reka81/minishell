@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/18 17:26:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:05:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ void	join_or_not(char *value, char *variable, char *new, t_env *tmp)
 	if (check_if_pls2(variable))
 	{
 		tmp->value = ft_strjoin(tmp->value, value);
-		free(variable);
-		free(value);
-		free(new);
+		// free(variable);
+		// free(value);
+		// free(new);
 	}
 	else
 	{
-		free(tmp->value);
+		// free(tmp->value);
 		tmp->value = value;
-		free(variable);
-		free(new);
+		// free(variable);
+		// free(new);
 	}
 }
 
@@ -94,5 +94,5 @@ void	exp_n_valid(t_hxh *final_linked, char *value)
 	if (final_linked->value[2])
 		printf("bash: export: %s :not a valid identifier\n",
 			final_linked->value[2]);
-	free(value);
+	// free(value);
 }

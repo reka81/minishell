@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 18:40:37 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	normal_exporting(char *variable, char *value,
 		if (!tmp)
 		{
 			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
-			free(variable);
+			// free(variable);
 		}
 		else
 		{
@@ -116,7 +116,7 @@ char	**fill_args(t_hxh *final_linked)
 	int		i;
 	char	**arg;
 
-	arg = malloc(sizeof(char *) * 5);
+	arg = zyalloc(sizeof(char *) * 5);
 	i = 0;
 	while (final_linked->value[i])
 	{

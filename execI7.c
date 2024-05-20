@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 17:48:03 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 {
 	t_exec	*var;
 
-	var = malloc(sizeof(t_exec));
+	var = zyalloc(sizeof(t_exec));
 	var->arg = NULL;
 	var->ex = 0;
 	pipe(var->fd);

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:31:47 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/17 18:49:45 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value)
 	{
 		if (!check_if_pls(final_linked->value))
 		{
-			free(tmp->value);
+			// free(tmp->value);
 			tmp->value = value;
 		}
 		else
@@ -48,8 +48,8 @@ void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value)
 			tmp->value = ft_strjoin(tmp->value, value);
 		}
 	}
-	else
-		free(value);
+	// else
+	// 	// free(value);
 }
 
 void	afterwards_assignment(t_hxh *final_linked,
@@ -62,7 +62,7 @@ void	afterwards_assignment(t_hxh *final_linked,
 
 	j = 0;
 	i = 0;
-	variable = malloc(strlen(final_linked->value[0]) + 1);
+	variable = zyalloc(strlen(final_linked->value[0]) + 1);
 	store_var(final_linked, &i, variable);
 	variable[i] = '\0';
 	if (i > 0)
@@ -72,13 +72,12 @@ void	afterwards_assignment(t_hxh *final_linked,
 		i++;
 	}
 	j = 0;
-	value = malloc(strlen(final_linked->value[0]) + 1);
+	value = zyalloc(strlen(final_linked->value[0]) + 1);
 	store_val(final_linked, &i, &j, value);
 	value[j] = '\0';
-	printf("%s\n", value);
 	tmp = check_if_var2(environment, variable);
 	join_or_n(final_linked, tmp, value);
-	free(variable);
+	// free(variable);
 }
 
 int	check_if_equal(char *str)

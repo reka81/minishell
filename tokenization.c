@@ -6,13 +6,18 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 15:36:43 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:05:51 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_is_in_mini;
+
+void ff()
+{
+	system("leaks minishell");
+}
 
 void ft_rm_null(t_stack **a)
 {
@@ -27,15 +32,15 @@ void ft_rm_null(t_stack **a)
 		if ((*a)->value == NULL && i == 0)
 		{
 			tmp2 = (*a)->next;
-			free((*a)->value);
-			free(*a);
+			// free((*a)->value);
+			// free(*a);
 			(*a) = tmp2;
 		}
 		else if ((*a)->value == NULL && (*a)->next != NULL)
         {
             tmp1 = (*a)->next;
-			free((*a)->value);
-			free(*a);
+			// free((*a)->value);
+			// free(*a);
 			(*a) = tmp;
 			(*a)->next = tmp1;
         }
@@ -62,8 +67,8 @@ int check_if_null(t_stack *a)
 }
 void freeing_pr(t_stack **a)
 {
-	free((*a)->value);
-	free(*a);
+	// free((*a)->value);
+	// free(*a);
 	*a = NULL;
 }
 
@@ -83,13 +88,13 @@ void clean_final(t_hxh **final_linked)
             if(i == 0)
             {
                 tmp2 = (*final_linked)->next;
-                free(*final_linked);
+                // free(*final_linked);
                 *final_linked = tmp2;
             }
             else if ((*final_linked)->next != NULL)
             {
                 tmp1 = (*final_linked)->next;
-                free(*final_linked);
+                // free(*final_linked);
                 (*final_linked) = tmp;
                 (*final_linked)->next = tmp1;
             }
@@ -143,7 +148,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 			if(a)
 			{
 				final_linked = ft_store(a);
-				while(check_if_faulty(final_linked))    
+				while(check_if_faulty(final_linked))
 					clean_final(&final_linked);
 				if(final_linked)
 				{
@@ -157,6 +162,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 				}
 			}
 		}
+		free(main_fun->l);
 	}
 }
 
@@ -164,7 +170,7 @@ t_env    *ft_lstnew5(char *variable, char *value)
 {
     t_env    *s1;
 
-    s1 = malloc(sizeof(t_env));
+    s1 = zyalloc(sizeof(t_env));
     if (!s1)
         return (NULL);
     s1->variable = variable;
@@ -215,7 +221,7 @@ void    ft_lstadd_back7(t_env **lst, t_env *newnode)
 char *fill(char *str1, char *str2)
 {
     int i = 0;
-    str1 = malloc(sizeof(char) * strlen(str2) + 1);
+    str1 = zyalloc(sizeof(char) * strlen(str2) + 1);
     while (str2[i])
     {
         str1[i] = str2[i];
@@ -229,7 +235,7 @@ void fill_env2(t_env **environment)
 {
     int i = 0;
     *environment = NULL;
-    char *value = malloc(50);
+    char *value = zyalloc(50);
     char *variable;
     while (i < 4)
     {
@@ -268,12 +274,13 @@ int	main(int ac, char **av, char **env)
 	t_env	*environment;
 	t_main	*main_fun;
 
+	atexit(ff);
 	a = NULL;
 	final_linked = NULL;
 	(void) ac;
 	(void) av;
 	environment = NULL;
-	main_fun = malloc(sizeof(t_main));
+	main_fun = zyalloc(sizeof(t_main));
 	filling_env(env, &environment);
 	if(!environment)
 		fill_env2(&environment);

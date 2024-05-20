@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 20:05:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/11 15:48:27 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	init(t_numbers *tokens)
 
 void	rest_of_tokenization(char *str, t_numbers *tokens, t_stack **a, char *l)
 {
-	if (str[0] == '\0')
-		free(str);
+	// if (str[0] == '\0')
+	// 	free(str);
 	if (tokens->flag_for_white)
 	{
 		ft_lstadd_back(a, ft_lstnew(str, tokens->quote_flag));
@@ -114,21 +114,21 @@ void	tokenization(t_stack **a, char *l)
 	char		*str;
 	char		operator;
 
-	tokens = malloc(sizeof(t_numbers));
+	tokens = zyalloc(sizeof(t_numbers));
 	operator = 0;
 	str = NULL;
 	init(tokens);
 	while (l[tokens->i])
 	{
 		tokens->j = 0;
-		str = malloc(ft_strlen1(l) + 2);
+		str = zyalloc(ft_strlen1(l) + 2);
 		rest_of_tokenization4(tokens, l, str);
 		str[tokens->j] = '\0';
 		rest_of_tokenization(str, tokens, a, l);
 		tokens->j = 0;
 		if (l[tokens->i] == '>' || l[tokens->i] == '<')
 		{
-			str = malloc(ft_strlen1(l));
+			str = zyalloc(ft_strlen1(l));
 			rest_of_tokenization5(l, tokens, str, &operator);
 			str[tokens->j] = '\0';
 			ft_lstadd_back(a, ft_lstnew(str, 3));

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:27:17 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/12 16:40:38 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 	unsigned int		number;
 
 	len = ft_len(n);
-	s = (char *)malloc(sizeof(char) * (len + 1));
+	s = (char *)zyalloc(sizeof(char) * (len + 1));
 	if (!(s))
 		return (NULL);
 	s[len--] = '\0';

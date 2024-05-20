@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 15:24:59 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:48:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,12 @@ typedef struct s_store
 	char	*chen;
 }	t_store;
 
+typedef struct s_garbage
+{
+	void	*address;
+	struct	s_garbage *next;
+}	t_garbage;
+
 void	ft_lstadd_back(t_stack **lst, t_stack *newnode);
 t_stack	*ft_lstnew(char *content, int quote_type);
 int		ft_strlen1(char *s);
@@ -240,5 +246,6 @@ void not_builtins(t_hxh *final_linked, t_exec1 *var, t_env *environment, int *ex
 void join_or_not(char *value, char *variable, char *new, t_env *tmp);
 void exp_n_valid(t_hxh *final_linked, char *value);
 void	ctl_c(int a);
+void    *zyalloc(long long size);
 
 #endif 

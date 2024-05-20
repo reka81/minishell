@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 19:36:59 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 17:56:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	rest_of_expanding2(t_stack *a, t_counter *count_num, char *str2)
 	{
 		if (ft_isdigit (a->value[count_num->i]))
 			count_num->i++;
-		free(str2);
-		str2 = malloc(100);
+		// free(str2);
+		str2 = zyalloc(100);
 		count_num->j = 0;
 		while (a->value[count_num->i])
 		{
@@ -60,7 +60,7 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 {
 	char	*str;
 
-	str = malloc(ft_strlen1(a->value) + 1);
+	str = zyalloc(ft_strlen1(a->value) + 1);
 	if (expander->dollar_flag == 1)
 	{
 		while (a->value[count_num->i] && !cmp_delim(a->value[count_num->i]))
@@ -81,7 +81,7 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 		expander->user = ft_itoa(exit_status);
 	else
 		expander->user = ft_get_env(str, environment);
-	free(str);
+	// free(str);
 }
 
 void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
@@ -150,13 +150,13 @@ void	rest_of_expanding6(t_counter *count_num, t_stack *a,
 		}
 		if(str2[0] == '\0')
 		{
-			free(str2);
+			// free(str2);
 			str2 = NULL;
 			a->value = str2;
 		}
 		if (str2 != NULL)
 		{
-			free(a->value);
+			// free(a->value);
 			a->value = str2;
 			a->did_expand = 40;
 		}
@@ -183,8 +183,8 @@ void	expanding(t_stack *a, int exit_status, t_env *environment)
 	t_counter	*count_num;
 	t_exp		*expander;
 
-	expander = malloc(sizeof(t_exp));
-	count_num = malloc(sizeof(t_counter));
+	expander = zyalloc(sizeof(t_exp));
+	count_num = zyalloc(sizeof(t_counter));
 	flag = 1;
 	setting_values(expander, count_num, exit_status);
 	while (a)
@@ -192,7 +192,7 @@ void	expanding(t_stack *a, int exit_status, t_env *environment)
 		count_num->i = 0;
 		if ((a->type == 1 || a->type == 0) && a->should_be_exp != 1)
 		{
-			str2 = malloc(100);
+			str2 = zyalloc(100);
 			while (a->value[count_num->i] != '$' && a->value[count_num->i])
 			{
 				str2[count_num->i] = a->value[count_num->i];

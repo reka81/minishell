@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:24:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 17:04:04 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ t_env	*check_if_var2(t_env *environment, char *variable)
 {
 	char	*new;
 
-	new = malloc(100);
+	new = zyalloc(100);
 	while (environment)
 	{
 		new = new_var_woutequal(environment->variable);
 		if (strcmp(new, variable) == 0)
 		{
-			free (new);
+			// free (new);
 			return (environment);
 		}
-		free (new);
+		// free (new);
 		environment = environment->next;
 	}
 	return (NULL);
