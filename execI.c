@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 18:53:12 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:46:59 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,29 +96,29 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 	waiting_for_children(fd_out, fd_in, var);
 }
 
-void	one_command(t_hxh *final_linked, t_env *environment,
-	t_exec1 *var, int *exit_status)
+void    one_command(t_hxh *final_linked, t_env **environment,
+    t_exec1 *var, int *exit_status)
 {
-	if (!strcmp(final_linked->value[0], "pwd"))
-		pwd_cmd(final_linked);
-	else if (!strcmp(final_linked->value[0], "export")
-		|| check_if_value(final_linked->value))
-		export(final_linked, environment, var->variable, var->value);
-	else if (!strcmp(final_linked->value[0], "env"))
-		env_cmd(environment);
-	else if (!strcmp(final_linked->value[0], "cd"))
-		cd_cmd(final_linked, environment);
-	else if (!strcmp(final_linked->value[0], "echo"))
-		ft_echo(final_linked);
-	else if (!strcmp(final_linked->value[0], "unset"))
-		ft_unset(final_linked, &environment, exit_status);
-	else if (!strcmp(final_linked->value[0], "exit"))
-		ft_exit(final_linked);
-	else
-		not_builtins(final_linked, var, environment, exit_status);
+    if (!strcmp(final_linked->value[0], "pwd"))
+        pwd_cmd(final_linked);
+    else if (!strcmp(final_linked->value[0], "export")
+        || check_if_value(final_linked->value))
+        export(final_linked, *environment, var->variable, var->value);
+    else if (!strcmp(final_linked->value[0], "env"))
+        env_cmd(*environment);
+    else if (!strcmp(final_linked->value[0], "cd"))
+        cd_cmd(final_linked, *environment);
+    else if (!strcmp(final_linked->value[0], "echo"))
+        ft_echo(final_linked);
+    else if (!strcmp(final_linked->value[0], "unset"))
+        ft_unset(final_linked, environment, exit_status);
+    else if (!strcmp(final_linked->value[0], "exit"))
+        ft_exit(final_linked);
+    else
+        not_builtins(final_linked, var, *environment, exit_status);
 }
 
-void	execution(t_env *environment, t_hxh *final_linked,
+void	execution(t_env **environment, t_hxh *final_linked,
 	char **env, int *exit_status)
 {
 	t_exec1	*var;
@@ -133,5 +133,5 @@ void	execution(t_env *environment, t_hxh *final_linked,
 	if (final_linked->next == NULL)
 		one_command(final_linked, environment, var, exit_status);
 	else
-		primary_pipes(var, final_linked, env, environment);
+		primary_pipes(var, final_linked, env, *environment);
 }

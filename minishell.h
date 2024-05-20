@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 16:51:15 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:24:59 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	ft_putchar_fd(char c, int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isdigit(int c);
-void	execution(t_env *environment, t_hxh *final_linked,
+void	execution(t_env **environment, t_hxh *final_linked,
 			char **env, int *exit_status);
 int		ft_lstsize(t_hxh *lst);
 int		ft_cheak_n(char *str);

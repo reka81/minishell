@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/18 21:33:42 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:36:43 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int check_if_faulty(t_hxh *a)
 }
 
 void	rest_of_main(t_main *main_fun, t_stack *a
-			, t_env *environment, t_hxh *final_linked)
+			, t_env **environment, t_hxh *final_linked)
 {
 	if (main_fun->l[0] == '\0')
 	{
@@ -132,7 +132,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 		{
 			tokenization(&a, main_fun->l);
 			flaging_expandables(a);
-			expanding(a, main_fun->exit_status, environment);
+			expanding(a, main_fun->exit_status, *environment);
 			while(check_if_null(a))
 				ft_rm_null(&a);
 			if(a)
@@ -152,7 +152,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 						main_fun->envi2, &main_fun->exit_status);
 					g_is_in_mini = 0;
 					main_fun->old_path = main_fun->buf;
-					main_fun->buf = ft_update_pwd(environment,
+					main_fun->buf = ft_update_pwd(*environment,
 						main_fun->current_path, main_fun->old_path);
 				}
 			}
@@ -173,7 +173,7 @@ t_env    *ft_lstnew5(char *variable, char *value)
     return (s1);
 }
 
-void	routine(t_stack *a, t_main *main_fun, t_env *environment,
+void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 			t_hxh *final_linked)
 {
 	while (1)
@@ -282,5 +282,5 @@ int	main(int ac, char **av, char **env)
 	main_fun->save_fd = dup(STDIN_FILENO);
 	main_fun->envi2 = store_env_2darr(environment);
 	setup_signal_handlers();
-	routine(a, main_fun, environment, final_linked);
+	routine(a, main_fun, &environment, final_linked);
 }
