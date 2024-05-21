@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:54:53 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:34:20 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	setting_var_and_val(char **variable,
 	*value = zyalloc(strlen(final_linked->value[d]) + 1);
 	while (final_linked->value[d][i])
 	{
-		if (i > 0 && final_linked->value[d][i - 1] == '\0') // here
+		if (i > 0 && final_linked->value[d][i - 1] == '\0')
 			break ;
 		value[0][j] = final_linked->value[d][i];
 		j++;

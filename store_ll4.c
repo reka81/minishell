@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:30:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:22:32 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_hxh	*ft_lstnew1(char **content, int out, int in, char *str, int i)
+t_hxh	*ft_lstnew1(t_int *lor_int, char *str)
 {
 	t_hxh	*new_node;
 
 	new_node = zyalloc(sizeof(t_hxh));
 	if (!new_node)
 		return (NULL);
-	new_node->value = content;
-	if(str != NULL)
+	new_node->value = lor_int->str;
+	if (str != NULL)
 		new_node->is_faulty = 2;
 	else
-		new_node->is_faulty = 0;	
-	new_node->output = out;
-	new_node->input = in;
-	new_node->ambigious = i;
+		new_node->is_faulty = 0;
+	new_node->output = lor_int->out;
+	new_node->input = lor_int->in;
+	new_node->ambigious = lor_int->k;
 	new_node->next = NULL;
 	return (new_node);
 }

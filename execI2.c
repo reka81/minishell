@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:24:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:45:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,6 @@ int	check_if_pls(char **str)
 	return (0);
 }
 
-void	ft_putstr_fd2(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
-}
-
 t_env	*check_if_var2(t_env *environment, char *variable)
 {
 	char	*new;
@@ -52,10 +38,8 @@ t_env	*check_if_var2(t_env *environment, char *variable)
 		new = new_var_woutequal(environment->variable);
 		if (strcmp(new, variable) == 0)
 		{
-			// free (new);
 			return (environment);
 		}
-		// free (new);
 		environment = environment->next;
 	}
 	return (NULL);

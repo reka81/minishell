@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:34:35 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	normal_exporting(char *variable, char *value,
 		if (!tmp)
 		{
 			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
-			// free(variable);
 		}
 		else
 		{

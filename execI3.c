@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:31:47 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:34:12 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value)
 	{
 		if (!check_if_pls(final_linked->value))
 		{
-			// free(tmp->value);
 			tmp->value = value;
 		}
 		else
@@ -48,8 +47,6 @@ void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value)
 			tmp->value = ft_strjoin(tmp->value, value);
 		}
 	}
-	// else
-	// 	// free(value);
 }
 
 void	afterwards_assignment(t_hxh *final_linked,
@@ -77,7 +74,6 @@ void	afterwards_assignment(t_hxh *final_linked,
 	value[j] = '\0';
 	tmp = check_if_var2(environment, variable);
 	join_or_n(final_linked, tmp, value);
-	// free(variable);
 }
 
 int	check_if_equal(char *str)

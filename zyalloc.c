@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:23:23 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:49:49 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/20 23:03:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ t_garbage	*ft_lstnew8(char *address)
 	return (s1);
 }
 
-void    *zyalloc(long long size)
+void	*zyalloc(long long size)
 {
-    static t_garbage	*gorg;
-    void				*address;
-	
+	static t_garbage	*gorg;
+	void				*address;
+
 	address = malloc(size);
-	if(!address)
+	if (!address)
 	{
 		free(address);
 		exit(1);
 	}
-	ft_lstadd_back4(&gorg,ft_lstnew8(address));
-	return(address);
+	ft_lstadd_back4(&gorg, ft_lstnew8(address));
+	return (address);
 }

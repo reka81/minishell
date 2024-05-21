@@ -6,41 +6,11 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 20:05:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:54:35 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	init(t_numbers *tokens)
-{
-	tokens->i = 0;
-	tokens->j = 0;
-	tokens->quote_flag = 0;
-}
-
-void	rest_of_tokenization(char *str, t_numbers *tokens, t_stack **a, char *l)
-{
-	// if (str[0] == '\0')
-	// 	free(str);
-	if (tokens->flag_for_white)
-	{
-		ft_lstadd_back(a, ft_lstnew(str, tokens->quote_flag));
-		tokens->quote_flag = 0;
-		tokens->flag_for_white = 0;
-	}
-	if (l[tokens->i] == '|')
-	{
-		ft_lstadd_back(a, ft_lstnew(strdup("|"), 3));
-		tokens->i++;
-	}
-	if (l[tokens->i] == ' ')
-	{
-		ft_lstadd_back(a, ft_lstnew(strdup(" "), 6));
-		while (l[tokens->i] == ' ')
-			tokens->i++;
-	}
-}
 
 void	rest_of_tokenization2(t_numbers *tokens, char *str, char *l)
 {

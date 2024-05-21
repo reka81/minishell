@@ -6,14 +6,14 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:33:37 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	last_pipe(t_hxh *final_linked, char **env,
-	t_env *environment, t_exec1 *var)
+		t_env *environment, t_exec1 *var)
 {
 	char	**arg;
 
@@ -33,9 +33,12 @@ void	last_pipe(t_hxh *final_linked, char **env,
 	else
 		var->path2 = look_for_path(final_linked->value[0],
 				ft_get_env("PATH", environment));
-	execve(var->path2, arg, env);
-	perror("execve2");
-	exit (1);
+	if (final_linked->shouldnt_run != 5)
+	{
+		execve(var->path2, arg, env);
+		perror("execve2");
+		exit (1);
+	}
 }
 
 void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var)
@@ -50,23 +53,23 @@ void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var)
 		waitpid(var->pid_tab[var->i], var->exit_status, 0);
 		var->i++;
 	}
-	if(WIFSIGNALED(*var->exit_status))
+	if (WIFSIGNALED(*var->exit_status))
 	{
-		if(WTERMSIG(*var->exit_status) == 2)
+		if (WTERMSIG(*var->exit_status) == 2)
 			printf("\n");
-		if(WTERMSIG(*var->exit_status) == 3)
+		if (WTERMSIG(*var->exit_status) == 3)
 		{
 			printf("Quit: 3\n");
 			tcsetattr(STDIN_FILENO, TCSANOW, &var->my_termios);
 		}
-		*var->exit_status = 128 + WTERMSIG(*var->exit_status);	
+		*var->exit_status = 128 + WTERMSIG(*var->exit_status);
 	}
 	else
 		*var->exit_status = WEXITSTATUS(*var->exit_status);
 }
 
 void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
-	char **env, t_env *environment)
+		char **env, t_env *environment)
 {
 	int	fd_out;
 	int	fd_in;
@@ -82,44 +85,46 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 		signal(SIGQUIT, ctl_c);
 		tcgetattr(STDIN_FILENO, &var->my_termios);
 		var->pid_tab[var->i] = execute_cmds(final_linked, env, environment);
+		close_fds(final_linked);
 		final_linked = final_linked->next;
 		var->a--;
 		var->i++;
-		if (var->a == 1)
+		if (var->a == 1 && final_linked->shouldnt_run != 5)
 		{
 			var->pid = fork();
 			var->pid_tab[var->i] = var->pid;
 			if (var->pid == 0)
 				last_pipe(final_linked, env, environment, var);
+			close_fds(final_linked);
 		}
 	}
 	waiting_for_children(fd_out, fd_in, var);
 }
 
-void    one_command(t_hxh *final_linked, t_env **environment,
-    t_exec1 *var, int *exit_status)
+void	one_command(t_hxh *final_linked, t_env **environment,
+		t_exec1 *var, int *exit_status)
 {
-    if (!strcmp(final_linked->value[0], "pwd"))
-        pwd_cmd(final_linked);
-    else if (!strcmp(final_linked->value[0], "export")
-        || check_if_value(final_linked->value))
-        export(final_linked, *environment, var->variable, var->value);
-    else if (!strcmp(final_linked->value[0], "env"))
-        env_cmd(*environment);
-    else if (!strcmp(final_linked->value[0], "cd"))
-        cd_cmd(final_linked, *environment);
-    else if (!strcmp(final_linked->value[0], "echo"))
-        ft_echo(final_linked);
-    else if (!strcmp(final_linked->value[0], "unset"))
-        ft_unset(final_linked, environment, exit_status);
-    else if (!strcmp(final_linked->value[0], "exit"))
-        ft_exit(final_linked);
-    else
-        not_builtins(final_linked, var, *environment, exit_status);
+	if (!strcmp(final_linked->value[0], "pwd"))
+		pwd_cmd(final_linked);
+	else if (!strcmp(final_linked->value[0], "export")
+		|| check_if_value(final_linked->value))
+		export(final_linked, *environment, var->variable, var->value);
+	else if (!strcmp(final_linked->value[0], "env"))
+		env_cmd(*environment);
+	else if (!strcmp(final_linked->value[0], "cd"))
+		cd_cmd(final_linked, *environment);
+	else if (!strcmp(final_linked->value[0], "echo"))
+		ft_echo(final_linked);
+	else if (!strcmp(final_linked->value[0], "unset"))
+		ft_unset(final_linked, environment, exit_status);
+	else if (!strcmp(final_linked->value[0], "exit"))
+		ft_exit(final_linked);
+	else
+		not_builtins(final_linked, var, *environment, exit_status);
 }
 
 void	execution(t_env **environment, t_hxh *final_linked,
-	char **env, int *exit_status)
+		char **env, int *exit_status)
 {
 	t_exec1	*var;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:28:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:22:12 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 
 	str = NULL;
-	str = zyalloc((count_strings(s, c) + 1)* 200 * sizeof(char *));
+	str = zyalloc((count_strings(s, c) + 1) * 200 * sizeof(char *));
 	if (!str)
 		return (NULL);
 	if (!s)

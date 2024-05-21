@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:35:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		expo2(final_linked, environment, var->variable, var->value);
 	else
 	{
-		execve(var->path, var->arg, env);
-		perror("execve1");
-		exit(1);
+		if (final_linked->shouldnt_run != 5)
+		{
+			execve(var->path, var->arg, env);
+			perror("execve1");
+			exit(1);
+		}
 	}
 }
 
