@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 20:05:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:54:35 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:23:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	rest_of_tokenization2(t_numbers *tokens, char *str, char *l)
 		str[tokens->j] = l[tokens->i];
 		tokens->i++;
 		tokens->j++;
-		tokens->quote_flag = 1;
-		tokens->flag_for_white = 1;
 	}
+	tokens->quote_flag = 1;
+	tokens->flag_for_white = 1;
 	tokens->i++;
 }
 
@@ -33,9 +33,9 @@ void	rest_of_tokenization3(char *l, t_numbers *tokens, char *str)
 		str[tokens->j] = l[tokens->i];
 		tokens->i++;
 		tokens->j++;
-		tokens->quote_flag = 2;
-		tokens->flag_for_white = 1;
 	}
+	tokens->quote_flag = 2;
+	tokens->flag_for_white = 1;
 }
 
 void	rest_of_tokenization4(t_numbers *tokens, char *l, char *str)

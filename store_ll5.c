@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:41 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:55:36 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	if_next_is_null(t_stack **lst, char **splitting, t_int *lor_int, int *j)
 
 char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 {
+	extern int	g_is_in_mini;
+
 	rederection(lst, lor_int, &i);
 	if (i == 1)
 	{
@@ -98,12 +100,14 @@ char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 		lor_int->k = 20;
 		return (chen);
 	}
-	herdog(lst, lor_int);
-	if (i == 1)
+	g_is_in_mini = 2;
+	if (read(0, NULL, 0) == -1)
 	{
-		lor_int->k = 20;
+		chen = "broken";
 		return (chen);
 	}
+	herdog(lst, lor_int);
+	g_is_in_mini = 0;
 	append(lst, &lor_int->fd, lor_int, &i);
 	if (i == 1)
 	{

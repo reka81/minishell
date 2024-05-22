@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:56:37 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
 		lor_int->chen = NULL;
-		lor_int->chen = rederection_handling(lst,
-				lor_int, lor_int->chen);
+		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
 		if (lor_int->k == 20)
 		{
 			printf("is an ambigious redirect\n");
@@ -77,6 +76,8 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 		}
 		if (lor_int->chen != NULL)
 		{
+			if (ft_strcmp("broken", lor_int->chen) == 0)
+				break ;
 			printf("%s\n", lor_int->chen);
 			break ;
 		}

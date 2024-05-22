@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/22 16:49:56 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:39:40 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 			var->path = look_for_path(final_linked->value[0],
 					ft_get_env("PATH", environment));
 		if (final_linked->shouldnt_run != 5)
-		{
-			(execve(var->path, final_linked->value, var->env),
-				perror("execve"));
-		}
+			if (execve(var->path, final_linked->value, var->env) == -1)
+				printf("bash : %s:command not found\n", final_linked->value[0]);
 		exit(1);
 	}
 	else

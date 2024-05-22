@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 23:15:02 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 22:32:16 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:01:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,15 @@ void	init(t_numbers *tokens)
 	tokens->i = 0;
 	tokens->j = 0;
 	tokens->quote_flag = 0;
+	tokens->flag_for_white = 0;
 }
 
 void	rest_of_tokenization(char *str, t_numbers *tokens, t_stack **a, char *l)
 {
 	if (tokens->flag_for_white)
 	{
+		if (tokens->quote_flag == 0 && str[0] == '\0')
+			return ;
 		ft_lstadd_back(a, ft_lstnew(str, tokens->quote_flag));
 		tokens->quote_flag = 0;
 		tokens->flag_for_white = 0;

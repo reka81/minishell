@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:30:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:05:58 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,13 @@ char	*ft_update_pwd(t_env *environment, char *current_path, char *old_path)
 {
 	while (environment != NULL)
 	{
-		if (strcmp("PWD", environment->variable) == 0)
+		if (strcmp("PWD=", environment->variable) == 0)
 		{
 			current_path = getcwd(current_path, 100);
 			environment->value = current_path;
 		}
-		if (strcmp("OLDPWD", environment->variable) == 0 && old_path != NULL)
+		if (strcmp("OLDPWD=", environment->variable) == 0 && old_path != NULL
+			&& ft_strcmp(old_path, current_path) != 0)
 		{
 			environment->value = old_path;
 		}

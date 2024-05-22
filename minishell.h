@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 22:31:10 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:18:07 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <string.h>
 # include <fcntl.h>
 # include <termios.h>
+
+# define ERROR_GETCWD "cd: error retrieving current directory: getcwd: \
+cannot access parent directories: No such file or directory\n"
 
 typedef struct stack
 {

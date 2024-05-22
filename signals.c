@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 16:51:24 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:46:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	ctl_c(int a)
 	extern int	g_is_in_mini;
 
 	(void)a;
+	if (g_is_in_mini == 2)
+	{
+		close(0);
+		return ;
+	}
 	if (!g_is_in_mini)
 	{
 		if (a == SIGINT)

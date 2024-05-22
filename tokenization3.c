@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:50 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:57:33 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_if_faulty(t_hxh *a)
 void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 	t_env **environment, t_main *main_fun)
 {
+	int	fd;
+
 	if (a)
 	{
 		if (a->type == 6 && a->next == NULL)
@@ -52,7 +54,9 @@ void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 	}
 	if (a)
 	{
+		fd = dup(0);
 		final_linked = ft_store(a);
+		(dup2(fd, 0), close(fd));
 		while (check_if_faulty(final_linked))
 			clean_final(final_linked);
 		if (final_linked)

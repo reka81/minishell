@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/22 16:46:49 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:09:24 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ void	herdog(t_stack **lst, t_int *lor_int)
 		{
 			ll = readline (">");
 			if (!ll)
-				exit(1);
+				break ;
 			lor_int->zz = herdog_delm(*lst);
 			if (ft_strcmp(lor_int->zz, ll) == 0)
 				break ;
-			ft_putstr_fd(ll, lor_int->fd);
-			free(ll);
+			(ft_putstr_fd(ll, lor_int->fd), free(ll));
 		}
+		if ((*lst)->next->type == 6)
+			(*lst) = (*lst)->next->next;
+		else
+			(*lst) = (*lst)->next;
 		lor_int->n++;
 		lor_int->in = lor_int->fd;
 	}

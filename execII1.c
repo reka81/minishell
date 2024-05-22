@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/16 18:07:40 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:36:31 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,24 @@
 void	cd_cmd(t_hxh *final_linked, t_env *environment)
 {
 	char	*user;
+	char	cwd[1024];
 
 	if (final_linked->value[1])
-		chdir(final_linked->value[1]);
+	{
+		if (chdir(final_linked->value[1]) != 0)
+			perror("chdir ");
+		else if (!getcwd(cwd, 1024))
+		{
+			dprintf(2, ERROR_GETCWD);
+		}
+	}
 	else
 	{
 		user = ft_get_env("HOME", environment);
 		if (user)
+		{
 			chdir(user);
+		}
 		else
 			printf("bash: cd: HOME not set\n");
 	}
