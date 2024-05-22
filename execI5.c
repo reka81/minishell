@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 14:34:35 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:31:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	normal_exporting(char *variable, char *value,
 	char	*new;
 
 	new = NULL;
-	if (value[0] == '\0' && check_if_pls2(variable)
+	if ((value[0] == '\0' && check_if_pls2(variable))
 		|| ft_isdigit(variable[0]) || check_if_dlm(variable))
 		printf("bash: export: `%s': not a valid identifier\n", variable);
 	else if (variable[0] == '\0')
@@ -36,12 +36,12 @@ void	normal_exporting(char *variable, char *value,
 		}
 		else
 		{
-			join_or_not(value, variable, new, tmp);
+			join_or_not(value, variable, tmp);
 		}
 	}
 }
 
-void	no_args_export2(t_env *environment, t_hxh *final_linked)
+void	no_args_export2(t_env *environment)
 {
 	while (environment)
 	{
@@ -67,12 +67,13 @@ void	export2(t_hxh *final_linked, t_env *environment,
 	int		d;
 
 	d = 1;
+	tmp = NULL;
 	if (check_if_value(final_linked->value))
 	{
 		afterwards_assignment(final_linked, environment, tmp);
 	}
 	else if (!final_linked->value[1])
-		no_args_export2(environment, final_linked);
+		no_args_export2(environment);
 	else
 	{
 		d = 1;
@@ -92,6 +93,7 @@ void	export(t_hxh *final_linked, t_env *environment,
 	int		d;
 
 	d = 1;
+	tmp = NULL;
 	if (check_if_value(final_linked->value))
 	{
 		afterwards_assignment(final_linked, environment, tmp);

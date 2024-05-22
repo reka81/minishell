@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll5.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 15:25:16 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:30:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 		lor_int->k = 20;
 		return (chen);
 	}
-	herdog(lst, lor_int, &i);
+	herdog(lst, lor_int);
 	if (i == 1)
 	{
 		lor_int->k = 20;

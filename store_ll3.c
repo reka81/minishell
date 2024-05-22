@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:28:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 15:22:12 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:59:18 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	count_strings(const char *s, char c)
+int	count_strings(const char *s, char c)
 {
 	int	i;
 	int	count;

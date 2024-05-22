@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 15:21:09 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:30:31 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
+char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 {
 	int		i;
 	char	**splitting;
@@ -20,6 +20,7 @@ char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 
 	i = 0;
 	j = 0;
+	splitting = NULL;
 	if ((*lst) != NULL && ((*lst)->type == 1
 			|| (*lst)->type == 2 || (*lst)->type == 0))
 	{
@@ -35,6 +36,8 @@ char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen)
 	}
 	else if (*lst != NULL && (*lst)->type == 3)
 		chen = opening_rederections(lst, lor_int, chen, i);
+	if (*lst)
+		(*lst) = (*lst)->next;
 	return (chen);
 }
 
@@ -65,9 +68,8 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
 		lor_int->chen = NULL;
-		lor_int->chen = rederection_handling(lst, lor_int->n,
+		lor_int->chen = rederection_handling(lst,
 				lor_int, lor_int->chen);
-		(*lst) = (*lst)->next;
 		if (lor_int->k == 20)
 		{
 			printf("is an ambigious redirect\n");

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 23:03:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:30:50 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 	}
 	if (main_fun->l)
 	{
-		if (!parentheses(main_fun->l) && !double_pipe(main_fun->l)
+		if (!double_pipe(main_fun->l)
 			&& !ds_quotes(main_fun->l) && !ft_pars(main_fun->l))
 		{
 			tokenization(&a, main_fun->l);

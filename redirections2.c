@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 16:19:42 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:15:07 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 
 char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if (access((*lst)->next->next->value, F_OK) == 0)
+	if ((*lst)->next->next == NULL)
 	{
-		if (lor_int->in >= 3)
-			close(lor_int->fd);
-		if (count_word((*lst)->next->next->value) >= 1)
+		*i = 1;
+		return (NULL);
+	}
+	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
+			*i = 0;
+		else
 		{
 			*i = 1;
 			return (NULL);
 		}
+	}
+	if (access((*lst)->next->next->value, F_OK) == 0)
+	{
+		if (lor_int->in >= 3)
+			close(lor_int->fd);
 		lor_int->fd = open((*lst)->next->next->value, O_RDWR, 0644);
 		lor_int->in = lor_int->fd;
 	}
@@ -33,15 +43,25 @@ char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 
 char	*infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if (access((*lst)->next->value, F_OK) == 0)
+	if ((*lst)->next == NULL)
 	{
-		if (lor_int->in >= 3)
-			close(lor_int->fd);
-		if (count_word((*lst)->next->value) >= 1)
+		*i = 1;
+		return (NULL);
+	}
+	else if (count_strings((*lst)->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
+			*i = 0;
+		else
 		{
 			*i = 1;
 			return (NULL);
 		}
+	}
+	if (access((*lst)->next->value, F_OK) == 0)
+	{
+		if (lor_int->in >= 3)
+			close(lor_int->fd);
 		lor_int->fd = open((*lst)->next->value, O_RDWR, 0644);
 		lor_int->in = lor_int->fd;
 	}

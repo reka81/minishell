@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 16:43:38 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:31:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ typedef struct s_env
 
 typedef struct s_int
 {
-    int        out;
-    int        in;
-    char    *zz;
-    char    *ten;
-    char    **str;
-    int        first_time;
-    int        fd;
-    int        z;
-    int        k;
-    int        n;
-    int        i;
-    char    *chen;
-}    t_int;
+	int			out;
+	int			in;
+	char		*zz;
+	char		*ten;
+	char		**str;
+	int			first_time;
+	int			fd;
+	int			z;
+	int			k;
+	int			n;
+	int			i;
+	char		*chen;
+}	t_int;
 
 typedef struct s_exec
 {
@@ -151,7 +151,7 @@ typedef struct s_store
 typedef struct s_garbage
 {
 	void				*address;
-	struct	s_garbage	*next;
+	struct s_garbage	*next;
 }	t_garbage;
 
 void	ft_lstadd_back(t_stack **lst, t_stack *newnode);
@@ -164,11 +164,11 @@ int		ds_quotes(char *str);
 int		double_pipe(char *str);
 int		parentheses(char *str);
 t_hxh	*ft_store(t_stack *lol);
-char	*rederection_handling(t_stack **lst, int n, t_int *lor_int, char *chen);
+char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
 void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
-void    herdog(t_stack **lst, t_int *lor_int, int *i);
-char    *infile(t_stack **lst, t_int *lor_int, int *i);
-void    rederection(t_stack **lst, t_int *lor_int, int *i);
+void	herdog(t_stack **lst, t_int *lor_int);
+char	*infile(t_stack **lst, t_int *lor_int, int *i);
+void	rederection(t_stack **lst, t_int *lor_int, int *i);
 char	*herdog_delm(t_stack *lst);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
@@ -186,7 +186,7 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void	ft_putstr_fd1(char *s, int fd);
 char	**ft_split(char const *s, char c);
 char	*look_for_path(char *cmd, char *path);
-void	setup_signal_handlers();
+void	setup_signal_handlers(void);
 char	**store_env_2darr(t_env *environment);
 char	*ft_get_env(char *var, t_env *enviroment);
 char	*new_var_woutequal(char *variable);
@@ -201,78 +201,100 @@ void	filling_env(char **env, t_env **environment);
 char	*ft_update_pwd(t_env *environment, char *current_path, char *old_path);
 int		check_if_equal(char *str);
 void	ft_lstadd_back1(t_hxh **lst, t_hxh *new);
-t_hxh    *ft_lstnew1(t_int *lor_int, char *str);
+t_hxh	*ft_lstnew1(t_int *lor_int, char *str);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
-int check_if_pls2(char *str);
-char *ft_strmcpy(char *path, char *value);
-int is_apath(char *str);
-char *new_var_woutpls(char *variable);
-char *new_var_woutequal(char *variable);
-int check_if_pls(char **str);
-void ft_putstr_fd2(char *s, int fd);
-t_env *check_if_var2(t_env *environment, char *variable);
-t_env *check_if_var(t_env *environment, char *variable);
-int check_if_value(char **str);
-void store_var(t_hxh *final_linked, int *i, char *variable);
-void store_val(t_hxh *final_linked, int *i, int *j, char *value);
-void join_or_n(t_hxh *final_linked, t_env *tmp, char *value);
-void afterwards_assignment(t_hxh *final_linked, t_env *environment, t_env *tmp);
-int check_if_equal(char *str);
-void no_args_export(t_env *environment, t_hxh *final_linked);
-void store_var1(t_hxh *final_linked, char **variable, int *i, int *d);
-void setting_var_and_val(char **variable, char **value, t_hxh *final_linked, int d);
-int cmp_w_dlm(char c, char s);
-int check_if_dlm(char *str);
-void normal_exporting(char *variable, char *value, t_hxh *final_linked, t_env *environment);
-void no_args_export2(t_env *environment, t_hxh *final_linked);
-void export2(t_hxh *final_linked, t_env *environment, char *variable, char *value);
-void export(t_hxh *final_linked, t_env *environment, char *variable, char *value);
-char **fill_args(t_hxh *final_linked);
-void dup_close1(t_hxh *final_linked);
-void dup_close2(t_hxh *final_linked);
-void dup_close3(int *fd);
-void expo2(t_hxh *final_linked, t_env *environment, char *variable, char *value);
-void execve1 (char *path, char **arg, char **env);
-void dup_close4(int *fd);
-void ecexc_cmd1(t_exec *var, t_hxh *final_linked, t_env *environment, char **env);
-int execute_cmds(t_hxh *final_linked, char **env, t_env *environment);
-void pwd_cmd(t_hxh *final_linked);
-void env_cmd(t_env *environment);
-void cd_cmd(t_hxh *final_linked, t_env *environment);
-int    ft_cheak_n(char *str);
-int    ft_strdigit(char *str);
-void    ft_echo(t_hxh *lst);
-void    ft_exit(t_hxh *lst);
-void dup_close5(int fd_out, int fd_in);
-void not_builtins(t_hxh *final_linked, t_exec1 *var, t_env *environment, int *exit_status);
-void join_or_not(char *value, char *variable, char *new, t_env *tmp);
-void exp_n_valid(t_hxh *final_linked, char *value);
+int		check_if_pls2(char *str);
+char	*ft_strmcpy(char *path, char *value);
+int		is_apath(char *str);
+char	*new_var_woutpls(char *variable);
+char	*new_var_woutequal(char *variable);
+int		check_if_pls(char **str);
+void	ft_putstr_fd2(char *s, int fd);
+t_env	*check_if_var2(t_env *environment, char *variable);
+t_env	*check_if_var(t_env *environment, char *variable);
+int		check_if_value(char **str);
+void	store_var(t_hxh *final_linked, int *i, char *variable);
+void	store_val(t_hxh *final_linked, int *i, int *j, char *value);
+void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value);
+void	afterwards_assignment(t_hxh *final_linked,
+			t_env *environment, t_env *tmp);
+int		check_if_equal(char *str);
+void	no_args_export(t_env *environment, t_hxh *final_linked);
+void	store_var1(t_hxh *final_linked, char **variable, int *i, int *d);
+void	setting_var_and_val(char **variable,
+			char **value, t_hxh *final_linked, int d);
+int		cmp_w_dlm(char c, char s);
+int		check_if_dlm(char *str);
+void	normal_exporting(char *variable, char *value,
+			t_hxh *final_linked, t_env *environment);
+void	no_args_export2(t_env *environment);
+void	export2(t_hxh *final_linked, t_env *environment,
+			char *variable, char *value);
+void	export(t_hxh *final_linked, t_env *environment,
+			char *variable, char *value);
+char	**fill_args(t_hxh *final_linked);
+void	dup_close1(t_hxh *final_linked);
+void	dup_close2(t_hxh *final_linked);
+void	dup_close3(int *fd);
+void	expo2(t_hxh *final_linked, t_env *environment,
+			char *variable, char *value);
+void	execve1(char *path, char **arg, char **env);
+void	dup_close4(int *fd);
+void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
+			t_env *environment, char **env);
+int		execute_cmds(t_hxh *final_linked, char **env, t_env *environment);
+void	pwd_cmd(t_hxh *final_linked);
+void	env_cmd(t_env *environment);
+void	cd_cmd(t_hxh *final_linked, t_env *environment);
+int		ft_cheak_n(char *str);
+int		ft_strdigit(char *str);
+void	ft_echo(t_hxh *lst);
+void	ft_exit(t_hxh *lst);
+void	dup_close5(int fd_out, int fd_in);
+void	not_builtins(t_hxh *final_linked, t_exec1 *var,
+			t_env *environment, int *exit_status);
+void	join_or_not(char *value, char *variable, t_env *tmp);
+void	exp_n_valid(t_hxh *final_linked, char *value);
 void	ctl_c(int a);
-void    *zyalloc(long long size);
+void	*zyalloc(long long size);
 void	close_fds(t_hxh *final_linked);
-void	rest_of_main(t_main *main_fun, t_stack *a
-		, t_env **environment, t_hxh *final_linked);
-void    ft_lstadd_back7(t_env **lst, t_env *newnode);
-t_env    *ft_lstnew5(char *variable, char *value);
-void clean_final2(t_hxh *final_linked, int i);
-void freeing_pr(t_stack **a);
-int check_if_null(t_stack *a);
-void ft_rm_null(t_stack **a);
-char *fill(char *str1, char *str2);
+void	rest_of_main(t_main *main_fun, t_stack *a,
+			t_env **environment, t_hxh *final_linked);
+void	ft_lstadd_back7(t_env **lst, t_env *newnode);
+t_env	*ft_lstnew5(char *variable, char *value);
+void	clean_final2(t_hxh *final_linked, int i);
+void	freeing_pr(t_stack **a);
+int		check_if_null(t_stack *a);
+void	ft_rm_null(t_stack **a);
+char	*fill(char *str1, char *str2);
 void	routine(t_stack *a, t_main *main_fun, t_env **environment,
-		t_hxh *final_linked);
+			t_hxh *final_linked);
 void	init(t_numbers *tokens);
-void	rest_of_tokenization(char *str, t_numbers *tokens, t_stack **a, char *l);
+void	rest_of_tokenization(char *str, t_numbers *tokens,
+			t_stack **a, char *l);
 void	rest_of_expanding2(t_stack *a, t_counter *count_num, char *str2);
 void	rest_of_expanding(t_exp *expander, t_stack *a,
 			char *str2, t_counter *count_num);
 void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num);
 void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 			t_exp *expander, t_env *environment);
-void if_next_is_space(t_stack **lst, char **splitting, t_int *lor_int, int *j);
-void if_next_not_space(t_stack **lst, t_int *lor_int);
-void if_next_is_null(t_stack **lst, char **splitting, t_int *lor_int, int *j);
-char *opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
-int    count_word(char *s);
+void	if_next_is_space(t_stack **lst, char **splitting,
+			t_int *lor_int, int *j);
+void	if_next_not_space(t_stack **lst, t_int *lor_int);
+void	if_next_is_null(t_stack **lst, char **splitting,
+			t_int *lor_int, int *j);
+char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
+int		count_word(char *s);
+int		count_strings(const char *s, char c);
+void	ft_unset_v1(t_env **env, t_hxh *lst, int i, t_env *tmp3);
+void	one_command(t_hxh *final_linked, t_env **environment,
+			t_exec1 *var, int *exit_status);
+char	*ft_rm_equal(char *str);
+int		not_valid(char **strs);
+void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
+			char **env, t_env *environment);
+int		pipeee(char *str, int *i, int *j);
+int		rederectionnn(char *str, int *i, int *j);
+int		infileee(char *str, int *i, int *j);
 #endif 

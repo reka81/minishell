@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 14:35:29 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:30:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		{
 			execve(var->path, var->arg, env);
 			perror("execve1");
-			exit(1);
 		}
+		exit(1);
 	}
 }
 
@@ -79,7 +79,7 @@ void	env_cmd(t_env *environment)
 {
 	while (environment)
 	{
-		if (environment->value[0] != '\0' && environment->variable[0] != '\0'
+		if ((environment->value[0] != '\0' && environment->variable[0] != '\0')
 			|| check_if_equal(environment->variable))
 			printf("%s%s\n", environment->variable, environment->value);
 		environment = environment->next;

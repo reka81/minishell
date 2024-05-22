@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:33:37 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 20:17:07 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	last_pipe(t_hxh *final_linked, char **env,
 	{
 		execve(var->path2, arg, env);
 		perror("execve2");
-		exit (1);
 	}
+	exit (1);
 }
 
 void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var)
@@ -68,6 +68,14 @@ void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var)
 		*var->exit_status = WEXITSTATUS(*var->exit_status);
 }
 
+void	setting_values5(t_exec1 *var, t_hxh *final_linked)
+{
+	var->a = ft_lstsize(final_linked);
+	var->num_of_elems = var->a;
+	var->pid_tab = zyalloc(var->a * 4);
+	dup2(final_linked->input, 0);
+}
+
 void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 		char **env, t_env *environment)
 {
@@ -76,10 +84,7 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 
 	fd_out = dup(1);
 	fd_in = dup(0);
-	var->a = ft_lstsize(final_linked);
-	var->num_of_elems = var->a;
-	var->pid_tab = zyalloc(var->a * 4);
-	dup2(final_linked->input, 0);
+	setting_values5(var, final_linked);
 	while (var->a > 1)
 	{
 		signal(SIGQUIT, ctl_c);
@@ -99,44 +104,4 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 		}
 	}
 	waiting_for_children(fd_out, fd_in, var);
-}
-
-void	one_command(t_hxh *final_linked, t_env **environment,
-		t_exec1 *var, int *exit_status)
-{
-	if (!strcmp(final_linked->value[0], "pwd"))
-		pwd_cmd(final_linked);
-	else if (!strcmp(final_linked->value[0], "export")
-		|| check_if_value(final_linked->value))
-		export(final_linked, *environment, var->variable, var->value);
-	else if (!strcmp(final_linked->value[0], "env"))
-		env_cmd(*environment);
-	else if (!strcmp(final_linked->value[0], "cd"))
-		cd_cmd(final_linked, *environment);
-	else if (!strcmp(final_linked->value[0], "echo"))
-		ft_echo(final_linked);
-	else if (!strcmp(final_linked->value[0], "unset"))
-		ft_unset(final_linked, environment, exit_status);
-	else if (!strcmp(final_linked->value[0], "exit"))
-		ft_exit(final_linked);
-	else
-		not_builtins(final_linked, var, *environment, exit_status);
-}
-
-void	execution(t_env **environment, t_hxh *final_linked,
-		char **env, int *exit_status)
-{
-	t_exec1	*var;
-
-	var = zyalloc(sizeof(t_exec1));
-	var->i = 0;
-	var->path = NULL;
-	var->env = env;
-	var->exit_status = exit_status;
-	if (final_linked->value[0] == NULL)
-		return ;
-	if (final_linked->next == NULL)
-		one_command(final_linked, environment, var, exit_status);
-	else
-		primary_pipes(var, final_linked, env, *environment);
 }

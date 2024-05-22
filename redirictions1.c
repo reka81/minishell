@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 16:52:25 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:23:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,47 @@ void	reder_open_file(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if (count_word((*lst)->next->next->value) >= 1)
+	if ((*lst)->next->next == NULL)
 	{
 		*i = 1;
 		return ;
 	}
+	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
+			*i = 0;
+		else
+		{
+			*i = 1;
+			return ;
+		}
+	}
 	lor_int->fd = open((*lst)->next->next->value,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
+}
+
+void	reder_open_file2(t_stack **lst, t_int *lor_int, int *i)
+{
+	if (lor_int->out >= 3)
+		close(lor_int->fd);
+	if ((*lst)->next == NULL)
+	{
+		*i = 1;
+		return ;
+	}
+	else if ((*lst)->next == NULL
+		|| count_strings((*lst)->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
+			*i = 0;
+		else
+		{
+			*i = 1;
+			return ;
+		}
+	}
+	lor_int->fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_TRUNC,
+			0644);
 }
 
 void	rederection(t_stack **lst, t_int *lor_int, int *i)
@@ -66,20 +100,9 @@ void	rederection(t_stack **lst, t_int *lor_int, int *i)
 	if (ft_strcmp((*lst)->value, ">") == 0)
 	{
 		if ((*lst)->next->type == 6)
-		{
 			reder_open_file(lst, lor_int, i);
-		}
 		else
-		{
-			if (lor_int->out >= 3)
-				close(lor_int->fd);
-			if (count_word((*lst)->next->value) >= 1)
-			{
-				*i = 1;
-				return ;
-			}
-			lor_int->fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		}
+			reder_open_file2(lst, lor_int, i);
 		lor_int->out = lor_int->fd;
 		if ((*lst)->next->type == 6)
 			(*lst) = (*lst)->next->next;

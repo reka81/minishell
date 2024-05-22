@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 23:15:02 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:28:16 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:32:16 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_rm_null(t_stack **a)
 
 	i = 0;
 	tmp2 = *a;
+	tmp1 = NULL;
 	while ((*a) != NULL)
 	{
 		if ((*a)->value == NULL && i == 0)

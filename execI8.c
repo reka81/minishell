@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 14:37:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:49:56 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@ void	dup_close5(int fd_out, int fd_in)
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
+}
+
+void	checking_if_signal(int fd_out, int fd_in,
+	int *exit_status, t_exec1 *var)
+{
+	waitpid(var->pid, exit_status, 0);
+	if (WIFSIGNALED(*exit_status))
+	{
+		if (WTERMSIG(*exit_status) == 2)
+			printf("\n");
+		if (WTERMSIG(*exit_status) == 3)
+		{
+			printf("Quit: 3\n");
+			tcsetattr(STDIN_FILENO, TCSANOW, &var->my_termios);
+		}
+		*exit_status = 128 + WTERMSIG(*exit_status);
+	}
+	else
+		*exit_status = WEXITSTATUS(*exit_status);
+	dup_close5(fd_out, fd_in);
 }
 
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,
@@ -47,31 +67,17 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 			var->path = look_for_path(final_linked->value[0],
 					ft_get_env("PATH", environment));
 		if (final_linked->shouldnt_run != 5)
-			execve(var->path, final_linked->value, var->env);
-		perror("execve");
+		{
+			(execve(var->path, final_linked->value, var->env),
+				perror("execve"));
+		}
 		exit(1);
 	}
 	else
-	{
-		waitpid(var->pid, exit_status, 0);
-		if (WIFSIGNALED(*exit_status))
-		{
-			if (WTERMSIG(*exit_status) == 2)
-				printf("\n");
-			if (WTERMSIG(*exit_status) == 3)
-			{
-				printf("Quit: 3\n");
-				tcsetattr(STDIN_FILENO, TCSANOW, &var->my_termios);
-			}
-			*exit_status = 128 + WTERMSIG(*exit_status);
-		}
-		else
-			*exit_status = WEXITSTATUS(*exit_status);
-		dup_close5(fd_out, fd_in);
-	}
+		checking_if_signal(fd_out, fd_in, exit_status, var);
 }
 
-void	join_or_not(char *value, char *variable, char *new, t_env *tmp)
+void	join_or_not(char *value, char *variable, t_env *tmp)
 {
 	if (check_if_pls2(variable))
 	{
