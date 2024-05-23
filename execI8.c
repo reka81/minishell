@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/22 18:39:40 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:52:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 void	dup_close5(int fd_out, int fd_in)
 {
-	if (!isatty(STDOUT_FILENO))
-	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
-	if (!isatty(STDIN_FILENO))
-	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-	}
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_out);
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
 }
 
 void	checking_if_signal(int fd_out, int fd_in,
@@ -54,8 +48,16 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 
 	fd_out = dup(1);
 	fd_in = dup(0);
-	dup2(final_linked->input, 0);
-	dup2(final_linked->output, 1);
+	if (final_linked->input != 0)
+	{
+		dup2(final_linked->input, 0);
+		close(final_linked->input);
+	}
+	if (final_linked->output != 1)
+	{
+		dup2(final_linked->output, 1);
+		close(final_linked->output);
+	}
 	tcgetattr(STDIN_FILENO, &var->my_termios);
 	var->pid = fork();
 	if (var->pid == 0)
@@ -67,8 +69,10 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 			var->path = look_for_path(final_linked->value[0],
 					ft_get_env("PATH", environment));
 		if (final_linked->shouldnt_run != 5)
+		{
 			if (execve(var->path, final_linked->value, var->env) == -1)
 				printf("bash : %s:command not found\n", final_linked->value[0]);
+		}
 		exit(1);
 	}
 	else

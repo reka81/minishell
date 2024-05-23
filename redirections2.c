@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 20:15:07 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:59:35 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ char	*infile(t_stack **lst, t_int *lor_int, int *i)
 			chen = infile_open_file(lst, chen, i, lor_int);
 		else
 			chen = infile_open_file1(lst, chen, i, lor_int);
-		if ((*lst)->next->type == 6)
-			(*lst) = (*lst)->next->next;
+		if ((*lst)->next-           t;
 		else
 			(*lst) = (*lst)->next;
 	}
