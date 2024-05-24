@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 23:23:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:34:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,26 @@ int	count_word(char *s)
 	return (j);
 }
 
+int	check_if_pipe(t_stack *lst)
+{
+	while (lst)
+	{
+		if (lst->value)
+			if (ft_strcmp(lst->value, "|") == 0)
+				return (1);
+		lst = lst->next;
+	}
+	return (0);
+}
+
 void	reder_open_file(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
 	if ((*lst)->next->next == NULL)
 	{
-		*i = 1;
+		lor_int->fd = 1;
+		*i = 2;
 		return ;
 	}
 	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
@@ -63,6 +76,7 @@ void	reder_open_file(t_stack **lst, t_int *lor_int, int *i)
 			*i = 0;
 		else
 		{
+			lor_int->fd = 1;
 			*i = 1;
 			return ;
 		}
@@ -75,9 +89,9 @@ void	reder_open_file2(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->next == NULL)
+	if ((*lst)->next == NULL )
 	{
-		*i = 1;
+		*i = 2;
 		return ;
 	}
 	else if ((*lst)->next == NULL
@@ -99,13 +113,21 @@ void	rederection(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (ft_strcmp((*lst)->value, ">") == 0)
 	{
-		if ((*lst)->next->type == 6)
-			reder_open_file(lst, lor_int, i);
+		// if ((*lst)->next)
+		// {
+			if ((*lst)->next->type == 6)
+				reder_open_file(lst, lor_int, i);
+			// else
+			// 	reder_open_file2(lst, lor_int, i);
+		// }
 		else
 			reder_open_file2(lst, lor_int, i);
 		lor_int->out = lor_int->fd;
-		if ((*lst)->next->type == 6)
-			(*lst) = (*lst)->next->next;
+		if ((*lst)->next)
+		{
+			if ((*lst)->next->type == 6)
+				(*lst) = (*lst)->next->next;
+		}
 		else
 			(*lst) = (*lst)->next;
 	}

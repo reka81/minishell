@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 RM = rm -f
 
 SRCS = tokenization.c ft_lstadd_back.c ft_lstnew.c ft_strlen.c ft_lstnew2.c ft_lstadd_back2.c parsing.c store_ll.c ft_isdigit.c \

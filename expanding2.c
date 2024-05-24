@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:04:55 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 15:09:25 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:22:58 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 		expander->user = ft_itoa(expander->exit_status);
 	else
 		expander->user = ft_get_env(str, environment);
+	if (!expander->user)
+		a->was = ft_strjoin("$", str);
 }
 
 void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)

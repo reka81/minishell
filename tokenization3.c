@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/23 15:31:52 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:35:20 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	check_if_faulty(t_hxh *a)
 {
 	while (a)
 	{
-		if (a->is_faulty == 2 || a->ambigious == 20)
+		if (a->is_faulty == 2 || a->ambigious == 20 || !a->value[0])
 		{
 			if (a->shouldnt_run != 5)
+			{
 				return (1);
+			}
 		}
 		a = a->next;
 	}
@@ -88,6 +90,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 			tokenization(&a, main_fun->l);
 			flaging_expandables(a);
 			expanding(a, main_fun->exit_status, *environment);
+			// print_ambigious(a);
 			while (check_if_null(a))
 				ft_rm_null(&a);
 			rest_of_main2(a, final_linked, environment, main_fun);

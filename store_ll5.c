@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/22 20:55:36 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:46:50 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,12 @@ char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 	extern int	g_is_in_mini;
 
 	rederection(lst, lor_int, &i);
-	if (i == 1)
+	if (i == 1 || i == 2)
 	{
-		lor_int->k = 20;
+		if (i == 2)
+			lor_int->k = 30;
+		else
+			lor_int->k = 20;
 		return (chen);
 	}
 	chen = infile(lst, lor_int, &i);

@@ -6,18 +6,64 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 14:31:57 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:15:35 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_if_null(t_stack *a)
+void	print_ambigious(t_stack *a)
 {
+	t_stack		*tmp;
+	static int	j = 0;
+
 	while (a)
 	{
+		if (a->value)
+		{
+			if (ft_strcmp(a->value, "|") == 0)
+				j = 0;
+		}
+		tmp = a;
+		a = a->next;
+		if (a && j == 0)
+		{
+			if (a->type == 6)
+			{
+				if (a->next)
+				{
+					if (tmp->type == 3 && a->next->value == NULL)
+					{
+						j = 1;
+						dprintf(2, "bash: %s: ambiguous redirect\n", a->next->was);
+					}
+				}
+			}
+			else
+			{
+				if (tmp->type == 3 && a->value == NULL)
+				{
+					j = 1;
+					dprintf(2, "bash: %s: ambiguous redirect\n", a->was);
+				}
+			}
+		}
+		if (!a)
+			j = 0;
+	}
+}
+
+int	check_if_null(t_stack *a)
+{
+	t_stack		*tmp;
+
+	while (a)
+	{
+		tmp = a;
 		if (a->value == NULL)
+		{
 			return (1);
+		}
 		a = a->next;
 	}
 	return (0);

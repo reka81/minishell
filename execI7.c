@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 22:30:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:00:57 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 	{
 		if (final_linked->shouldnt_run != 5)
 		{
-			execve(var->path, var->arg, env);
-			perror("execve1");
+			if (execve(var->path, var->arg, env) == -1)
+				dprintf(2, "bash : %s:command not found\n",
+					final_linked->value[0]);
 		}
 		exit(1);
 	}
@@ -51,14 +52,16 @@ int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 	var->ex = 0;
 	pipe(var->fd);
 	var->pid = fork();
-	var->arg = fill_args(final_linked);
-	if (is_apath(final_linked->value[0]))
-		var->path = ft_strmcpy(var->path, final_linked->value[0]);
-	else
-		var->path = look_for_path(final_linked->value[0],
-				ft_get_env("PATH", environment));
 	if (var->pid == 0)
 	{
+		if (!final_linked->value[0])
+			exit(0);
+		var->arg = fill_args(final_linked);
+		if (is_apath(final_linked->value[0]))
+			var->path = ft_strmcpy(var->path, final_linked->value[0]);
+		else
+			var->path = look_for_path(final_linked->value[0],
+					ft_get_env("PATH", environment));
 		ecexc_cmd1(var, final_linked, environment, env);
 	}
 	else

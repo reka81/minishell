@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/23 16:52:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:01:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 		if (final_linked->shouldnt_run != 5)
 		{
 			if (execve(var->path, final_linked->value, var->env) == -1)
-				printf("bash : %s:command not found\n", final_linked->value[0]);
+			{
+				dprintf(2, "bash : %s:command not found\n", final_linked->value[0]);
+				*exit_status = 127;
+			}
 		}
 		exit(1);
 	}

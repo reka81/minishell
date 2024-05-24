@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/22 20:56:37 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:39:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	else if (*lst != NULL && (*lst)->type == 3)
 		chen = opening_rederections(lst, lor_int, chen, i);
 	if (*lst)
-		(*lst) = (*lst)->next;
+	{
+			(*lst) = (*lst)->next;
+	}
 	return (chen);
 }
 
@@ -69,9 +71,10 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 	{
 		lor_int->chen = NULL;
 		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
-		if (lor_int->k == 20)
+		if (lor_int->k == 20 || lor_int->k == 30)
 		{
-			printf("is an ambigious redirect\n");
+			if (lor_int->k == 20)
+				printf("is an ambigious redirect\n");
 			break ;
 		}
 		if (lor_int->chen != NULL)
@@ -104,7 +107,9 @@ t_hxh	*ft_store(t_stack *lol)
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
 		if (lst == NULL)
+		{
 			break ;
+		}
 		increment_to_pipe(&lst);
 	}
 	return (l);

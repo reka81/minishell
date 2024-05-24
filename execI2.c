@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:24:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 16:45:39 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:32:34 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,18 @@ t_env	*check_if_var2(t_env *environment, char *variable)
 
 t_env	*check_if_var(t_env *environment, char *variable)
 {
+	char	*new;
+	char	*new2;
+
+	new2 = new_var_woutequal(variable);
+	new = zyalloc(100);
 	while (environment)
 	{
-		if (strcmp(environment->variable, variable) == 0)
+		new = new_var_woutequal(environment->variable);
+		if (strcmp(new, new2) == 0)
 		{
+			if (environment->variable[ft_strlen(environment->variable) - 1] != '=')
+				environment->variable = ft_strjoin(environment->variable, "=");
 			return (environment);
 		}
 		environment = environment->next;

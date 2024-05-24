@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 20:17:07 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:23:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ void	last_pipe(t_hxh *final_linked, char **env,
 				ft_get_env("PATH", environment));
 	if (final_linked->shouldnt_run != 5)
 	{
-		execve(var->path2, arg, env);
-		perror("execve2");
+		dprintf(2, "%s--%d\n", var->path2 ,final_linked->output);
+		if (execve(var->path2, arg, env) == -1)
+		{
+			dprintf(2, "bash : %s:command not found\n", final_linked->value[0]);
+			exit(127);
+		}
 	}
 	exit (1);
 }

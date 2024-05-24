@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 22:59:40 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:31:05 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	close_fds(t_hxh *final_linked)
 
 void	clean_final2(t_hxh *final_linked, int i)
 {
-	if (final_linked->is_faulty == 2 || final_linked->ambigious)
+	if (final_linked->is_faulty == 2 || final_linked->ambigious || !final_linked->value[0])
 	{
 		if (i == 0)
 		{
@@ -45,6 +45,7 @@ void	clean_final2(t_hxh *final_linked, int i)
 void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 		t_hxh *final_linked)
 {
+	main_fun->buf = 0;
 	while (1)
 	{
 		a = NULL;

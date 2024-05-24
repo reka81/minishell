@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/23 16:23:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:38:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct stack
 	int				should_be_exp;
 	struct stack	*next;
 	int				did_expand;
+	char			*was;
 }	t_stack;
 
 typedef struct s_hxh
@@ -300,4 +301,5 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 int		pipeee(char *str, int *i, int *j);
 int		rederectionnn(char *str, int *i, int *j);
 int		infileee(char *str, int *i, int *j);
+void	print_ambigious(t_stack *a);
 #endif 
