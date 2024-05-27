@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 11:31:05 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 21:55:18 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	close_fds(t_hxh *final_linked)
 
 void	clean_final2(t_hxh *final_linked, int i)
 {
-	if (final_linked->is_faulty == 2 || final_linked->ambigious || !final_linked->value[0])
+	if (final_linked->is_faulty == 2 || final_linked->ambigious == 20 || !final_linked->value[0] || final_linked->ambigious == 30)
 	{
 		if (i == 0)
 		{

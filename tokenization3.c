@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 13:35:20 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:38:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ int	check_if_faulty(t_hxh *a)
 {
 	while (a)
 	{
-		if (a->is_faulty == 2 || a->ambigious == 20 || !a->value[0])
+		if (a->is_faulty == 2 || a->ambigious == 20 || !a->value[0] || a->ambigious == 30)
 		{
 			if (a->shouldnt_run != 5)
-			{
 				return (1);
-			}
 		}
 		a = a->next;
 	}
@@ -57,7 +55,7 @@ void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 	if (a)
 	{
 		fd = dup(0);
-		final_linked = ft_store(a);
+		final_linked = ft_store(a, *environment);
 		(dup2(fd, 0), close(fd));
 		while (check_if_faulty(final_linked))
 			clean_final(final_linked);
@@ -90,7 +88,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 			tokenization(&a, main_fun->l);
 			flaging_expandables(a);
 			expanding(a, main_fun->exit_status, *environment);
-			// print_ambigious(a);
+			print_ambigious(a);
 			while (check_if_null(a))
 				ft_rm_null(&a);
 			rest_of_main2(a, final_linked, environment, main_fun);

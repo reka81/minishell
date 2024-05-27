@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/22 22:36:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:50:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_cheak_n(char *str)
 	j = 0;
 	if (!str)
 		return (0);
-	while (str[j])
+	while (str[i])
 	{
 		if (str[0] != '-' || str[i] != 'n')
 		{

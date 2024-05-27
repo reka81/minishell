@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 13:39:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:47:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 			if ((*lst)->next->type == 6)
 				if_next_is_space(lst, splitting, lor_int, &j);
 			else
-				if_next_not_space(lst, lor_int);
+				if_next_not_space(lst, lor_int, splitting, &j);
 		}
 		else
 			if_next_is_null(lst, splitting, lor_int, &j);
@@ -37,8 +37,9 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	else if (*lst != NULL && (*lst)->type == 3)
 		chen = opening_rederections(lst, lor_int, chen, i);
 	if (*lst)
-	{
-			(*lst) = (*lst)->next;
+	{	
+		lor_int->val = (*lst)->value;
+		(*lst) = (*lst)->next;
 	}
 	return (chen);
 }
@@ -59,8 +60,10 @@ void	increment_to_pipe(t_stack **lst)
 		(*lst) = (*lst)->next;
 }
 
-void	creating_list(t_stack **lst, t_int *lor_int)
+void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
 {
+	char	*var;
+	
 	lor_int->str = zyalloc(sizeof(char *) * 100);
 	lor_int->out = 1;
 	lor_int->in = 0;
@@ -69,12 +72,19 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 	lor_int->k = 0;
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
+		lor_int->val = NULL;
+		var = NULL;
 		lor_int->chen = NULL;
 		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
 		if (lor_int->k == 20 || lor_int->k == 30)
 		{
-			if (lor_int->k == 20)
-				printf("is an ambigious redirect\n");
+			if (lor_int->k == 20)	
+			{	
+				var = ft_get_env1(lor_int->val, environment);
+				var = new_var_woutequal(var);
+				var = ft_strjoin("$", var);
+				printf("bash : %s:is an ambigious redirect\n", var);
+			}
 			break ;
 		}
 		if (lor_int->chen != NULL)
@@ -89,7 +99,7 @@ void	creating_list(t_stack **lst, t_int *lor_int)
 	}
 }
 
-t_hxh	*ft_store(t_stack *lol)
+t_hxh	*ft_store(t_stack *lol, t_env *environment)
 {
 	t_hxh	*l;
 	t_int	*lor_int;
@@ -103,13 +113,11 @@ t_hxh	*ft_store(t_stack *lol)
 	lor_int->chen = NULL;
 	while (lst != NULL)
 	{
-		creating_list(&lst, lor_int);
+		creating_list(&lst, lor_int, environment);
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
 		if (lst == NULL)
-		{
 			break ;
-		}
 		increment_to_pipe(&lst);
 	}
 	return (l);

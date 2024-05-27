@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/23 17:05:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:33:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if ((*lst)->next->next == NULL)
+	if ((*lst)->next->next == NULL || more_than_two(*lst) || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
-		*i = 1;
+		*i = 2;
 		return (NULL);
 	}
 	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
@@ -43,9 +43,9 @@ char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 
 char	*infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if ((*lst)->next == NULL)
+	if ((*lst)->next == NULL || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
-		*i = 1;
+		*i = 2;
 		return (NULL);
 	}
 	else if (count_strings((*lst)->next->value, ' ') >= 2)
@@ -54,7 +54,6 @@ char	*infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
 			*i = 0;
 		else
 		{
-			*i = 1;
 			return (NULL);
 		}
 	}
@@ -80,9 +79,16 @@ char	*infile(t_stack **lst, t_int *lor_int, int *i)
 		if ((*lst)->next->type == 6)
 			chen = infile_open_file(lst, chen, i, lor_int);
 		else
+		{
 			chen = infile_open_file1(lst, chen, i, lor_int);
-		if ((*lst)->next->type == 6)
-			(*lst) = (*lst)->next->next;
+		}
+		if ((*lst)->next)
+		{
+			if ((*lst)->next->type == 6)
+				(*lst) = (*lst)->next->next;
+			else
+				(*lst) = (*lst)->next;
+		}
 		else
 			(*lst) = (*lst)->next;
 	}

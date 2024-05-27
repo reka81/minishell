@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 12:15:35 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:52:53 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,10 @@ void	print_ambigious(t_stack *a)
 
 int	check_if_null(t_stack *a)
 {
-	t_stack		*tmp;
-
 	while (a)
 	{
-		tmp = a;
 		if (a->value == NULL)
-		{
 			return (1);
-		}
 		a = a->next;
 	}
 	return (0);

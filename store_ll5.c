@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/24 12:46:50 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:26:54 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	num_herdog(t_stack *lol)
 void	if_next_is_space(t_stack **lst, char **splitting,
 	t_int *lor_int, int *j)
 {
-	if ((*lst)->did_expand == 40)
+	if ((*lst)->did_expand == 40 && (*lst)->type != 2)
 	{
 		splitting = ft_split((*lst)->value, ' ');
 		while (splitting[*j])
@@ -50,24 +50,49 @@ void	if_next_is_space(t_stack **lst, char **splitting,
 	}
 }
 
-void	if_next_not_space(t_stack **lst, t_int *lor_int)
+void	if_next_not_space(t_stack **lst, t_int *lor_int, char **splitting, int *j)
 {
-	lor_int->str[lor_int->z] = ft_strjoin((*lst)->value,
-			(*lst)->next->value);
-	if ((*lst)->did_expand == 40 || (*lst)->next->did_expand == 40)
+	if((*lst)->next->type != 3)
 	{
-		lor_int->str = ft_split((lor_int)->str[lor_int->z], ' ');
-		while (lor_int->str[lor_int->z])
+		lor_int->str[lor_int->z] = ft_strjoin((*lst)->value,
+				(*lst)->next->value);
+		if ((*lst)->did_expand == 40 || (*lst)->next->did_expand == 40)
+		{
+			splitting = ft_split((lor_int)->str[lor_int->z], ' ');
+			while (splitting[*j])
+			{
+				lor_int->str[lor_int->z] = splitting[*j];
+				(*j)++;
+				lor_int->z++;
+			}
+		}
+		else
 			lor_int->z++;
+		(*lst) = (*lst)->next;
 	}
 	else
-		lor_int->z++;
-	(*lst) = (*lst)->next;
+	{
+		if ((*lst)->did_expand == 40)
+		{
+			splitting = ft_split((*lst)->value , ' ');
+			while (splitting[*j])
+			{
+				lor_int->str[lor_int->z] = splitting[*j];
+				(*j)++;
+				lor_int->z++;
+			}
+		}
+		else
+		{
+			lor_int->str[lor_int->z] = (*lst)->value;
+			lor_int->z++;
+		}
+	}
 }
 
 void	if_next_is_null(t_stack **lst, char **splitting, t_int *lor_int, int *j)
 {
-	if ((*lst)->did_expand == 40)
+	if ((*lst)->did_expand == 40 && (*lst)->type != 1)
 	{
 		splitting = ft_split((*lst)->value, ' ');
 		while (splitting[*j])
@@ -91,16 +116,19 @@ char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 	rederection(lst, lor_int, &i);
 	if (i == 1 || i == 2)
 	{
-		if (i == 2)
-			lor_int->k = 30;
-		else
+		if (i == 1)
 			lor_int->k = 20;
+		else
+			lor_int->k = 30;
 		return (chen);
 	}
 	chen = infile(lst, lor_int, &i);
-	if (i == 1)
+	if (i == 1 || i == 2)
 	{
-		lor_int->k = 20;
+		if (i == 1)
+			lor_int->k = 20;
+		else
+			lor_int->k = 30;
 		return (chen);
 	}
 	g_is_in_mini = 2;
@@ -112,9 +140,12 @@ char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 	herdog(lst, lor_int);
 	g_is_in_mini = 0;
 	append(lst, &lor_int->fd, lor_int, &i);
-	if (i == 1)
+	if (i == 1 || i == 2)
 	{
-		lor_int->k = 20;
+		if (i == 1)
+			lor_int->k = 20;
+		else
+			lor_int->k = 30;
 		return (chen);
 	}
 	return (chen);

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 19:36:59 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 11:17:08 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:26:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	expanding(t_stack *a, int exit_status, t_env *environment)
 	while (a)
 	{
 		count_num->i = 0;
-		if ((a->type == 1 || a->type == 0) && a->should_be_exp != 1)
+		if ((a->type == 1 || a->type == 0) && a->should_be_exp != 1 && ft_strcmp(a->value, "$"))
 		{
 			expander->str2 = zyalloc(100);
 			while (a->value[count_num->i] != '$' && a->value[count_num->i])

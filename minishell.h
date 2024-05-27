@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 13:38:42 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:09:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct stack
 	struct stack	*next;
 	int				did_expand;
 	char			*was;
+	int				prev_is_null;
 }	t_stack;
 
 typedef struct s_hxh
@@ -69,6 +70,7 @@ typedef struct s_int
 	int			n;
 	int			i;
 	char		*chen;
+	char		*val;
 }	t_int;
 
 typedef struct s_exec
@@ -167,7 +169,7 @@ int		ft_pars(char *str);
 int		ds_quotes(char *str);
 int		double_pipe(char *str);
 int		parentheses(char *str);
-t_hxh	*ft_store(t_stack *lol);
+t_hxh	*ft_store(t_stack *lol, t_env *environment);
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
 void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
 void	herdog(t_stack **lst, t_int *lor_int);
@@ -285,7 +287,7 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 			t_exp *expander, t_env *environment);
 void	if_next_is_space(t_stack **lst, char **splitting,
 			t_int *lor_int, int *j);
-void	if_next_not_space(t_stack **lst, t_int *lor_int);
+void	if_next_not_space(t_stack **lst, t_int *lor_int, char **splitting, int *j);
 void	if_next_is_null(t_stack **lst, char **splitting,
 			t_int *lor_int, int *j);
 char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
@@ -302,4 +304,8 @@ int		pipeee(char *str, int *i, int *j);
 int		rederectionnn(char *str, int *i, int *j);
 int		infileee(char *str, int *i, int *j);
 void	print_ambigious(t_stack *a);
+char    *ft_get_env1(char *val, t_env *enviroment);
+char    *new_val_woutequal(char *value);
+int		more_than_two(t_stack *lst);
+
 #endif 

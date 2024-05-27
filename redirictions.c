@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/23 22:22:37 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:33:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,23 @@ void	herdog(t_stack **lst, t_int *lor_int)
 void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int)
 {
 	if (lor_int->out >= 3)
-		close(*fd);
-	if (count_word((*lst)->next->next->value) >= 1)
+		close(lor_int->fd);
+	if ((*lst)->next->next == NULL || more_than_two(*lst) || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
-		*i = 1;
+		lor_int->fd = 1;
+		*i = 2;
 		return ;
+	}
+	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
+			*i = 0;
+		else
+		{
+			lor_int->fd = 1;
+			*i = 1;
+			return ;
+		}
 	}
 	*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
 }
@@ -70,18 +82,21 @@ void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int)
 void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
 {
 	if (lor_int->out >= 3)
-		close(*fd);
-	if ((*lst)->next == NULL)
+		close(lor_int->fd);
+	if ((*lst)->next == NULL || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
-		*i = 1;
+		lor_int->fd = 1;
+		*i = 2;
 		return ;
 	}
-	else if (count_strings((*lst)->next->value, ' ') >= 2)
+	else if ((*lst)->next == NULL
+		|| count_strings((*lst)->next->value, ' ') >= 2)
 	{
 		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
 			*i = 0;
 		else
 		{
+			lor_int->fd = 1;
 			*i = 1;
 			return ;
 		}

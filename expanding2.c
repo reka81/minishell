@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:04:55 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 10:22:58 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:24:20 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
 	i = 0;
 	if (expander->user)
 	{
-		str2[count_num->j] = '\0';
+		if (expander->user[count_num->d])
+			str2[count_num->j] = '\0';
 		while (expander->user[count_num->d])
 		{
 			i = 1;
