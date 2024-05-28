@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 23:15:02 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/27 14:19:10 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:22:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_rm_null(t_stack **a)
 		{
 			tmp2 = (*a)->next;
 			(*a) = tmp2;
-			(*a)->prev_is_null = 20;
+			if (*a)
+				(*a)->prev_is_null = 20;
 		}
 		else if ((*a)->value == NULL && (*a)->next != NULL)
 			ft_rm_null2(a, tmp1, tmp);

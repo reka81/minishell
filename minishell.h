@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/27 14:09:10 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:45:54 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
 void	herdog(t_stack **lst, t_int *lor_int);
 char	*infile(t_stack **lst, t_int *lor_int, int *i);
 void	rederection(t_stack **lst, t_int *lor_int, int *i);
-char	*herdog_delm(t_stack *lst);
+char	*herdog_delm(t_stack **lst);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);

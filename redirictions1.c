@@ -6,30 +6,99 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/27 14:31:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:36:47 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*herdog_delm(t_stack *lst)
+char    *herdog_delm(t_stack **lst)
 {
-	t_stack	*tmp;
+	t_stack    *tmp;
+	char *str;
 
-	tmp = lst;
+	tmp = *lst;
+	str = NULL;
 	while (tmp != NULL && ft_strcmp(tmp->value, "|") != 0)
 	{
 		if (ft_strcmp(tmp->value, "<<") == 0)
 		{
 			if (tmp->next->type == 6)
-				return (tmp->next->next->value);
-			return (tmp->next->value);
+			{
+				tmp = tmp->next->next;
+				if (tmp->next != NULL)
+				{
+					if (tmp->next->type != 6)
+					{
+						while (tmp->next != NULL)
+						{
+							if (tmp->next->type != 6)
+							{
+								if(!str)
+									str = ft_strjoin(tmp->value , tmp->next->value);
+								else 
+									str = ft_strjoin(str , tmp->next->value);
+							}
+							else
+								break ;
+							tmp = tmp->next;
+							*lst = tmp;
+						}
+					}
+					else
+					{
+						str = tmp->value;
+						*lst = tmp;
+					}
+				}
+				else
+				{
+					str = tmp->value;
+					*lst = tmp;
+					// printf("%s\n", (*lst)->value);
+				}
+			}
+			else if (tmp->next->type != 6)
+			{
+				tmp = tmp->next;
+				if (tmp->next != NULL)
+				{
+					printf("ss--\n");
+					if (tmp->next->type != 6)
+					{
+						while (tmp->next != NULL)
+						{
+							if (tmp->next->type != 6)
+							{
+								if(!str)
+									str = ft_strjoin(tmp->value , tmp->next->value);
+								else 
+									str = ft_strjoin(str , tmp->next->value);
+							}
+							else
+								break ;
+							tmp = tmp->next;
+							*lst = tmp;
+						}
+					}
+					else
+					{
+						str = tmp->value;
+						*lst = tmp;
+					}
+				}
+				else
+				{
+					str = tmp->value;
+					*lst = tmp;
+					// printf("%s\n", (*lst)->value);
+				}
+			}
 		}
 		tmp = tmp->next;
 	}
-	return (NULL);
+	return (str);
 }
-
 int	count_word(char *s)
 {
 	int	i;
@@ -103,7 +172,7 @@ void	reder_open_file2(t_stack **lst, t_int *lor_int, int *i)
 		return ;
 	}
 	else if ((*lst)->next == NULL
-		|| count_strings((*lst)->next->value, ' ') >= 2)
+			|| count_strings((*lst)->next->value, ' ') >= 2)
 	{
 		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
 			*i = 0;
@@ -122,15 +191,15 @@ void	rederection(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (ft_strcmp((*lst)->value, ">") == 0)
 	{
-        if ((*lst)->next)
-        {
-            if ((*lst)->next->type == 6)
-                reder_open_file(lst, lor_int, i);
-            else
-                reder_open_file2(lst, lor_int, i);
-        }
-        else
-            reder_open_file2(lst, lor_int, i);
+		if ((*lst)->next)
+		{
+			if ((*lst)->next->type == 6)
+				reder_open_file(lst, lor_int, i);
+			else
+				reder_open_file2(lst, lor_int, i);
+		}
+		else
+			reder_open_file2(lst, lor_int, i);
 		lor_int->out = lor_int->fd;
 		if ((*lst)->next)
 		{

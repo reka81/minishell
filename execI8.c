@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/23 20:01:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:34:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 				*exit_status = 127;
 			}
 		}
-		exit(1);
+		exit(127);
 	}
 	else
 		checking_if_signal(fd_out, fd_in, exit_status, var);
