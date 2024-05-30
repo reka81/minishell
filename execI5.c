@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/23 21:37:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:15:42 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ void	export2(t_hxh *final_linked, t_env *environment,
 	}
 }
 
-void	export(t_hxh *final_linked, t_env *environment,
-	char *variable, char *value)
+void	export(t_hxh *final_linked, t_env *environment, t_exec1 *var)
 {
 	t_env	*tmp;
 	int		d;
@@ -97,14 +96,15 @@ void	export(t_hxh *final_linked, t_env *environment,
 		afterwards_assignment(final_linked, environment, tmp);
 	}
 	else if (!final_linked->value[1])
-		no_args_export(environment, final_linked);
+		no_args_export(final_linked, var->env);
 	else
 	{
 		d = 1;
 		while (final_linked->value[d])
 		{
-			setting_var_and_val(&variable, &value, final_linked, d);
-			normal_exporting(variable, value, final_linked, environment);
+			setting_var_and_val(&var->variable, &var->value, final_linked, d);
+			normal_exporting(var->variable, var->value,
+				final_linked, environment);
 			d++;
 		}
 	}

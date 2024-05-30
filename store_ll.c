@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/25 15:47:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:51:50 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	cheack_if_space_or_not(t_stack **lst, char **splitting,
+	t_int *lor_int, int j)
+{
+	if ((*lst)->next->type == 6)
+		if_next_is_space(lst, splitting, lor_int, &j);
+	else
+		if_next_not_space(lst, lor_int, splitting, &j);
+}
 
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 {
@@ -26,10 +35,7 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	{
 		if ((*lst)->next)
 		{
-			if ((*lst)->next->type == 6)
-				if_next_is_space(lst, splitting, lor_int, &j);
-			else
-				if_next_not_space(lst, lor_int, splitting, &j);
+			cheack_if_space_or_not(lst, splitting, lor_int, j);
 		}
 		else
 			if_next_is_null(lst, splitting, lor_int, &j);
@@ -37,7 +43,7 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	else if (*lst != NULL && (*lst)->type == 3)
 		chen = opening_rederections(lst, lor_int, chen, i);
 	if (*lst)
-	{	
+	{
 		lor_int->val = (*lst)->value;
 		(*lst) = (*lst)->next;
 	}
@@ -60,16 +66,33 @@ void	increment_to_pipe(t_stack **lst)
 		(*lst) = (*lst)->next;
 }
 
-void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
+void	init2(t_int *lor_int)
 {
-	char	*var;
-	
 	lor_int->str = zyalloc(sizeof(char *) * 100);
 	lor_int->out = 1;
 	lor_int->in = 0;
 	lor_int->fd = 0;
 	lor_int->z = 0;
 	lor_int->k = 0;
+}
+
+void	imbigious_red(t_int *lor_int, t_env *environment, char *var)
+{
+	if (lor_int->k == 20)
+	{
+		var = ft_get_env1(lor_int->val, environment);
+		var = new_var_woutequal(var);
+		var = ft_strjoin("$", var);
+		printf("bash : %s:is an ambigious redirect\n", var);
+	}
+	return ;
+}
+
+void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
+{
+	char	*var;
+
+	init2(lor_int);
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
 		lor_int->val = NULL;
@@ -78,13 +101,7 @@ void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
 		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
 		if (lor_int->k == 20 || lor_int->k == 30)
 		{
-			if (lor_int->k == 20)	
-			{	
-				var = ft_get_env1(lor_int->val, environment);
-				var = new_var_woutequal(var);
-				var = ft_strjoin("$", var);
-				printf("bash : %s:is an ambigious redirect\n", var);
-			}
+			imbigious_red(lor_int, environment, var);
 			break ;
 		}
 		if (lor_int->chen != NULL)

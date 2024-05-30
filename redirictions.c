@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/28 19:48:09 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:40:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void	increment_lst(t_stack **lst)
 		(*lst) = (*lst)->next->next;
 	else
 		(*lst) = (*lst)->next;
+}
+
+void	herdog_v1(t_int *lor_int, int fd1)
+{
+	close(lor_int->fd);
+	lor_int->fd = fd1;
+	lor_int->n++;
+	lor_int->in = lor_int->fd;
 }
 
 void	herdog(t_stack **lst, t_int *lor_int)
@@ -44,10 +52,7 @@ void	herdog(t_stack **lst, t_int *lor_int)
 				break ;
 			(ft_putstr_fd(ll, lor_int->fd), free(ll));
 		}
-		close(lor_int->fd);
-		lor_int->fd = fd1;
-		lor_int->n++;
-		lor_int->in = lor_int->fd;
+		herdog_v1(lor_int, fd1);
 	}
 }
 
@@ -55,7 +60,7 @@ void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->next->next == NULL || more_than_two(*lst) || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;
@@ -79,7 +84,7 @@ void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->next == NULL || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;

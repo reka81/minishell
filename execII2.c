@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/27 15:35:25 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:20:19 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	one_command(t_hxh *final_linked, t_env **environment,
 		pwd_cmd(final_linked);
 	else if (!strcmp(final_linked->value[0], "export")
 		|| check_if_value(final_linked->value))
-		export(final_linked, *environment, var->variable, var->value);
+		export(final_linked, *environment, var);
 	else if (!strcmp(final_linked->value[0], "env"))
 		env_cmd(*environment);
 	else if (!strcmp(final_linked->value[0], "cd"))

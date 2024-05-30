@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/28 19:45:54 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:38:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	join_or_n(t_hxh *final_linked, t_env *tmp, char *value);
 void	afterwards_assignment(t_hxh *final_linked,
 			t_env *environment, t_env *tmp);
 int		check_if_equal(char *str);
-void	no_args_export(t_env *environment, t_hxh *final_linked);
+void	no_args_export(t_hxh *final_linked, char **env);
 void	store_var1(t_hxh *final_linked, char **variable, int *i, int *d);
 void	setting_var_and_val(char **variable,
 			char **value, t_hxh *final_linked, int d);
@@ -238,7 +238,7 @@ void	no_args_export2(t_env *environment);
 void	export2(t_hxh *final_linked, t_env *environment,
 			char *variable, char *value);
 void	export(t_hxh *final_linked, t_env *environment,
-			char *variable, char *value);
+			t_exec1 *var);
 char	**fill_args(t_hxh *final_linked);
 void	dup_close1(t_hxh *final_linked);
 void	dup_close2(t_hxh *final_linked);
@@ -287,7 +287,8 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 			t_exp *expander, t_env *environment);
 void	if_next_is_space(t_stack **lst, char **splitting,
 			t_int *lor_int, int *j);
-void	if_next_not_space(t_stack **lst, t_int *lor_int, char **splitting, int *j);
+void	if_next_not_space(t_stack **lst, t_int *lor_int,
+			char **splitting, int *j);
 void	if_next_is_null(t_stack **lst, char **splitting,
 			t_int *lor_int, int *j);
 char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
@@ -304,8 +305,8 @@ int		pipeee(char *str, int *i, int *j);
 int		rederectionnn(char *str, int *i, int *j);
 int		infileee(char *str, int *i, int *j);
 void	print_ambigious(t_stack *a);
-char    *ft_get_env1(char *val, t_env *enviroment);
-char    *new_val_woutequal(char *value);
+char	*ft_get_env1(char *val, t_env *enviroment);
+char	*new_val_woutequal(char *value);
 int		more_than_two(t_stack *lst);
 
 #endif 

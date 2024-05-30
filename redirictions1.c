@@ -3,19 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   redirictions1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/28 19:36:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:10:52 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *herdog_delm(t_stack **lst)
+char	*join_delm(t_stack **tmp, t_stack **lst, char *str)
 {
-	t_stack    *tmp;
-	char *str;
+	while ((*tmp)->next != NULL)
+	{
+		if ((*tmp)->next->type != 6)
+		{
+			if (!str)
+				str = ft_strjoin((*tmp)->value,
+						(*tmp)->next->value);
+			else
+				str = ft_strjoin(str, (*tmp)->next->value);
+		}
+		else
+			break ;
+		(*tmp) = (*tmp)->next;
+		*lst = (*tmp);
+	}
+	return (str);
+}
+
+char	*next_space(t_stack **tmp, char *str, t_stack **lst)
+{
+	*tmp = (*tmp)->next->next;
+	if ((*tmp)->next != NULL)
+	{
+		if ((*tmp)->next->type != 6)
+		{
+			str = join_delm(tmp, lst, str);
+		}
+		else
+		{
+			str = (*tmp)->value;
+			*lst = (*tmp);
+		}
+	}
+	else
+	{
+		str = (*tmp)->value;
+		*lst = (*tmp);
+	}
+	return (str);
+}
+
+char	*join_delm1(t_stack **tmp, t_stack **lst, char *str)
+{
+	while ((*tmp)->next != NULL)
+	{
+		if ((*tmp)->next->type != 6)
+		{
+			if (!str)
+				str = ft_strjoin((*tmp)->value,
+						(*tmp)->next->value);
+			else
+				str = ft_strjoin(str, (*tmp)->next->value);
+		}
+		else
+			break ;
+		(*tmp) = (*tmp)->next;
+		*lst = (*tmp);
+	}
+	return (str);
+}
+
+char	*next_not_space(t_stack **tmp, char *str, t_stack **lst)
+{
+	(*tmp) = (*tmp)->next;
+	if ((*tmp)->next != NULL)
+	{
+		if ((*tmp)->next->type != 6)
+		{
+			str = join_delm1(tmp, lst, str);
+		}
+		else
+		{
+			str = (*tmp)->value;
+			*lst = (*tmp);
+		}
+	}
+	else
+	{
+		str = (*tmp)->value;
+		*lst = *tmp;
+	}
+	return (str);
+}
+
+char	*herdog_delm(t_stack **lst)
+{
+	t_stack	*tmp;
+	char	*str;
 
 	tmp = *lst;
 	str = NULL;
@@ -25,80 +111,19 @@ char    *herdog_delm(t_stack **lst)
 		{
 			if (tmp->next->type == 6)
 			{
-				tmp = tmp->next->next;
-				if (tmp->next != NULL)
-				{
-					if (tmp->next->type != 6)
-					{
-						while (tmp->next != NULL)
-						{
-							if (tmp->next->type != 6)
-							{
-								if(!str)
-									str = ft_strjoin(tmp->value , tmp->next->value);
-								else 
-									str = ft_strjoin(str , tmp->next->value);
-							}
-							else
-								break ;
-							tmp = tmp->next;
-							*lst = tmp;
-						}
-					}
-					else
-					{
-						str = tmp->value;
-						*lst = tmp;
-					}
-				}
-				else
-				{
-					str = tmp->value;
-					*lst = tmp;
-					// printf("%s\n", (*lst)->value);
-				}
+				str = next_space(&tmp, str, lst);
+				printf("%s\n", str);
 			}
 			else if (tmp->next->type != 6)
 			{
-				tmp = tmp->next;
-				if (tmp->next != NULL)
-				{
-					printf("ss--\n");
-					if (tmp->next->type != 6)
-					{
-						while (tmp->next != NULL)
-						{
-							if (tmp->next->type != 6)
-							{
-								if(!str)
-									str = ft_strjoin(tmp->value , tmp->next->value);
-								else 
-									str = ft_strjoin(str , tmp->next->value);
-							}
-							else
-								break ;
-							tmp = tmp->next;
-							*lst = tmp;
-						}
-					}
-					else
-					{
-						str = tmp->value;
-						*lst = tmp;
-					}
-				}
-				else
-				{
-					str = tmp->value;
-					*lst = tmp;
-					// printf("%s\n", (*lst)->value);
-				}
+				str = next_not_space(&tmp, str, lst);
 			}
 		}
 		tmp = tmp->next;
 	}
 	return (str);
 }
+
 int	count_word(char *s)
 {
 	int	i;
@@ -117,9 +142,9 @@ int	count_word(char *s)
 	return (j);
 }
 
-int		more_than_two(t_stack *lst)
+int	more_than_two(t_stack *lst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	lst = lst->next;
@@ -127,20 +152,21 @@ int		more_than_two(t_stack *lst)
 	{
 		if (i == 2)
 			return (1);
-		if (lst->type == 6)	
+		if (lst->type == 6)
 			i++;
 		if (lst->type != 6)
-			return(0);
+			return (0);
 		lst = lst->next;
 	}
-	return(0);
+	return (0);
 }
 
 void	reder_open_file(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->next->next == NULL || more_than_two(*lst) || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next->next == NULL || more_than_two(*lst)
+		|| (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;
@@ -165,14 +191,15 @@ void	reder_open_file2(t_stack **lst, t_int *lor_int, int *i)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->next == NULL || (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next == NULL || (*lst)->prev_is_null == 20
+		|| (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;
 		return ;
 	}
 	else if ((*lst)->next == NULL
-			|| count_strings((*lst)->next->value, ' ') >= 2)
+		|| count_strings((*lst)->next->value, ' ') >= 2)
 	{
 		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
 			*i = 0;

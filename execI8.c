@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/28 19:34:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:29:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ void	checking_if_signal(int fd_out, int fd_in,
 	dup_close5(fd_out, fd_in);
 }
 
+void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
+	t_env *environment, int *exit_status)
+{
+	signal(SIGQUIT, ctl_c);
+	if (is_apath(final_linked->value[0]))
+		var->path = ft_strmcpy(var->path, final_linked->value[0]);
+	else
+		var->path = look_for_path(final_linked->value[0],
+				ft_get_env("PATH", environment));
+	if (final_linked->shouldnt_run != 5)
+	{
+		if (execve(var->path, final_linked->value, var->env) == -1)
+		{
+			dprintf(2, "bash : %s:command not found\n",
+				final_linked->value[0]);
+			*exit_status = 127;
+		}
+	}
+	exit(127);
+}
+
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 	t_env *environment, int *exit_status)
 {
@@ -61,23 +82,7 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 	tcgetattr(STDIN_FILENO, &var->my_termios);
 	var->pid = fork();
 	if (var->pid == 0)
-	{
-		signal(SIGQUIT, ctl_c);
-		if (is_apath(final_linked->value[0]))
-			var->path = ft_strmcpy(var->path, final_linked->value[0]);
-		else
-			var->path = look_for_path(final_linked->value[0],
-					ft_get_env("PATH", environment));
-		if (final_linked->shouldnt_run != 5)
-		{
-			if (execve(var->path, final_linked->value, var->env) == -1)
-			{
-				dprintf(2, "bash : %s:command not found\n", final_linked->value[0]);
-				*exit_status = 127;
-			}
-		}
-		exit(127);
-	}
+		not_builtins_v2(final_linked, var, environment, exit_status);
 	else
 		checking_if_signal(fd_out, fd_in, exit_status, var);
 }

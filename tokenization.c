@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/27 20:30:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:14:18 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_ambigious_redi(t_stack *a, t_stack *tmp, int *j)
+{
+	if (a->type == 6)
+	{
+		if (a->next)
+		{
+			if (tmp->type == 3 && a->next->value == NULL)
+			{
+				*j = 1;
+				dprintf(2, "bash: %s: ambiguous redirect\n",
+					a->next->was);
+			}
+		}
+	}
+	else
+	{
+		if (tmp->type == 3 && a->value == NULL)
+		{
+			*j = 1;
+			dprintf(2, "bash: %s: ambiguous redirect\n", a->was);
+		}
+	}
+}
 
 void	print_ambigious(t_stack *a)
 {
@@ -28,25 +52,7 @@ void	print_ambigious(t_stack *a)
 		a = a->next;
 		if (a && j == 0)
 		{
-			if (a->type == 6)
-			{
-				if (a->next)
-				{
-					if (tmp->type == 3 && a->next->value == NULL)
-					{
-						j = 1;
-						dprintf(2, "bash: %s: ambiguous redirect\n", a->next->was);
-					}
-				}
-			}
-			else
-			{
-				if (tmp->type == 3 && a->value == NULL)
-				{
-					j = 1;
-					dprintf(2, "bash: %s: ambiguous redirect\n", a->was);
-				}
-			}
+			print_ambigious_redi(a, tmp, &j);
 		}
 		if (!a)
 			j = 0;
@@ -131,7 +137,6 @@ int	main(int ac, char **av, char **env)
 		fill_env2(&environment);
 	main_fun->l = NULL;
 	main_fun->exit_status = 0;
-	main_fun->envi2 = store_env_2darr(environment);
 	setup_signal_handlers();
 	routine(a, main_fun, &environment, final_linked);
 }
