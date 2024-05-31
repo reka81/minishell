@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/24 21:55:18 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:36:13 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	close_fds(t_hxh *final_linked)
 
 void	clean_final2(t_hxh *final_linked, int i)
 {
-	if (final_linked->is_faulty == 2 || final_linked->ambigious == 20 || !final_linked->value[0] || final_linked->ambigious == 30)
+	if (final_linked->is_faulty == 2 || final_linked->ambigious == 20
+		|| !final_linked->value[0] || final_linked->ambigious == 30)
 	{
 		if (i == 0)
 		{
@@ -48,6 +49,7 @@ void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 	main_fun->buf = 0;
 	while (1)
 	{
+		main_fun->envi2 = store_env_2darr(*environment);
 		a = NULL;
 		main_fun->l = readline ("~$ :");
 		add_history(main_fun->l);

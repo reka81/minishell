@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:54:53 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/30 21:14:57 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:20:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,22 +122,6 @@ int	cmp_w_dlm(char c, char s)
 			else
 				return (1);
 		}
-		i++;
-	}
-	return (0);
-}
-
-int	check_if_dlm(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i + 1] == '\0')
-			return (0);
-		if (cmp_w_dlm(str[i], str[i + 1]))
-			return (1);
 		i++;
 	}
 	return (0);

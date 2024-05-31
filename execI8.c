@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/30 21:29:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:47:08 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,4 @@ void	join_or_not(char *value, char *variable, t_env *tmp)
 	{
 		tmp->value = value;
 	}
-}
-
-void	exp_n_valid(t_hxh *final_linked, char *value)
-{
-	printf("bash: export: %s :not a valid identifier\n", value);
-	if (final_linked->value[2])
-		printf("bash: export: %s :not a valid identifier\n",
-			final_linked->value[2]);
 }

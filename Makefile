@@ -1,11 +1,57 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-SRCS = tokenization.c ft_lstadd_back.c ft_lstnew.c ft_strlen.c ft_lstnew2.c ft_lstadd_back2.c parsing.c store_ll.c ft_isdigit.c \
-	ft_lstsize.c minishell_tools.c environment_fs.c expanding.c tokenization2.c rest_of_main.c  store_ll2.c store_ll3.c store_ll4.c  redirictions.c execI1.c execI2.c execI3.c execI4.c execI5.c execI6.c execI7.c execI8.c execII1.c execI.c execII.c zyalloc.c tokenization3.c tokenization4.c tokenization5.c  \
-	expanding2.c store_ll5.c redirections2.c redirictions1.c libft_func.c execII2.c parsing1.c parsing2.c signals.c
+SRCS = ./environment_fs.c \
+./execI.c \
+./execI1.c \
+./execI2.c \
+./execI3.c \
+./execI4.c \
+./execI5.c \
+./execI6.c \
+./execI7.c \
+./execI8.c \
+./execII.c \
+./execII1.c \
+./execII2.c \
+./execII3.c \
+./expanding.c \
+./expanding2.c \
+./ft_isdigit.c \
+./ft_lstadd_back.c \
+./ft_lstadd_back2.c \
+./ft_lstnew.c \
+./ft_lstnew2.c \
+./ft_lstsize.c \
+./ft_strlen.c \
+./libft_func.c \
+./minishell_tools.c \
+./parsing.c \
+./parsing1.c \
+./parsing2.c \
+./redirections2.c \
+./redirictions.c \
+./redirictions1.c \
+./redirictions3.c \
+./redirictions4.c \
+./rest_of_main.c \
+./signals.c  \
+./store_ll.c \
+./store_ll2.c \
+./store_ll3.c \
+./store_ll4.c \
+./store_ll5.c \
+./store_ll6.c \
+./tokenization.c \
+./tokenization2.c \
+./tokenization3.c \
+./tokenization4.c \
+./tokenization5.c \
+./tokenization6.c \
+./zyalloc.c 
+
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h
 

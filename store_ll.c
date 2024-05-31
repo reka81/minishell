@@ -3,52 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   store_ll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 20:51:50 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:34:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cheack_if_space_or_not(t_stack **lst, char **splitting,
-	t_int *lor_int, int j)
-{
-	if ((*lst)->next->type == 6)
-		if_next_is_space(lst, splitting, lor_int, &j);
-	else
-		if_next_not_space(lst, lor_int, splitting, &j);
-}
-
-char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
-{
-	int		i;
-	char	**splitting;
-	int		j;
-
-	i = 0;
-	j = 0;
-	splitting = NULL;
-	if ((*lst) != NULL && ((*lst)->type == 1
-			|| (*lst)->type == 2 || (*lst)->type == 0))
-	{
-		if ((*lst)->next)
-		{
-			cheack_if_space_or_not(lst, splitting, lor_int, j);
-		}
-		else
-			if_next_is_null(lst, splitting, lor_int, &j);
-	}
-	else if (*lst != NULL && (*lst)->type == 3)
-		chen = opening_rederections(lst, lor_int, chen, i);
-	if (*lst)
-	{
-		lor_int->val = (*lst)->value;
-		(*lst) = (*lst)->next;
-	}
-	return (chen);
-}
 
 void	increment_to_pipe(t_stack **lst)
 {

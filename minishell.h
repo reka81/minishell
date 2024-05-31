@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 21:38:23 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:20:48 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ int		parentheses(char *str);
 t_hxh	*ft_store(t_stack *lol, t_env *environment);
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
 void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
+// void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
 void	herdog(t_stack **lst, t_int *lor_int);
 char	*infile(t_stack **lst, t_int *lor_int, int *i);
 void	rederection(t_stack **lst, t_int *lor_int, int *i);
@@ -308,5 +309,14 @@ void	print_ambigious(t_stack *a);
 char	*ft_get_env1(char *val, t_env *enviroment);
 char	*new_val_woutequal(char *value);
 int		more_than_two(t_stack *lst);
+void	fill_env2(t_env **environment);
+void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int);
+void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int);
+char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
+void	split_or_not_split(t_stack **lst, char **splitting,
+			t_int *lor_int, int *j);
+void	handling_space_in_expanding(t_stack **lst, char **splitting,
+			int *j, t_int *lor_int);
+void	handling_dq(t_stack **lst, char **splitting, int *j, t_int *lor_int);
 
 #endif 

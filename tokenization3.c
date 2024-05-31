@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/27 15:38:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:36:48 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	check_if_faulty(t_hxh *a)
 {
 	while (a)
 	{
-		if (a->is_faulty == 2 || a->ambigious == 20 || !a->value[0] || a->ambigious == 30)
+		if (a->is_faulty == 2 || a->ambigious == 20
+			|| !a->value[0] || a->ambigious == 30)
 		{
 			if (a->shouldnt_run != 5)
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/30 21:37:22 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:46:57 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,17 @@ int	ft_strdigit(char *str)
 	return (0);
 }
 
+void	ft_echo2(int *i, t_hxh *lst)
+{
+	while (lst->value[(*i)])
+	{
+		if (ft_cheak_n(lst->value[(*i)]) == 2)
+			(*i)++;
+		else
+			break ;
+	}
+}
+
 void	ft_echo(t_hxh *lst)
 {
 	int		i;
@@ -86,13 +97,7 @@ void	ft_echo(t_hxh *lst)
 			if (lst->value[1] == NULL)
 				ft_putchar_fd('\n', lst->output);
 			i = 1;
-			while (lst->value[i])
-			{
-				if (ft_cheak_n(lst->value[i]) == 2)
-					i++;
-				else
-					break ;
-			}
+			ft_echo2(&i, lst);
 			while (lst->value[i])
 			{
 				ft_putstr_fd1(lst->value[i], lst->output);
@@ -104,27 +109,5 @@ void	ft_echo(t_hxh *lst)
 				ft_putchar_fd('\n', lst->output);
 		}
 		lst = lst->next;
-	}
-}
-
-void	ft_exit(t_hxh *lst)
-{
-	if (!ft_strcmp(lst->value[0], "exit"))
-	{
-		if (lst->value[1])
-		{
-			if (ft_strdigit(lst->value[1]) == 1)
-			{
-				exit(atoi(lst->value[1]));
-			}
-			else
-			{
-				printf("bash: exit: %s: numeric argument required",
-					lst->value[1]);
-				exit(255);
-			}
-		}
-		else
-			exit(0);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 23:15:02 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/28 19:22:55 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:01:40 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,20 @@ void	ft_rm_null2(t_stack **a, t_stack *tmp1, t_stack *tmp)
 	(*a)->prev_is_null = 20;
 }
 
+void	first_value_null(t_stack **a, t_stack **tmp2)
+{
+	*tmp2 = (*a)->next;
+	(*a) = *tmp2;
+	if (*a)
+		(*a)->prev_is_null = 20;
+}
+
 void	ft_rm_null(t_stack **a)
 {
-	int		i;
-	t_stack	*tmp1;
-	t_stack	*tmp2;
-	t_stack	*tmp;
+	int			i;
+	t_stack		*tmp1;
+	t_stack		*tmp2;
+	t_stack		*tmp;
 
 	i = 0;
 	tmp2 = *a;
@@ -33,12 +41,7 @@ void	ft_rm_null(t_stack **a)
 	while ((*a) != NULL)
 	{
 		if ((*a)->value == NULL && i == 0)
-		{
-			tmp2 = (*a)->next;
-			(*a) = tmp2;
-			if (*a)
-				(*a)->prev_is_null = 20;
-		}
+			first_value_null(a, &tmp2);
 		else if ((*a)->value == NULL && (*a)->next != NULL)
 			ft_rm_null2(a, tmp1, tmp);
 		else if ((*a)->value == NULL && (*a)->next == NULL)

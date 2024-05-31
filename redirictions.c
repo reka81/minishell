@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 21:40:29 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:30:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,4 @@ void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
 		}
 	}
 	*fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
-}
-
-void	append(t_stack **lst, int *fd, t_int *lor_int, int *i)
-{
-	if (ft_strcmp((*lst)->value, ">>") == 0)
-	{
-		if ((*lst)->next->type == 6)
-			append_open_file(lst, fd, i, lor_int);
-		else
-			append_open_file2(lst, fd, i, lor_int);
-		lor_int->out = *fd;
-		if ((*lst)->next->type == 6)
-			(*lst) = (*lst)->next->next;
-		else
-			(*lst) = (*lst)->next;
-	}
 }
