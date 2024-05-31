@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:38:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 13:38:46 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:52:38 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,28 @@ void	fill_env2(t_env **environment)
 		fill_env3(variable, value, environment, i);
 		i++;
 	}
+}
+
+char	*remove_tab(char *l)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	new_str = zyalloc(ft_strlen(l) + 1);
+	while (l[i])
+	{
+		if (l[i] == '\t')
+			i++;
+		else
+		{
+			new_str[j] = l[i];
+			i++;
+			j++;
+		}
+	}
+	new_str[j] = '\0';
+	return (new_str);
 }

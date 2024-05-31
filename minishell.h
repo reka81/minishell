@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 15:20:48 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:53:46 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,5 +318,6 @@ void	split_or_not_split(t_stack **lst, char **splitting,
 void	handling_space_in_expanding(t_stack **lst, char **splitting,
 			int *j, t_int *lor_int);
 void	handling_dq(t_stack **lst, char **splitting, int *j, t_int *lor_int);
+char	*remove_tab(char *l);
 
 #endif 

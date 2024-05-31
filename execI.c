@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 21:11:52 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:44:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,15 @@ void	last_pipe(t_hxh *final_linked, char **env,
 		close(final_linked->input);
 	}
 	if (final_linked->output != 1)
-	{
-		dup2(final_linked->output, 1);
-		close(final_linked->output);
-	}
+		(dup2(final_linked->output, 1), close(final_linked->output));
 	if (is_apath(final_linked->value[0]))
 		var->path2 = ft_strmcpy(var->path, final_linked->value[0]);
 	else
 		var->path2 = look_for_path(final_linked->value[0],
 				ft_get_env("PATH", environment));
-	if (final_linked->shouldnt_run != 5)
+	if (!ft_strcmp(final_linked->value[0], "export"))
+		export(final_linked, environment, var);
+	else if (final_linked->shouldnt_run != 5)
 	{
 		if (execve(var->path2, arg, env) == -1)
 			(dprintf(2, "bash : %s:command not found\n",

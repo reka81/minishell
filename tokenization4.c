@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 14:36:13 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:52:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 		main_fun->envi2 = store_env_2darr(*environment);
 		a = NULL;
 		main_fun->l = readline ("~$ :");
+		if (main_fun->l)
+			main_fun->l = remove_tab(main_fun->l);
 		add_history(main_fun->l);
 		if (!main_fun->l)
 		{

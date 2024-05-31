@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 19:57:15 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:02:04 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_pars(char *str)
 
 int	pipeee(char *str, int *i, int *j)
 {
-	if (i - 1 >= 0)
+	if (*i - 1 >= 0)
 	{
 		if (str[*i - 1] == '|' || str[*i + 1] == '|')
 		{
