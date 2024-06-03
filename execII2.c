@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 18:44:37 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:02:48 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	ft_unset_v1(t_env **env, t_hxh *lst, int i, t_env *tmp3)
 			(*env)->next = tmp1;
 		}
 		tmp = (*env);
-		(*env) = (*env)->next;
+		if (*env)
+			(*env) = (*env)->next;
 	}
 	*env = tmp3;
 }
@@ -45,7 +46,6 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status)
 	int		i;
 	t_env	*tmp3;
 
-	tmp3 = *env;
 	if (ft_strcmp(lst->value[0], "unset") == 0)
 	{
 		if (not_valid(lst->value) == 1)
@@ -58,6 +58,7 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status)
 		i = 1;
 		while (lst->value[i])
 		{
+			tmp3 = *env;
 			ft_unset_v1(env, lst, i, tmp3);
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 19:33:04 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:41:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,17 @@ void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 		t_hxh *final_linked)
 {
 	main_fun->buf = 0;
+	g_is_in_mini = 0;
 	while (1)
 	{
 		main_fun->envi2 = store_env_2darr(*environment);
 		a = NULL;
 		main_fun->l = readline ("~$ :");
+		if (g_is_in_mini == 3)
+		{
+			g_is_in_mini = 0;
+			main_fun->exit_status = 1;
+		}
 		if (main_fun->l)
 			main_fun->l = remove_tab(main_fun->l);
 		if (!main_fun->l)

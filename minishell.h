@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 17:03:13 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:19:17 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define ERROR_GETCWD "cd: error retrieving current directory: getcwd: \
 cannot access parent directories: No such file or directory\n"
+
+int	g_is_in_mini;
 
 typedef struct stack
 {
@@ -192,7 +194,7 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void	ft_putstr_fd1(char *s, int fd);
 char	**ft_split(char const *s, char c);
 char	*look_for_path(char *cmd, char *path);
-void	setup_signal_handlers(void);
+void	setup_signal_handlers(int *exit_status);
 char	**store_env_2darr(t_env *environment);
 char	*ft_get_env(char *var, t_env *enviroment);
 char	*new_var_woutequal(char *variable);

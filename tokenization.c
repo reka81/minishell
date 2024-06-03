@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 19:21:25 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:52:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ void	freeing_pr(t_stack **a)
 
 int	main(int ac, char **av, char **env)
 {
-	t_stack	*a;
-	t_hxh	*final_linked;
-	t_env	*environment;
-	t_main	*main_fun;
+	t_stack		*a;
+	t_hxh		*final_linked;
+	t_env		*environment;
+	t_main		*main_fun;
 
 	a = NULL;
 	final_linked = NULL;
@@ -93,6 +93,8 @@ int	main(int ac, char **av, char **env)
 		fill_env2(&environment);
 	main_fun->l = NULL;
 	main_fun->exit_status = 0;
-	setup_signal_handlers();
+	g_is_in_mini = 0;
+	main_fun->current_path = NULL;
+	setup_signal_handlers(&main_fun->exit_status);
 	routine(a, main_fun, &environment, final_linked);
 }
