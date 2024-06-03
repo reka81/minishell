@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 13:36:48 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:32:48 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 		if (final_linked)
 		{
 			g_is_in_mini = 1;
+			fd = dup(0);
 			execution(environment, final_linked,
 				main_fun->envi2, &main_fun->exit_status);
+			(dup2(fd, 0), close(fd));
 			g_is_in_mini = 0;
 			main_fun->old_path = main_fun->buf;
 			main_fun->buf = ft_update_pwd(*environment,
@@ -83,6 +85,7 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 	}
 	if (main_fun->l)
 	{
+		add_history(main_fun->l);
 		if (!double_pipe(main_fun->l)
 			&& !ds_quotes(main_fun->l) && !ft_pars(main_fun->l))
 		{

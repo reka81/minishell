@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 16:53:46 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:03:13 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ int		parentheses(char *str);
 t_hxh	*ft_store(t_stack *lol, t_env *environment);
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
 void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
-// void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
 void	herdog(t_stack **lst, t_int *lor_int);
 char	*infile(t_stack **lst, t_int *lor_int, int *i);
 void	rederection(t_stack **lst, t_int *lor_int, int *i);

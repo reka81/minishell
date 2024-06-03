@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 13:32:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:55:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ char	*herdog_delm(t_stack **lst)
 			if (tmp->next->type == 6)
 			{
 				str = next_space(&tmp, str, lst);
-				printf("%s\n", str);
 			}
 			else if (tmp->next->type != 6)
 			{

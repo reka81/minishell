@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:38:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 16:52:38 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:39:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ char	*remove_tab(char *l)
 		}
 	}
 	new_str[j] = '\0';
+	free(l);
 	return (new_str);
 }

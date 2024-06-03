@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 19:36:59 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 21:22:28 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:42:14 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	rest_of_expanding6(t_counter *count_num, t_stack *a,
 {
 	if (a->value[count_num->i] == '$')
 	{
-		count_num->e = 0;
 		while (a->value[count_num->i])
 		{
+			count_num->e = 0;
 			count_num->d = 0;
 			count_num->j = ft_strlen1(expander->str2);
 			expander->str2[count_num->j] = '\0';
