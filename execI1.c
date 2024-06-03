@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:15:07 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:11:05 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ft_strmcpy(char *path, char *value)
 	int	i;
 
 	i = 0;
+	if (!value)
+		return (NULL);
 	path = zyalloc(ft_strlen1(value) + 1);
 	while (value[i])
 	{

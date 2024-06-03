@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 19:20:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:26:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	last_pipe(t_hxh *final_linked, char **env,
 		var->path2 = look_for_path(final_linked->value[0],
 				ft_get_env("PATH", environment));
 	if (!ft_strcmp(final_linked->value[0], "export"))
-		export(final_linked, environment, var);
+		export(final_linked, environment, var, var->exit_status);
 	else if (final_linked->shouldnt_run != 5)
 	{
 		if (execve(var->path2, arg, env) == -1)

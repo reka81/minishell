@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/03 20:01:20 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:09:51 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_echo2(int *i, t_hxh *lst)
 	}
 }
 
-void	ft_echo(t_hxh *lst)
+void	ft_echo(t_hxh *lst, int *exit_status)
 {
 	int		i;
 
@@ -110,4 +110,5 @@ void	ft_echo(t_hxh *lst)
 		}
 		lst = lst->next;
 	}
+	*exit_status = 0;
 }

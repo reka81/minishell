@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:52:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:12:45 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	main(int ac, char **av, char **env)
 	main_fun->exit_status = 0;
 	g_is_in_mini = 0;
 	main_fun->current_path = NULL;
+	main_fun->old_path = NULL;
 	setup_signal_handlers(&main_fun->exit_status);
 	routine(a, main_fun, &environment, final_linked);
 }

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 19:19:17 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:30:33 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	execution(t_env **environment, t_hxh *final_linked,
 			char **env, int *exit_status);
 int		ft_lstsize(t_hxh *lst);
 int		ft_cheak_n(char *str);
-void	ft_echo(t_hxh *lst);
+void	ft_echo(t_hxh *lst, int *exit_status);
 void	ft_exit(t_hxh *lst);
 void	ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void	ft_putstr_fd1(char *s, int fd);
@@ -234,13 +234,13 @@ void	setting_var_and_val(char **variable,
 			char **value, t_hxh *final_linked, int d);
 int		cmp_w_dlm(char c, char s);
 int		check_if_dlm(char *str);
-void	normal_exporting(char *variable, char *value,
+int		normal_exporting(char *variable, char *value,
 			t_hxh *final_linked, t_env *environment);
 void	no_args_export2(t_env *environment);
 void	export2(t_hxh *final_linked, t_env *environment,
 			char *variable, char *value);
 void	export(t_hxh *final_linked, t_env *environment,
-			t_exec1 *var);
+			t_exec1 *var, int *exit_status);
 char	**fill_args(t_hxh *final_linked);
 void	dup_close1(t_hxh *final_linked);
 void	dup_close2(t_hxh *final_linked);
@@ -257,7 +257,7 @@ void	env_cmd(t_env *environment);
 void	cd_cmd(t_hxh *final_linked, t_env *environment);
 int		ft_cheak_n(char *str);
 int		ft_strdigit(char *str);
-void	ft_echo(t_hxh *lst);
+void	ft_echo(t_hxh *lst, int *exit_status);
 void	ft_exit(t_hxh *lst);
 void	dup_close5(int fd_out, int fd_in);
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,
