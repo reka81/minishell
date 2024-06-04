@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 22:37:41 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:36:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,28 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status)
 void	one_command(t_hxh *final_linked, t_env **environment,
 		t_exec1 *var, int *exit_status)
 {
-	if (!strcmp(final_linked->value[0], "pwd"))
-		pwd_cmd(final_linked);
-	else if (!strcmp(final_linked->value[0], "export")
-		|| check_if_value(final_linked->value))
-		export(final_linked, *environment, var, exit_status);
-	else if (!strcmp(final_linked->value[0], "env"))
-		env_cmd(*environment);
-	else if (!strcmp(final_linked->value[0], "cd"))
-		cd_cmd(final_linked, *environment, exit_status);
-	else if (!strcmp(final_linked->value[0], "echo"))
-		ft_echo(final_linked, exit_status);
-	else if (!strcmp(final_linked->value[0], "unset"))
-		ft_unset(final_linked, environment, exit_status);
-	else if (!strcmp(final_linked->value[0], "exit"))
-		ft_exit(final_linked);
+	if(final_linked->shouldnt_run != 5)
+	{
+		if (!strcmp(final_linked->value[0], "pwd"))
+			pwd_cmd(final_linked);
+		else if (!strcmp(final_linked->value[0], "export")
+			|| check_if_value(final_linked->value))
+			export(final_linked, *environment, var, exit_status);
+		else if (!strcmp(final_linked->value[0], "env"))
+			env_cmd(*environment);
+		else if (!strcmp(final_linked->value[0], "cd"))
+			cd_cmd(final_linked, *environment, exit_status);
+		else if (!strcmp(final_linked->value[0], "echo"))
+			ft_echo(final_linked, exit_status);
+		else if (!strcmp(final_linked->value[0], "unset"))
+			ft_unset(final_linked, environment, exit_status);
+		else if (!strcmp(final_linked->value[0], "exit"))
+			ft_exit(final_linked);
+		else
+			not_builtins(final_linked, var, *environment, exit_status);
+	}
 	else
-		not_builtins(final_linked, var, *environment, exit_status);
+		*exit_status = 1;
 }
 
 void	execution(t_env **environment, t_hxh *final_linked,

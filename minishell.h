@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 22:38:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:04:52 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -119,6 +121,7 @@ typedef struct s_forexpand
 	int		dollar_flag;
 	int		exit_status;
 	char	*str2;
+	int		empty;
 }	t_exp;
 
 typedef struct s_numbers
@@ -171,12 +174,12 @@ int		ft_pars(char *str);
 int		ds_quotes(char *str);
 int		double_pipe(char *str);
 int		parentheses(char *str);
-t_hxh	*ft_store(t_stack *lol, t_env *environment);
+t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status);
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
-void	append(t_stack **lst, int *fd, t_int *lor_int, int *i);
+char    *append(t_stack **lst, t_int *lor_int, int *i, char *chen);
 void	herdog(t_stack **lst, t_int *lor_int);
-char	*infile(t_stack **lst, t_int *lor_int, int *i);
-void	rederection(t_stack **lst, t_int *lor_int, int *i);
+char    *infile(t_stack **lst, t_int *lor_int, int *i, char *chen);
+char    *rederection(t_stack **lst, t_int *lor_int, int *i, char *chen);
 char	*herdog_delm(t_stack **lst);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
@@ -311,8 +314,8 @@ char	*ft_get_env1(char *val, t_env *enviroment);
 char	*new_val_woutequal(char *value);
 int		more_than_two(t_stack *lst);
 void	fill_env2(t_env **environment);
-void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int);
-void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int);
+char    *append_open_file(t_stack **lst, int *i, t_int *lor_int, char *chen);
+char	*append_open_file2(t_stack **lst, int *i, t_int *lor_int, char *chen);
 char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
 void	split_or_not_split(t_stack **lst, char **splitting,
 			t_int *lor_int, int *j);

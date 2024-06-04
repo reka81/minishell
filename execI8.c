@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 13:47:08 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:36:58 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,33 @@ void	checking_if_signal(int fd_out, int fd_in,
 void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 	t_env *environment, int *exit_status)
 {
+	struct stat	st;
+
 	signal(SIGQUIT, ctl_c);
 	if (is_apath(final_linked->value[0]))
+	{
 		var->path = ft_strmcpy(var->path, final_linked->value[0]);
+		if (access(var->path, F_OK) == -1)
+			(dprintf(2, "bash: %s: No such file or directory\n", var->path), exit(127));
+		else if (access(var->path, R_OK) == -1)
+			(dprintf(2, "bash: %s: permision denied\n", var->path), exit(126));
+	}
 	else
 		var->path = look_for_path(final_linked->value[0],
 				ft_get_env("PATH", environment));
 	if (final_linked->shouldnt_run != 5)
 	{
+		if (stat(var->path, &st) == 0 && S_ISDIR(st.st_mode))
+			(dprintf(2, "bash: %s: is a directory\n", var->path), exit(126));
 		if (execve(var->path, final_linked->value, var->env) == -1)
 		{
 			dprintf(2, "bash : %s:command not found\n",
 				final_linked->value[0]);
 			*exit_status = 127;
 		}
+		exit(127);
 	}
-	exit(127);
+	exit(1);
 }
 
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,

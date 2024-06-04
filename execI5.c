@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/03 20:32:01 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:10:40 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ int	normal_exporting(char *variable, char *value,
 	if ((value[0] == '\0' && check_if_pls2(variable))
 		|| ft_isdigit(variable[0]) || check_if_dlm(variable))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", variable);
+		dprintf(2, "bash: export: `%s': not a valid identifier\n", variable);
 		return (1);
 	}
 	else if (variable[0] == '\0')
+	{
 		exp_n_valid(final_linked, value);
+		return (1);
+	}
 	else
 	{
 		new = new_var_woutpls(variable);

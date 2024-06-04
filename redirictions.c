@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 14:30:55 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:12:59 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,38 @@ void	herdog(t_stack **lst, t_int *lor_int)
 	}
 }
 
-void	append_open_file(t_stack **lst, int *fd, int *i, t_int *lor_int)
+char    *append_open_file(t_stack **lst, int *i, t_int *lor_int, char *chen)
 {
-	if (lor_int->out >= 3)
-		close(lor_int->fd);
-	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
-	{
-		lor_int->fd = 1;
-		*i = 2;
-		return ;
-	}
-	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
-	{
-		if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
-			*i = 0;
-		else
-		{
-			lor_int->fd = 1;
-			*i = 1;
-			return ;
-		}
-	}
-	*fd = open((*lst)->next->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+    if (lor_int->out >= 3)
+        close(lor_int->fd);
+    if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+    {
+        lor_int->fd = 1;
+        *i = 2;
+        return (NULL);
+    }
+    else if (count_strings((*lst)->next->next->value, ' ') >= 2)
+    {
+        if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
+            *i = 0;
+        else
+        {
+            lor_int->fd = 1;
+            *i = 1;
+            return (NULL);
+        }
+    }
+    lor_int->fd = open((*lst)->next->next->value,
+            O_CREAT | O_RDWR | O_APPEND, 0644);
+    if (lor_int->fd < 0)
+    {
+        dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->next->value);
+        chen = "invalid";
+    }
+    return (chen);
 }
 
-void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
+char	*append_open_file2(t_stack **lst, int *i, t_int *lor_int, char *chen)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
@@ -88,7 +95,7 @@ void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
 	{
 		lor_int->fd = 1;
 		*i = 2;
-		return ;
+		return (NULL);
 	}
 	else if ((*lst)->next == NULL
 		|| count_strings((*lst)->next->value, ' ') >= 2)
@@ -99,8 +106,14 @@ void	append_open_file2(t_stack **lst, int *fd, int *i, t_int *lor_int)
 		{
 			lor_int->fd = 1;
 			*i = 1;
-			return ;
+			return (NULL);
 		}
 	}
-	*fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+	lor_int->fd = open((*lst)->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (lor_int->fd < 0)
+    {
+        dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->value);
+        chen = "invalid";
+    }
+	return (chen);
 }

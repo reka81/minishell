@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:33:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 14:37:34 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:54:12 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	return (chen);
 }
 
-void	append(t_stack **lst, int *fd, t_int *lor_int, int *i)
+char    *append(t_stack **lst, t_int *lor_int, int *i, char *chen)
 {
-	if (ft_strcmp((*lst)->value, ">>") == 0)
-	{
-		if ((*lst)->next->type == 6)
-			append_open_file(lst, fd, i, lor_int);
-		else
-			append_open_file2(lst, fd, i, lor_int);
-		lor_int->out = *fd;
-		if ((*lst)->next->type == 6)
-			(*lst) = (*lst)->next->next;
-		else
-			(*lst) = (*lst)->next;
-	}
+    if (ft_strcmp((*lst)->value, ">>") == 0)
+    {
+        if ((*lst)->next->type == 6)
+            chen = append_open_file(lst, i, lor_int, chen);
+        else
+            chen = append_open_file2(lst, i, lor_int, chen);
+        lor_int->out = lor_int->fd;
+        if ((*lst)->next->type == 6)
+            (*lst) = (*lst)->next->next;
+        else
+            (*lst) = (*lst)->next;
+    }
+    return (chen);
 }

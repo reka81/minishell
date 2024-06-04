@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:04:55 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 19:42:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:29:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,44 @@ void	rest_of_expanding2(t_stack *a, t_counter *count_num, char *str2)
 	}
 }
 
+// int	check_behind(char *str, int j, int start)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (j - start > 0)
+// 	{
+// 		if (str[j] == ' ')
+// 		{
+// 			while (j >= start)
+// 			{
+// 				if (str[j] != ' ')
+// 					return (1);
+// 				j--;
+// 			}
+// 		}
+// 	}
+// 	return (0);
+// }
+
 void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 			t_exp *expander, t_env *environment)
 {
 	char	*str;
+	int		i;
+	int		flag;
+	int		star_of;
 
+	star_of = count_num->i;
+	flag = 0;
+	i = 0;
 	str = zyalloc(ft_strlen1(a->value) + 1);
 	if (expander->dollar_flag == 1)
 	{
 		while (a->value[count_num->i] && !cmp_delim(a->value[count_num->i]))
 		{
+			if (a->value[count_num->i] == ' ')
+				break ;
 			str[count_num->j] = a->value[count_num->i];
 			count_num->i++;
 			count_num->j++;
@@ -76,6 +104,10 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 		}
 	}
 	str[count_num->j] = '\0';
+	if (str[0] == '\0')
+		expander->empty = 1;
+	else
+		expander->empty = 0;
 	if (!ft_strcmp(str, "?"))
 		expander->user = ft_itoa(expander->exit_status);
 	else
@@ -104,7 +136,9 @@ void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
 	if (count_num->d > 0)
 		str2[count_num->j] = '\0';
 	count_num->j = ft_strlen1(str2);
-	if (i == 0)
+	if (expander->empty == 1)
+		expander->empty = 1;
+	else if (i == 0)
 	{
 		count_num->j -= count_num->e;
 		str2[count_num->j] = '\0';

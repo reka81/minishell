@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 20:26:23 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:28:19 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,12 @@ void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var)
 			tcsetattr(STDIN_FILENO, TCSANOW, &var->my_termios);
 		}
 		*var->exit_status = 128 + WTERMSIG(*var->exit_status);
+		printf("%d\n", *var->exit_status);
 	}
 	else
+	{
 		*var->exit_status = WEXITSTATUS(*var->exit_status);
+	}
 }
 
 void	setting_values5(t_exec1 *var, t_hxh *final_linked)
@@ -94,12 +97,16 @@ void	primary_pipes(t_exec1 *var, t_hxh *final_linked,
 		final_linked = final_linked->next;
 		var->a--;
 		var->i++;
-		if (var->a == 1 && final_linked->shouldnt_run != 5)
+		if (var->a == 1)
 		{
 			var->pid = fork();
 			var->pid_tab[var->i] = var->pid;
 			if (var->pid == 0)
+			{
+				if (final_linked->value[0] == NULL)
+					exit(0);
 				last_pipe(final_linked, env, environment, var);
+			}
 			close_fds(final_linked);
 		}
 	}

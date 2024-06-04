@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 13:34:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 23:09:12 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
 		}
 		if (lor_int->chen != NULL)
 		{
-			if (ft_strcmp("broken", lor_int->chen) == 0)
+			if (ft_strcmp("broken", lor_int->chen) == 0 || ft_strcmp("invalid", lor_int->chen) == 0)
 				break ;
-			printf("%s\n", lor_int->chen);
+			dprintf(2, "%s\n", lor_int->chen);
 			break ;
 		}
 		if (lst == NULL)
@@ -78,7 +78,7 @@ void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
 	}
 }
 
-t_hxh	*ft_store(t_stack *lol, t_env *environment)
+t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 {
 	t_hxh	*l;
 	t_int	*lor_int;
@@ -90,6 +90,7 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment)
 	lor_int->i = 0;
 	lor_int->n = 1;
 	lor_int->chen = NULL;
+	(void)exit_status;
 	while (lst != NULL)
 	{
 		creating_list(&lst, lor_int, environment);

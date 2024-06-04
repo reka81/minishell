@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 22:14:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:30:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 	if (a)
 	{
 		fd = dup(0);
-		final_linked = ft_store(a, *environment);
+		final_linked = ft_store(a, *environment, &main_fun->exit_status);
 		(dup2(fd, 0), close(fd));
 		while (check_if_faulty(final_linked))
 			clean_final(final_linked);

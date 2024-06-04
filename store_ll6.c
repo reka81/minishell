@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:35:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 14:35:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:47:52 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,28 +56,28 @@ void	if_next_is_null(t_stack **lst, char **splitting, t_int *lor_int, int *j)
 	}
 }
 
-char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
+char    *opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i)
 {
-	extern int	g_is_in_mini;
+    extern int    g_is_in_mini;
 
-	rederection(lst, lor_int, &i);
-	chen = infile(lst, lor_int, &i);
-	g_is_in_mini = 2;
-	if (read(0, NULL, 0) == -1)
-	{
-		chen = "broken";
-		return (chen);
-	}
-	herdog(lst, lor_int);
-	g_is_in_mini = 0;
-	append(lst, &lor_int->fd, lor_int, &i);
-	if (i == 1 || i == 2)
-	{
-		if (i == 1)
-			lor_int->k = 20;
-		else
-			lor_int->k = 30;
-		return (chen);
-	}
-	return (chen);
+    chen = rederection(lst, lor_int, &i, chen);
+    chen = infile(lst, lor_int, &i, chen);
+    g_is_in_mini = 2;
+    if (read(0, NULL, 0) == -1)
+    {
+        chen = "broken";
+        return (chen);
+    }
+    herdog(lst, lor_int);
+    g_is_in_mini = 0;
+    chen = append(lst, lor_int, &i, chen);
+    if (i == 1 || i == 2)
+    {
+        if (i == 1)
+            lor_int->k = 20;
+        else
+            lor_int->k = 30;
+        return (chen);
+    }
+    return (chen);
 }
