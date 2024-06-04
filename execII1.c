@@ -6,13 +6,26 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/03 20:09:51 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:19:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd_cmd(t_hxh *final_linked, t_env *environment)
+int	check_pwd(t_env *env)
+{
+	while (env != NULL)
+	{
+		if (ft_strcmp(env->variable, "PWD=") == 0)
+		{
+			return (0);
+		}
+		env = env->next;
+	}
+	return (1);
+}
+
+void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status)
 {
 	char	*user;
 	char	cwd[1024];
@@ -20,21 +33,38 @@ void	cd_cmd(t_hxh *final_linked, t_env *environment)
 	if (final_linked->value[1])
 	{
 		if (chdir(final_linked->value[1]) != 0)
+		{
 			perror("chdir ");
+			*exit_status = 1;
+			return ;
+		}
 		else if (!getcwd(cwd, 1024))
 		{
 			dprintf(2, ERROR_GETCWD);
+			*exit_status = 1;
+			return ;
 		}
 	}
 	else
 	{
 		user = ft_get_env("HOME", environment);
 		if (user)
-		{
 			chdir(user);
-		}
 		else
+		{
 			printf("bash: cd: HOME not set\n");
+			*exit_status = 1;
+			return ;
+		}
+	}
+	if (check_pwd(environment) == 1)
+	{
+		while (environment != NULL)
+		{
+			if (ft_strcmp(environment->variable, "OLDPWD=") == 0)
+				environment->value[0] = '\0';
+			environment = environment->next;
+		}
 	}
 }
 

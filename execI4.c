@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:54:53 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 15:20:23 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:12:17 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	no_args_export(t_hxh *final_linked, char **env)
 
 	tmp = NULL;
 	filling_env(env, &tmp);
-	tmp = sort_envi(tmp);
+	if (tmp)
+		tmp = sort_envi(tmp);
 	while (tmp)
 	{
 		if (tmp->variable)

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 20:30:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:38:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 int		execute_cmds(t_hxh *final_linked, char **env, t_env *environment);
 void	pwd_cmd(t_hxh *final_linked);
 void	env_cmd(t_env *environment);
-void	cd_cmd(t_hxh *final_linked, t_env *environment);
+void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status);
 int		ft_cheak_n(char *str);
 int		ft_strdigit(char *str);
 void	ft_echo(t_hxh *lst, int *exit_status);

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 20:14:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:37:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	one_command(t_hxh *final_linked, t_env **environment,
 	else if (!strcmp(final_linked->value[0], "env"))
 		env_cmd(*environment);
 	else if (!strcmp(final_linked->value[0], "cd"))
-		cd_cmd(final_linked, *environment);
+		cd_cmd(final_linked, *environment, exit_status);
 	else if (!strcmp(final_linked->value[0], "echo"))
 		ft_echo(final_linked, exit_status);
 	else if (!strcmp(final_linked->value[0], "unset"))
