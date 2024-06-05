@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:33:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/04 22:54:12 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:28:04 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 			|| (*lst)->type == 2 || (*lst)->type == 0))
 	{
 		if ((*lst)->next)
-		{
 			cheack_if_space_or_not(lst, splitting, lor_int, j);
-		}
 		else
 			if_next_is_null(lst, splitting, lor_int, &j);
 	}

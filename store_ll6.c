@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:35:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/04 22:47:52 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:28:14 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,34 @@ void	if_next_not_space(t_stack **lst, t_int *lor_int,
 	if ((*lst)->next->type != 3)
 	{
 		split_or_not_split(lst, splitting, lor_int, j);
-		if ((*lst)->next->did_expand == 40)
+		while((*lst)->next != NULL && (*lst)->next->type != 3 && (*lst)->next->type != 6)
 		{
 			if ((*lst)->next->type == 1)
+			{
 				lor_int->str[lor_int->z - 1] = ft_strjoin(
 						lor_int->str[lor_int->z - 1], (*lst)->next->value);
+			}
 			else if ((*lst)->next->type == 0)
-				handling_space_in_expanding(lst, splitting, j, lor_int);
+			{
+				if ((*lst)->next->did_expand == 40)
+					handling_space_in_expanding(lst, splitting, j, lor_int);
+				else
+				{
+					printf("%s--%s\n", lor_int->str[lor_int->z - 1], (*lst)->value);
+					lor_int->str[lor_int->z - 1]
+						= ft_strjoin(lor_int->str[lor_int->z - 1], (*lst)->next->value);
+				}
+			}
+			else
+			{
+				lor_int->str[lor_int->z - 1]
+					= ft_strjoin(lor_int->str[lor_int->z - 1], (*lst)->next->value);
+			}
+			*lst = (*lst)->next;
 		}
-		else
-			lor_int->str[lor_int->z - 1]
-				= ft_strjoin(lor_int->str[lor_int->z - 1], (*lst)->next->value);
-		(*lst) = (*lst)->next;
 	}
 	else
-	{
 		handling_dq(lst, splitting, j, lor_int);
-	}
 }
 
 void	if_next_is_null(t_stack **lst, char **splitting, t_int *lor_int, int *j)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirictions1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 16:55:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:38:18 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,27 @@ char	*join_delm(t_stack **tmp, t_stack **lst, char *str)
 	{
 		if ((*tmp)->next->type != 6)
 		{
-			if (!str)
-				str = ft_strjoin((*tmp)->value,
-						(*tmp)->next->value);
+			if ((*tmp)->next->type != 3)
+			{
+				if (!str)
+					str = ft_strjoin((*tmp)->value,
+							(*tmp)->next->value);
+				else
+					str = ft_strjoin(str, (*tmp)->next->value);
+			}
 			else
-				str = ft_strjoin(str, (*tmp)->next->value);
+			{
+				str = (*tmp)->value;
+				*lst = (*tmp);
+				break ;
+			}
 		}
 		else
+		{
+			str = (*tmp)->value;
+			*lst = (*tmp);
 			break ;
+		}
 		(*tmp) = (*tmp)->next;
 		*lst = (*tmp);
 	}
@@ -61,11 +74,20 @@ char	*join_delm1(t_stack **tmp, t_stack **lst, char *str)
 	{
 		if ((*tmp)->next->type != 6)
 		{
-			if (!str)
-				str = ft_strjoin((*tmp)->value,
-						(*tmp)->next->value);
+			if ((*tmp)->next->type != 3)
+			{
+				if (!str)
+					str = ft_strjoin((*tmp)->value,
+							(*tmp)->next->value);
+				else
+					str = ft_strjoin(str, (*tmp)->next->value);
+			}
 			else
-				str = ft_strjoin(str, (*tmp)->next->value);
+			{
+				str = (*tmp)->value;
+				*lst = (*tmp);
+				break ;
+			}
 		}
 		else
 			break ;
@@ -112,10 +134,14 @@ char	*herdog_delm(t_stack **lst)
 			if (tmp->next->type == 6)
 			{
 				str = next_space(&tmp, str, lst);
+				if (str)
+					break ;
 			}
 			else if (tmp->next->type != 6)
 			{
 				str = next_not_space(&tmp, str, lst);
+				if (str)
+					break ;
 			}
 		}
 		tmp = tmp->next;

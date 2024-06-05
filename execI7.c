@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 19:18:08 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:32:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		dup_close3(var->fd);
 	if (!ft_strcmp(var->arg[0], "export"))
 		expo2(final_linked, environment, var->variable, var->value);
+	if (!ft_strcmp(var->arg[0], "exit"))
+		ft_exit2(final_linked);
 	else
 	{
 		if (final_linked->shouldnt_run != 5 && final_linked->value[0])
