@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 16:37:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:41:15 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	increment_to_pipe(t_stack **lst)
 void	init2(t_int *lor_int)
 {
 	lor_int->str = zyalloc(sizeof(char *) * 100);
+	lor_int->str[0] = NULL;
 	lor_int->out = 1;
 	lor_int->in = 0;
 	lor_int->fd = 0;
@@ -50,15 +51,15 @@ void	imbigious_red(t_int *lor_int, t_env *environment, char *var)
 	return ;
 }
 
-void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment, int *last_pipe)
+void	creating_list(t_stack **lst, t_int *lor_int,
+	t_env *environment, int *last_pipe)
 {
 	char	*var;
 
 	init2(lor_int);
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
-		lor_int->val = NULL;
-		var = NULL;
+		(1) && (lor_int->val = NULL, var = NULL);
 		lor_int->chen = NULL;
 		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
 		if (lor_int->k == 20 || lor_int->k == 30)
@@ -68,17 +69,15 @@ void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment, int *last_
 		}
 		if (lor_int->chen != NULL)
 		{
-			if (ft_strcmp("broken", lor_int->chen) == 0 || ft_strcmp("invalid", lor_int->chen) == 0)
+			if (ft_strcmp("broken", lor_int->chen) == 0
+				|| ft_strcmp("invalid", lor_int->chen) == 0)
 				break ;
 			dprintf(2, "%s\n", lor_int->chen);
 			break ;
 		}
 		if (*lst == NULL)
 			break ;
-		if (ft_strcmp((*lst)->value, "|") == 0 && (*lst)->next == NULL)
-			*last_pipe = 1;
-		else
-			*last_pipe = 0;
+		last_pipe_num(lst, last_pipe);
 	}
 }
 
@@ -102,11 +101,8 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
 		if (last_pipe)
-		{
-			init2(lor_int);
-			lor_int->str[0] = NULL;
-			ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
-		}
+			(init2(lor_int),
+				ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen)));
 		if (lst == NULL)
 			break ;
 		increment_to_pipe(&lst);

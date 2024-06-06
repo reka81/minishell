@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 23:16:51 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:24:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ int	check_if_faulty(t_hxh *a)
 	return (0);
 }
 
+void	updatethepwd(t_main *main_fun, t_env **environment)
+{
+	ft_strmcpy(main_fun->old_path, main_fun->buf);
+	free(main_fun->buf);
+	main_fun->buf = NULL;
+	main_fun->buf = ft_update_pwd(*environment,
+			main_fun->current_path, main_fun->old_path);
+}
+
 void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 	t_env **environment, t_main *main_fun)
 {
@@ -66,11 +75,7 @@ void	rest_of_main2(t_stack *a, t_hxh *final_linked,
 				main_fun->envi2, &main_fun->exit_status);
 			(dup2(fd, 0), close(fd));
 			g_is_in_mini = 0;
-			ft_strmcpy(main_fun->old_path, main_fun->buf);
-			free(main_fun->buf);
-			main_fun->buf = NULL;
-			main_fun->buf = ft_update_pwd(*environment,
-					main_fun->current_path, main_fun->old_path);
+			updatethepwd(main_fun, environment);
 		}
 	}
 }
@@ -99,17 +104,4 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 		}
 		free(main_fun->l);
 	}
-}
-
-t_env	*ft_lstnew5(char *variable, char *value)
-{
-	t_env	*s1;
-
-	s1 = zyalloc(sizeof(t_env));
-	if (!s1)
-		return (NULL);
-	s1->variable = variable;
-	s1->value = value;
-	s1->next = NULL;
-	return (s1);
 }

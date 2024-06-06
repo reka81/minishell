@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/05 19:00:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:19:47 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	normal_exporting(char *variable, char *value,
 		if (!tmp)
 			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
 		else
-		{
 			join_or_not(value, variable, tmp);
-		}
 	}
 	return (0);
 }
@@ -89,6 +87,14 @@ void	export2(t_hxh *final_linked, t_env *environment,
 	}
 }
 
+void	updating_exite_status(int check, int *exit_status)
+{
+	if (check == 1)
+		*exit_status = 1;
+	else
+		*exit_status = 0;
+}
+
 void	export(t_hxh *final_linked, t_env *environment,
 			t_exec1 *var, int *exit_status)
 {
@@ -115,24 +121,5 @@ void	export(t_hxh *final_linked, t_env *environment,
 			d++;
 		}
 	}
-	if (check == 1)
-		*exit_status = 1;
-	else
-		*exit_status = 0;
-}
-
-char	**fill_args(t_hxh *final_linked)
-{
-	int		i;
-	char	**arg;
-
-	arg = zyalloc(sizeof(char *) * 5);
-	i = 0;
-	while (final_linked->value[i])
-	{
-		arg[i] = final_linked->value[i];
-		i++;
-	}
-	arg[i] = NULL;
-	return (arg);
+	updating_exite_status(check, exit_status);
 }

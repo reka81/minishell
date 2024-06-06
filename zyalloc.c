@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:23:23 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/20 23:03:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:24:07 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,17 @@ void	*zyalloc(long long size)
 	}
 	ft_lstadd_back4(&gorg, ft_lstnew8(address));
 	return (address);
+}
+
+t_env	*ft_lstnew5(char *variable, char *value)
+{
+	t_env	*s1;
+
+	s1 = zyalloc(sizeof(t_env));
+	if (!s1)
+		return (NULL);
+	s1->variable = variable;
+	s1->value = value;
+	s1->next = NULL;
+	return (s1);
 }

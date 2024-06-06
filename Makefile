@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 SRCS = ./environment_fs.c \
@@ -50,7 +50,10 @@ SRCS = ./environment_fs.c \
 ./tokenization4.c \
 ./tokenization5.c \
 ./tokenization6.c \
-./zyalloc.c 
+./zyalloc.c \
+./filling_chen.c\
+./execII4.c\
+./execI9.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h

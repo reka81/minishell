@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 17:22:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:40:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int		double_pipe(char *str);
 int		parentheses(char *str);
 t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status);
 char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen);
-char    *append(t_stack **lst, t_int *lor_int, int *i, char *chen);
+char	*append(t_stack **lst, t_int *lor_int, int *i, char *chen);
 void	herdog(t_stack **lst, t_int *lor_int);
-char    *infile(t_stack **lst, t_int *lor_int, int *i, char *chen);
-char    *rederection(t_stack **lst, t_int *lor_int, int *i, char *chen);
+char	*infile(t_stack **lst, t_int *lor_int, int *i, char *chen);
+char	*rederection(t_stack **lst, t_int *lor_int, int *i, char *chen);
 char	*herdog_delm(t_stack **lst);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
@@ -255,7 +255,8 @@ void	execve1(char *path, char **arg, char **env);
 void	dup_close4(int *fd);
 void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 			t_env *environment, char **env);
-int		execute_cmds(t_hxh *final_linked, char **env, t_env *environment, int *exit_status);
+int		execute_cmds(t_hxh *final_linked, char **env,
+			t_env *environment, int *exit_status);
 void	pwd_cmd(t_hxh *final_linked);
 void	env_cmd(t_env *environment);
 void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status);
@@ -315,7 +316,7 @@ char	*ft_get_env1(char *val, t_env *enviroment);
 char	*new_val_woutequal(char *value);
 int		more_than_two(t_stack *lst);
 void	fill_env2(t_env **environment);
-char    *append_open_file(t_stack **lst, int *i, t_int *lor_int, char *chen);
+char	*append_open_file(t_stack **lst, int *i, t_int *lor_int, char *chen);
 char	*append_open_file2(t_stack **lst, int *i, t_int *lor_int, char *chen);
 char	*opening_rederections(t_stack **lst, t_int *lor_int, char *chen, int i);
 void	split_or_not_split(t_stack **lst, char **splitting,
@@ -326,5 +327,13 @@ void	handling_dq(t_stack **lst, char **splitting, int *j, t_int *lor_int);
 char	*remove_tab(char *l);
 void	ft_exit2(t_hxh *lst, int *exit_status);
 void	pwd_cmd2(t_hxh *final_linked);
+char	*reder_chen2(t_stack **lst, t_int *lor_int, char *chen);
+char	*reder_chen(t_stack **lst, t_int *lor_int, char *chen);
+char	*append_chen2(t_stack **lst, t_int *lor_int, char *chen);
+char	*append_chen(t_stack **lst, t_int *lor_int, char *chen);
+void	last_pipe_num(t_stack **lst, int *last_pipe);
+void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var);
+void	ft_echo2(int *i, t_hxh *lst);
+int		cmp_w_dlm2(char c);
 
 #endif 

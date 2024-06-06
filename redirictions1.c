@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirictions1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/05 15:38:18 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:36:28 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,22 @@ char	*join_delm(t_stack **tmp, t_stack **lst, char *str)
 			if ((*tmp)->next->type != 3)
 			{
 				if (!str)
-					str = ft_strjoin((*tmp)->value,
-							(*tmp)->next->value);
+					str = ft_strjoin((*tmp)->value, (*tmp)->next->value);
 				else
 					str = ft_strjoin(str, (*tmp)->next->value);
 			}
 			else
 			{
-				str = (*tmp)->value;
-				*lst = (*tmp);
+				(1) && (str = (*tmp)->value, *lst = (*tmp));
 				break ;
 			}
 		}
 		else
 		{
-			str = (*tmp)->value;
-			*lst = (*tmp);
+			(1) && (str = (*tmp)->value, *lst = (*tmp));
 			break ;
 		}
-		(*tmp) = (*tmp)->next;
-		*lst = (*tmp);
+		(1) && ((*tmp) = (*tmp)->next, *lst = (*tmp));
 	}
 	return (str);
 }

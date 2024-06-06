@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 17:52:23 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:19:36 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,16 @@ void	ft_unset(t_hxh *lst, t_env **env, int *exit_status)
 	}
 }
 
+void	close_fd(t_hxh *final_linked)
+{
+	if (final_linked->output != 1)
+		close(final_linked->output);
+}
+
 void	one_command(t_hxh *final_linked, t_env **environment,
 		t_exec1 *var, int *exit_status)
 {
-	if(final_linked->shouldnt_run != 5)
+	if (final_linked->shouldnt_run != 5)
 	{
 		if (!strcmp(final_linked->value[0], "pwd"))
 			pwd_cmd(final_linked);
@@ -92,9 +98,7 @@ void	one_command(t_hxh *final_linked, t_env **environment,
 		*exit_status = 1;
 	if (final_linked->input != 0)
 		close(final_linked->input);
-	if (final_linked->output != 1)
-		close(final_linked->output);
-
+	close_fd(final_linked);
 }
 
 void	execution(t_env **environment, t_hxh *final_linked,

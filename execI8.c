@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI8.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/05 23:57:22 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:22:01 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ void	checking_if_signal(int fd_out, int fd_in,
 	dup_close5(fd_out, fd_in);
 }
 
+void	print_cmdnfound(t_hxh *final_linked, int *exit_status)
+{
+	dprintf(2, "bash : %s:command not found\n",
+		final_linked->value[0]);
+	*exit_status = 127;
+}
+
 void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 	t_env *environment, int *exit_status)
 {
@@ -50,7 +57,8 @@ void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 	{
 		var->path = ft_strmcpy(var->path, final_linked->value[0]);
 		if (access(var->path, F_OK) == -1)
-			(dprintf(2, "bash: %s: No such file or directory\n", var->path), exit(127));
+			(dprintf(2, "bash: %s: No such file or directory\n",
+					var->path), exit(127));
 		else if (access(var->path, R_OK) == -1)
 			(dprintf(2, "bash: %s: permision denied\n", var->path), exit(126));
 	}
@@ -62,11 +70,7 @@ void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 		if (stat(var->path, &st) == 0 && S_ISDIR(st.st_mode))
 			(dprintf(2, "bash: %s: is a directory\n", var->path), exit(126));
 		if (execve(var->path, final_linked->value, var->env) == -1)
-		{
-			dprintf(2, "bash : %s:command not found\n",
-				final_linked->value[0]);
-			*exit_status = 127;
-		}
+			print_cmdnfound(final_linked, exit_status);
 		exit(127);
 	}
 	exit(1);
@@ -96,16 +100,4 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 		not_builtins_v2(final_linked, var, environment, exit_status);
 	else
 		checking_if_signal(fd_out, fd_in, exit_status, var);
-}
-
-void	join_or_not(char *value, char *variable, t_env *tmp)
-{
-	if (check_if_pls2(variable))
-	{
-		tmp->value = ft_strjoin(tmp->value, value);
-	}
-	else
-	{
-		tmp->value = value;
-	}
 }

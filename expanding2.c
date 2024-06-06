@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:04:55 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/04 19:29:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:37:47 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,24 @@ void	rest_of_expanding2(t_stack *a, t_counter *count_num, char *str2)
 	}
 }
 
-// int	check_behind(char *str, int j, int start)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (j - start > 0)
-// 	{
-// 		if (str[j] == ' ')
-// 		{
-// 			while (j >= start)
-// 			{
-// 				if (str[j] != ' ')
-// 					return (1);
-// 				j--;
-// 			}
-// 		}
-// 	}
-// 	return (0);
-// }
+void	tb_expanded(t_stack *a, t_counter *count_num,
+	char *str, t_exp *expander)
+{
+	while (a->value[count_num->i] && !cmp_delim(a->value[count_num->i]))
+	{
+		if (a->value[count_num->i] == ' ')
+			break ;
+		str[count_num->j] = a->value[count_num->i];
+		count_num->i++;
+		count_num->j++;
+	}
+	if (a->value[count_num->i] == '?' && expander->exit_to_expand == 1)
+	{
+		str[count_num->j] = a->value[count_num->i];
+		count_num->j++;
+		count_num->i++;
+	}
+}
 
 void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 			t_exp *expander, t_env *environment)
@@ -87,22 +86,7 @@ void	rest_of_expanding3(t_stack *a, t_counter *count_num,
 	i = 0;
 	str = zyalloc(ft_strlen1(a->value) + 1);
 	if (expander->dollar_flag == 1)
-	{
-		while (a->value[count_num->i] && !cmp_delim(a->value[count_num->i]))
-		{
-			if (a->value[count_num->i] == ' ')
-				break ;
-			str[count_num->j] = a->value[count_num->i];
-			count_num->i++;
-			count_num->j++;
-		}
-		if (a->value[count_num->i] == '?' && expander->exit_to_expand == 1)
-		{
-			str[count_num->j] = a->value[count_num->i];
-			count_num->j++;
-			count_num->i++;
-		}
-	}
+		tb_expanded(a, count_num, str, expander);
 	str[count_num->j] = '\0';
 	if (str[0] == '\0')
 		expander->empty = 1;
@@ -129,8 +113,7 @@ void	rest_of_expanding4(t_exp *expander, char *str2, t_counter *count_num)
 		{
 			i = 1;
 			str2[count_num->j] = expander->user[count_num->d];
-			count_num->d++;
-			count_num->j++;
+			(1) && (count_num->d++, count_num->j++);
 		}
 	}
 	if (count_num->d > 0)

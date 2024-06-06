@@ -1,5 +1,0 @@
-builtins im children
-2commands | and spaces after
-pwd '''' > f , leak fd
-export pp=''''
-inside quotes syntax error -> echo '|| >> file'

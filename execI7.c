@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 17:40:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:20:31 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ void	dup_close4(int *fd)
 	close(fd[1]);
 	dup2(fd[0], 0);
 	close(fd[0]);
+}
+
+void	exec_cmd2(t_hxh *final_linked, t_exec *var, char **env)
+{
+	if (final_linked->shouldnt_run != 5 && final_linked->value[0])
+	{
+		if (execve(var->path, var->arg, env) == -1)
+			(dprintf(2, "bash : %s:command not found\n",
+					final_linked->value[0]), exit(127));
+	}
 }
 
 void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
@@ -35,23 +45,20 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		(ft_exit2(final_linked, var->exit_status), exit(*var->exit_status));
 	else if (!ft_strcmp(var->arg[0], "pwd"))
 		(pwd_cmd2(final_linked), exit(0));
-	else if(!ft_strcmp(final_linked->value[0], "unset"))
-		(ft_unset(final_linked, &environment, var->exit_status), exit(*var->exit_status));
+	else if (!ft_strcmp(final_linked->value[0], "unset"))
+		(ft_unset(final_linked, &environment, var->exit_status),
+			exit(*var->exit_status));
 	else
 	{
-		if (final_linked->shouldnt_run != 5 && final_linked->value[0])
-		{
-			if (execve(var->path, var->arg, env) == -1)
-				(dprintf(2, "bash : %s:command not found\n",
-						final_linked->value[0]), exit(127));
-		}
+		exec_cmd2(final_linked, var, env);
 		if (!final_linked->value[0])
 			exit(0);
 		exit(1);
 	}
 }
 
-int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment, int *exit_status)
+int	execute_cmds(t_hxh *final_linked, char **env,
+	t_env *environment, int *exit_status)
 {
 	t_exec	*var;
 
@@ -83,24 +90,4 @@ void	pwd_cmd(t_hxh *final_linked)
 
 	getcwd(cwd, sizeof(cwd));
 	ft_putstr_fd(cwd, final_linked->output);
-}
-
-void	env_cmd(t_env *environment)
-{
-	while (environment)
-	{
-		if ((environment->value[0] != '\0' && environment->variable[0] != '\0')
-			|| check_if_equal(environment->variable))
-			printf("%s%s\n", environment->variable, environment->value);
-		environment = environment->next;
-	}
-}
-
-void	pwd_cmd2(t_hxh *final_linked)
-{
-	char	cwd[1024];
-
-	(void)final_linked;
-	getcwd(cwd, sizeof(cwd));
-	printf("%s\n", cwd);
 }

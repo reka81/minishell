@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/04 17:09:04 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:25:42 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,36 @@ int	check_pwd(t_env *env)
 	return (1);
 }
 
+void	emptying_old_pwd(t_env *environment)
+{
+	while (environment != NULL)
+	{
+		if (ft_strcmp(environment->variable, "OLDPWD=") == 0)
+			environment->value[0] = '\0';
+		environment = environment->next;
+	}
+}
+
+int	cd_cmd1(char *user, int *exit_status, t_env *environment)
+{
+	user = ft_get_env("HOME", environment);
+	if (user)
+		chdir(user);
+	else
+	{
+		printf("bash: cd: HOME not set\n");
+		*exit_status = 1;
+		return (1);
+	}
+	return (0);
+}
+
 void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status)
 {
 	char	*user;
 	char	cwd[1024];
 
+	user = NULL;
 	if (final_linked->value[1])
 	{
 		if (chdir(final_linked->value[1]) != 0)
@@ -46,74 +71,10 @@ void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status)
 		}
 	}
 	else
-	{
-		user = ft_get_env("HOME", environment);
-		if (user)
-			chdir(user);
-		else
-		{
-			printf("bash: cd: HOME not set\n");
-			*exit_status = 1;
+		if (cd_cmd1(user, exit_status, environment) == 1)
 			return ;
-		}
-	}
 	if (check_pwd(environment) == 1)
-	{
-		while (environment != NULL)
-		{
-			if (ft_strcmp(environment->variable, "OLDPWD=") == 0)
-				environment->value[0] = '\0';
-			environment = environment->next;
-		}
-	}
-}
-
-int	ft_cheak_n(char *str)
-{
-	int		i;
-	int		j;
-
-	i = 1;
-	j = 0;
-	if (!str)
-		return (0);
-	if (ft_strlen(str) == 1)
-		return (1);
-	while (str[i])
-	{
-		if ((str[0] != '-' || str[i] != 'n'))
-		{
-			return (1);
-		}
-		i++;
-		j++;
-	}
-	return (2);
-}
-
-int	ft_strdigit(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	ft_echo2(int *i, t_hxh *lst)
-{
-	while (lst->value[(*i)])
-	{
-		if (ft_cheak_n(lst->value[(*i)]) == 2)
-			(*i)++;
-		else
-			break ;
-	}
+		emptying_old_pwd(environment);
 }
 
 void	ft_echo(t_hxh *lst, int *exit_status)

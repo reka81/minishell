@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execII3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:46:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 17:26:19 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:26:41 by zaheddac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	cmp_w_dlm2(char c)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = "/*-!@#$%^";
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	check_if_dlm(char *str)
 {
@@ -50,36 +34,39 @@ int	check_if_dlm(char *str)
 	return (0);
 }
 
-void    ft_exit(t_hxh *lst, int *exit_status)
+void	print_exit(t_hxh *lst)
 {
-    if (!ft_strcmp(lst->value[0], "exit"))
-    {
-        if (lst->value[1])
-        {
-            if (ft_strdigit(lst->value[1]) == 1)
-            {
-                if (lst->value[2] != NULL)
-                {
-                    dprintf(2, "bash: exit: too many arguments\n");
+	dprintf(2, "exit\n");
+	dprintf(2, "bash: exit: %s: numeric argument required",
+		lst->value[1]);
+	exit(255);
+}
+
+void	ft_exit(t_hxh *lst, int *exit_status)
+{
+	if (!ft_strcmp(lst->value[0], "exit"))
+	{
+		if (lst->value[1])
+		{
+			if (ft_strdigit(lst->value[1]) == 1)
+			{
+				if (lst->value[2] != NULL)
+				{
+					dprintf(2, "bash: exit: too many arguments\n");
 					*exit_status = 1;
-				    return ;
-                }
-                (exit(atoi(lst->value[1])), dprintf(2, "exit\n"));
-            }
-            else
-            {
-                dprintf(2, "exit\n");
-                dprintf(2, "bash: exit: %s: numeric argument required",
-                    lst->value[1]);
-                exit(255);
-            }
-        }
-        else
-        {
-            dprintf(2, "exit\n");
-            exit(0);
-        }
-    }
+					return ;
+				}
+				(exit(atoi(lst->value[1])), dprintf(2, "exit\n"));
+			}
+			else
+				print_exit(lst);
+		}
+		else
+		{
+			dprintf(2, "exit\n");
+			exit(0);
+		}
+	}
 }
 
 void	ft_exit2(t_hxh *lst, int *exit_status)
@@ -90,12 +77,12 @@ void	ft_exit2(t_hxh *lst, int *exit_status)
 		{
 			if (ft_strdigit(lst->value[1]) == 1)
 			{
-            	if (lst->value[2] != NULL)
-                {
-                    dprintf(2, "bash: exit: too many arguments\n");
-                    *exit_status = 1;
+				if (lst->value[2] != NULL)
+				{
+					dprintf(2, "bash: exit: too many arguments\n");
+					*exit_status = 1;
 					return ;
-                }
+				}
 				exit(atoi(lst->value[1]));
 			}
 			else

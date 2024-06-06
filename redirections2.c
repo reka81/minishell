@@ -6,98 +6,111 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/04 23:12:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:35:27 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char    *infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
+char	*infile_chen(t_stack **lst, t_int *lor_int, char *chen)
 {
-    if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
-    {
-        *i = 2;
-        return (NULL);
-    }
-    else if (count_strings((*lst)->next->next->value, ' ') >= 2)
-    {
-        if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
-            *i = 0;
-        else
-        {
-            *i = 1;
-            return (NULL);
-        }
-    }
-    if (access((*lst)->next->next->value, F_OK) == 0)
-    {
-        if (lor_int->in >= 3)
-            close(lor_int->fd);
-        lor_int->fd = open((*lst)->next->next->value, O_RDWR, 0644);
-        lor_int->in = lor_int->fd;
-        if (lor_int->fd < 0)
-        {
-            dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->next->value);
-            chen = "invalid";
-        }
-    }
-    else
-        chen = "No such file or directory";
-    return (chen);
+	if (access((*lst)->next->next->value, F_OK) == 0)
+	{
+		if (lor_int->in >= 3)
+			close(lor_int->fd);
+		lor_int->fd = open((*lst)->next->next->value, O_RDWR, 0644);
+		lor_int->in = lor_int->fd;
+		if (lor_int->fd < 0)
+		{
+			dprintf(2, "bash: %s: Permission denied\n",
+				(*lst)->next->next->value);
+			chen = "invalid";
+		}
+	}
+	else
+		chen = "No such file or directory";
+	return (chen);
 }
 
-char    *infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
+char	*infile_chen2(t_stack **lst, t_int *lor_int, char *chen)
 {
-    if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
-    {
-        *i = 2;
-        return (NULL);
-    }
-    else if (count_strings((*lst)->next->value, ' ') >= 2)
-    {
-        if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
-            *i = 0;
-        else
-        {
-            return (NULL);
-        }
-    }
-    if (access((*lst)->next->value, F_OK) == 0)
-    {
-        if (lor_int->in >= 3)
-            close(lor_int->fd);
-        lor_int->fd = open((*lst)->next->value, O_RDWR, 0644);
-        lor_int->in = lor_int->fd;
-        if (lor_int->fd < 0)
-        {
-            dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->value);
-            chen = "invalid";
-        }
-    }
-    else
-        chen = "No such file or directory";
-    return (chen);
+	if (access((*lst)->next->value, F_OK) == 0)
+	{
+		if (lor_int->in >= 3)
+			close(lor_int->fd);
+		lor_int->fd = open((*lst)->next->value, O_RDWR, 0644);
+		lor_int->in = lor_int->fd;
+		if (lor_int->fd < 0)
+		{
+			dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->value);
+			chen = "invalid";
+		}
+	}
+	else
+		chen = "No such file or directory";
+	return (chen);
 }
 
-char    *infile(t_stack **lst, t_int *lor_int, int *i, char *chen)
+char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-    if (ft_strcmp((*lst)->value, "<") == 0)
-    {
-        if ((*lst)->next->type == 6)
-            chen = infile_open_file(lst, chen, i, lor_int);
-        else
-        {
-            chen = infile_open_file1(lst, chen, i, lor_int);
-        }
-        if ((*lst)->next)
-        {
-            if ((*lst)->next->type == 6)
-                (*lst) = (*lst)->next->next;
-            else
-                (*lst) = (*lst)->next;
-        }
-        else
-            (*lst) = (*lst)->next;
-    }
-    return (chen);
+	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	{
+		*i = 2;
+		return (NULL);
+	}
+	else if (count_strings((*lst)->next->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->next->type == 2 || (*lst)->next->next->type == 1)
+			*i = 0;
+		else
+		{
+			*i = 1;
+			return (NULL);
+		}
+	}
+	chen = infile_chen(lst, lor_int, chen);
+	return (chen);
+}
+
+char	*infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
+{
+	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	{
+		*i = 2;
+		return (NULL);
+	}
+	else if (count_strings((*lst)->next->value, ' ') >= 2)
+	{
+		if ((*lst)->next->type == 2 || (*lst)->next->type == 1)
+			*i = 0;
+		else
+		{
+			return (NULL);
+		}
+	}
+	chen = infile_chen2(lst, lor_int, chen);
+	return (chen);
+}
+
+char	*infile(t_stack **lst, t_int *lor_int, int *i, char *chen)
+{
+	if (ft_strcmp((*lst)->value, "<") == 0)
+	{
+		if ((*lst)->next->type == 6)
+			chen = infile_open_file(lst, chen, i, lor_int);
+		else
+		{
+			chen = infile_open_file1(lst, chen, i, lor_int);
+		}
+		if ((*lst)->next)
+		{
+			if ((*lst)->next->type == 6)
+				(*lst) = (*lst)->next->next;
+			else
+				(*lst) = (*lst)->next;
+		}
+		else
+			(*lst) = (*lst)->next;
+	}
+	return (chen);
 }
