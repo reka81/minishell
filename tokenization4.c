@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 18:29:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:43:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	routine(t_stack *a, t_main *main_fun, t_env **environment,
 {
 	main_fun->buf = 0;
 	g_is_in_mini = 0;
-	while (1)// && isatty(0))
+	while (1) //&& isatty(0))
 	{
 		main_fun->envi2 = store_env_2darr(*environment);
 		a = NULL;

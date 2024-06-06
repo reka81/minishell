@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:35:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 22:28:14 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:47:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	if_next_not_space(t_stack **lst, t_int *lor_int,
 					handling_space_in_expanding(lst, splitting, j, lor_int);
 				else
 				{
-					printf("%s--%s\n", lor_int->str[lor_int->z - 1], (*lst)->value);
 					lor_int->str[lor_int->z - 1]
 						= ft_strjoin(lor_int->str[lor_int->z - 1], (*lst)->next->value);
 				}

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 19:26:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:37:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	imbigious_red(t_int *lor_int, t_env *environment, char *var)
 	return ;
 }
 
-void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
+void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment, int *last_pipe)
 {
 	char	*var;
 
@@ -73,8 +73,12 @@ void	creating_list(t_stack **lst, t_int *lor_int, t_env *environment)
 			dprintf(2, "%s\n", lor_int->chen);
 			break ;
 		}
-		if (lst == NULL)
+		if (*lst == NULL)
 			break ;
+		if (ft_strcmp((*lst)->value, "|") == 0 && (*lst)->next == NULL)
+			*last_pipe = 1;
+		else
+			*last_pipe = 0;
 	}
 }
 
@@ -83,6 +87,7 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 	t_hxh	*l;
 	t_int	*lor_int;
 	t_stack	*lst;
+	int		last_pipe;
 
 	lst = lol;
 	l = NULL;
@@ -93,9 +98,15 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 	(void)exit_status;
 	while (lst != NULL)
 	{
-		creating_list(&lst, lor_int, environment);
+		creating_list(&lst, lor_int, environment, &last_pipe);
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
+		if (last_pipe)
+		{
+			init2(lor_int);
+			lor_int->str[0] = NULL;
+			ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
+		}
 		if (lst == NULL)
 			break ;
 		increment_to_pipe(&lst);

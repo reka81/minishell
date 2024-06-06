@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:25:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/03 22:12:45 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:08:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_ambigious_redi(t_stack *a, t_stack *tmp, int *j)
 	{
 		if (a->next)
 		{
-			if (tmp->type == 3 && a->next->value == NULL)
+			if (tmp->type == 3 && a->next->value == NULL && ft_strcmp(tmp->value, "|") != 0)
 			{
 				*j = 1;
 				dprintf(2, "bash: %s: ambiguous redirect\n",
@@ -28,7 +28,7 @@ void	print_ambigious_redi(t_stack *a, t_stack *tmp, int *j)
 	}
 	else
 	{
-		if (tmp->type == 3 && a->value == NULL)
+		if (tmp->type == 3 && a->value == NULL && ft_strcmp(tmp->value, "|") != 0)
 		{
 			*j = 1;
 			dprintf(2, "bash: %s: ambiguous redirect\n", a->was);

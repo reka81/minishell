@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:46:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 18:11:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:26:19 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,54 @@ int	check_if_dlm(char *str)
 	return (0);
 }
 
-void	ft_exit(t_hxh *lst)
+void    ft_exit(t_hxh *lst, int *exit_status)
 {
-	if (!ft_strcmp(lst->value[0], "exit"))
-	{
-		if (lst->value[1])
-		{
-			if (ft_strdigit(lst->value[1]) == 1)
-				(exit(atoi(lst->value[1])), dprintf(2, "exit\n"));
-			else
-			{
-				dprintf(2, "bash: exit: %s: numeric argument required",
-					lst->value[1]);
-				dprintf(2, "exit\n");
-				exit(255);
-			}
-		}
-		else
-		{	
-			dprintf(2, "exit\n");
-			exit(0);
-		}
-	}
+    if (!ft_strcmp(lst->value[0], "exit"))
+    {
+        if (lst->value[1])
+        {
+            if (ft_strdigit(lst->value[1]) == 1)
+            {
+                if (lst->value[2] != NULL)
+                {
+                    dprintf(2, "bash: exit: too many arguments\n");
+					*exit_status = 1;
+				    return ;
+                }
+                (exit(atoi(lst->value[1])), dprintf(2, "exit\n"));
+            }
+            else
+            {
+                dprintf(2, "exit\n");
+                dprintf(2, "bash: exit: %s: numeric argument required",
+                    lst->value[1]);
+                exit(255);
+            }
+        }
+        else
+        {
+            dprintf(2, "exit\n");
+            exit(0);
+        }
+    }
 }
 
-void	ft_exit2(t_hxh *lst)
+void	ft_exit2(t_hxh *lst, int *exit_status)
 {
 	if (!ft_strcmp(lst->value[0], "exit"))
 	{
 		if (lst->value[1])
 		{
 			if (ft_strdigit(lst->value[1]) == 1)
-				(exit(atoi(lst->value[1])));
+			{
+            	if (lst->value[2] != NULL)
+                {
+                    dprintf(2, "bash: exit: too many arguments\n");
+                    *exit_status = 1;
+					return ;
+                }
+				exit(atoi(lst->value[1]));
+			}
 			else
 			{
 				dprintf(2, "bash: exit: %s: numeric argument required",

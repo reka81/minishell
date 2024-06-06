@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 16:02:04 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:16:29 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,31 @@ int	check_fun(char *str)
 				i++;
 			}
 			if (str[i] == '\0')
+			{
 				return (1);
+			}
 		}
 		i++;
 	}
 	return (0);
 }
+int check_if_pipe(char *str, int len)
+{
+	int	nothing;
 
+	nothing = 0;
+	while (len >= 0)
+	{
+		if (str[len] == ' ')
+			len--;
+		else
+			break;
+	}
+	if (str[len] == '|')
+		return (1);
+	else
+		return (0);
+}
 int	ft_parc1(char *str, int len)
 {
 	if (str[0] == '|')
@@ -44,7 +62,7 @@ int	ft_parc1(char *str, int len)
 		return (1);
 	}
 	else if (str[len] == '>' || str[len] == '<'
-		|| str[len] == '|' || check_fun(str) == 1)
+		|| str[len] == '|' || check_fun(str) == 1 || check_if_pipe(str, len))
 	{
 		printf("bash: syntax error\n");
 		return (1);
@@ -74,7 +92,9 @@ int	ft_pars(char *str)
 		}
 	}
 	if (ft_parc1(str, len) == 1)
+	{
 		return (1);
+	}
 	return (0);
 }
 

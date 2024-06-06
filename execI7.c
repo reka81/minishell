@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/05 17:32:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:40:33 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		dup_close3(var->fd);
 	if (!ft_strcmp(var->arg[0], "export"))
 		expo2(final_linked, environment, var->variable, var->value);
-	if (!ft_strcmp(var->arg[0], "exit"))
-		ft_exit2(final_linked);
+	else if (!ft_strcmp(var->arg[0], "exit"))
+		(ft_exit2(final_linked, var->exit_status), exit(*var->exit_status));
+	else if (!ft_strcmp(var->arg[0], "pwd"))
+		(pwd_cmd2(final_linked), exit(0));
+	else if(!ft_strcmp(final_linked->value[0], "unset"))
+		(ft_unset(final_linked, &environment, var->exit_status), exit(*var->exit_status));
 	else
 	{
 		if (final_linked->shouldnt_run != 5 && final_linked->value[0])
@@ -47,7 +51,7 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 	}
 }
 
-int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
+int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment, int *exit_status)
 {
 	t_exec	*var;
 
@@ -56,6 +60,7 @@ int	execute_cmds(t_hxh *final_linked, char **env, t_env *environment)
 	var->ex = 0;
 	pipe(var->fd);
 	var->pid = fork();
+	var->exit_status = exit_status;
 	if (var->pid == 0)
 	{
 		var->arg = fill_args(final_linked);
@@ -89,4 +94,13 @@ void	env_cmd(t_env *environment)
 			printf("%s%s\n", environment->variable, environment->value);
 		environment = environment->next;
 	}
+}
+
+void	pwd_cmd2(t_hxh *final_linked)
+{
+	char	cwd[1024];
+
+	(void)final_linked;
+	getcwd(cwd, sizeof(cwd));
+	printf("%s\n", cwd);
 }

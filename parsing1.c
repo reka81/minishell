@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:21:07 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/21 19:56:27 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/05 23:18:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,7 @@ int	double_pipe(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '|')
-		{
-			if (pipeee(str, &i, &j) == 1)
-				return (1);
-		}
-		else if (str[i] == '>')
+		if (str[i] == '>')
 		{
 			if (rederectionnn(str, &i, &j) == 1)
 				return (1);

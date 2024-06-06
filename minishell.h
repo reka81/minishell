@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/05 17:23:53 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:22:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_exec
 	char	*value;
 	char	*path;
 	int		pid;
+	int		*exit_status;
 }	t_exec;
 
 typedef struct s_exec1
@@ -192,7 +193,7 @@ void	execution(t_env **environment, t_hxh *final_linked,
 int		ft_lstsize(t_hxh *lst);
 int		ft_cheak_n(char *str);
 void	ft_echo(t_hxh *lst, int *exit_status);
-void	ft_exit(t_hxh *lst);
+void	ft_exit(t_hxh *lst, int *exit_status);
 void	ft_unset(t_hxh *lst, t_env **env, int *exit_status);
 void	ft_putstr_fd1(char *s, int fd);
 char	**ft_split(char const *s, char c);
@@ -254,14 +255,14 @@ void	execve1(char *path, char **arg, char **env);
 void	dup_close4(int *fd);
 void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 			t_env *environment, char **env);
-int		execute_cmds(t_hxh *final_linked, char **env, t_env *environment);
+int		execute_cmds(t_hxh *final_linked, char **env, t_env *environment, int *exit_status);
 void	pwd_cmd(t_hxh *final_linked);
 void	env_cmd(t_env *environment);
 void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status);
 int		ft_cheak_n(char *str);
 int		ft_strdigit(char *str);
 void	ft_echo(t_hxh *lst, int *exit_status);
-void	ft_exit(t_hxh *lst);
+void	ft_exit(t_hxh *lst, int *exit_status);
 void	dup_close5(int fd_out, int fd_in);
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 			t_env *environment, int *exit_status);
@@ -323,6 +324,7 @@ void	handling_space_in_expanding(t_stack **lst, char **splitting,
 			int *j, t_int *lor_int);
 void	handling_dq(t_stack **lst, char **splitting, int *j, t_int *lor_int);
 char	*remove_tab(char *l);
-void	ft_exit2(t_hxh *lst);
+void	ft_exit2(t_hxh *lst, int *exit_status);
+void	pwd_cmd2(t_hxh *final_linked);
 
 #endif 

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/04 23:36:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:52:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,17 @@ void	one_command(t_hxh *final_linked, t_env **environment,
 		else if (!strcmp(final_linked->value[0], "unset"))
 			ft_unset(final_linked, environment, exit_status);
 		else if (!strcmp(final_linked->value[0], "exit"))
-			ft_exit(final_linked);
+			(ft_exit(final_linked, exit_status));
 		else
 			not_builtins(final_linked, var, *environment, exit_status);
 	}
 	else
 		*exit_status = 1;
+	if (final_linked->input != 0)
+		close(final_linked->input);
+	if (final_linked->output != 1)
+		close(final_linked->output);
+
 }
 
 void	execution(t_env **environment, t_hxh *final_linked,
