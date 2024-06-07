@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:44:34 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:00:40 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,11 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 		dup_close2(final_linked);
 	else
 		dup_close3(var->fd);
-	if (!ft_strcmp(var->arg[0], "export"))
-		expo2(final_linked, environment, var->variable, var->value);
-	else if (!ft_strcmp(var->arg[0], "exit"))
-		(ft_exit2(final_linked, var->exit_status), exit(*var->exit_status));
-	else if (!ft_strcmp(var->arg[0], "pwd"))
-		(pwd_cmd2(final_linked), exit(0));
-	else if (!ft_strcmp(final_linked->value[0], "unset"))
-		(ft_unset(final_linked, &environment, var->exit_status),
-			exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "echo"))
-		(ft_echo(final_linked, var->exit_status), exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "env"))
-		(env_cmd(environment), exit(0));
-	else
-	{
-		exec_cmd2(final_linked, var, env);
-		if (!final_linked->value[0])
-			exit(0);
-		exit(1);
-	}
+	checking_them2(var, final_linked, environment);
+	exec_cmd2(final_linked, var, env);
+	if (!final_linked->value[0])
+		exit(0);
+	exit(1);
 }
 
 int	execute_cmds(t_hxh *final_linked, char **env,

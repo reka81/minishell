@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:36:14 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:00:17 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,33 +98,6 @@ void	ft_echo(t_hxh *lst, int *exit_status)
 			}
 			if (ft_cheak_n(lst->value[1]) == 1)
 				ft_putchar_fd('\n', lst->output);
-		}
-		lst = lst->next;
-	}
-	*exit_status = 0;
-}
-
-void	ft_echo3(t_hxh *lst, int *exit_status)
-{
-	int		i;
-
-	while (lst != NULL)
-	{
-		if (ft_strcmp("echo", lst->value[0]) == 0)
-		{
-			if (lst->value[1] == NULL)
-				printf("\n");
-			i = 1;
-			ft_echo2(&i, lst);
-			while (lst->value[i])
-			{
-				printf("%s\n", lst->value[i]);
-				if (lst->value[i + 1])
-					ft_putchar_fd(' ', lst->output);
-				i++;
-			}
-			if (ft_cheak_n(lst->value[1]) == 1)
-				printf("\n");
 		}
 		lst = lst->next;
 	}

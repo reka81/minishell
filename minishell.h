@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:48:39 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:02:00 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,5 +358,10 @@ char	*file_name(t_stack **lst);
 char	*str_setting(t_stack **tmp, char *str);
 void	ft_echo3(t_hxh *lst, int *exit_status);
 void	env_cmd2(t_env *environment, int output);
-
+void	checking_them(t_hxh *final_linked, t_env *environment, t_exec1 *var);
+void	checking_them2(t_exec *var, t_hxh *final_linked, t_env *environment);
+void	ft_echo3(t_hxh *lst, int *exit_status);
+void	join_or_not(char *value, char *variable, t_env *tmp);
+void	export_decision(char *variable, char *new,
+			t_env *tmp, t_env *environment);
 #endif 

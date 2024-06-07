@@ -6,18 +6,11 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:21:16 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:59:19 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	export_decision(char *variable, char *new,
-	t_env *tmp, t_env *environment)
-{
-	new = new_var_woutpls(variable);
-	tmp = check_if_var(environment, new);
-}
 
 int	normal_exporting(char *variable, char *value,
 	t_hxh *final_linked, t_env *environment)

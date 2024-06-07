@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:44:22 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:00:54 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,8 @@ void	runing_cmd(t_hxh *final_linked, char **env,
 	char	**arg;
 
 	arg = fill_args(final_linked);
-	if (!ft_strcmp(final_linked->value[0], "export"))
-		(export(final_linked, environment, var, var->exit_status),
-			exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "exit"))
-		(ft_exit2(final_linked, var->exit_status), exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "pwd"))
-		(pwd_cmd2(final_linked), exit(0));
-	else if (!ft_strcmp(final_linked->value[0], "unset"))
-		(ft_unset(final_linked, &environment, var->exit_status),
-			exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "echo"))
-		(ft_echo(final_linked, var->exit_status), exit(*var->exit_status));
-	else if (!ft_strcmp(final_linked->value[0], "env"))
-		(env_cmd(environment), exit(0));
-	else if (final_linked->shouldnt_run != 5)
+	checking_them(final_linked, environment, var);
+	if (final_linked->shouldnt_run != 5)
 	{
 		if (execve(var->path2, arg, env) == -1)
 		{

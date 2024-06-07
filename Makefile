@@ -58,7 +58,8 @@ expanding_herdoc.c \
 ./expanding_her2.c \
 ./expanding_her3.c \
 ./file_name.c \
-./redirections5.c
+./redirections5.c \
+./execI10.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:14:09 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:48:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:59:47 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,4 @@ void	pwd_cmd2(t_hxh *final_linked)
 	(void)final_linked;
 	getcwd(cwd, sizeof(cwd));
 	printf("%s\n", cwd);
-}
-
-void	join_or_not(char *value, char *variable, t_env *tmp)
-{
-	if (check_if_pls2(variable))
-	{
-		tmp->value = ft_strjoin(tmp->value, value);
-	}
-	else
-	{
-		tmp->value = value;
-	}
 }
