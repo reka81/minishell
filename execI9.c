@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI9.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:14:09 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 21:22:09 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:48:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,21 @@ char	**fill_args(t_hxh *final_linked)
 	}
 	arg[i] = NULL;
 	return (arg);
+}
+
+void	env_cmd2(t_env *environment, int output)
+{
+	while (environment)
+	{
+		if ((environment->value[0] != '\0' && environment->variable[0] != '\0')
+			|| check_if_equal(environment->variable))
+		{
+			ft_putstr_fd2(environment->variable, output);
+			ft_putstr_fd2(environment->value, output);
+			ft_putstr_fd2("\n", output);
+		}
+		environment = environment->next;
+	}
 }
 
 void	env_cmd(t_env *environment)

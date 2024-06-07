@@ -6,19 +6,11 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:22:39 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:03:31 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	increment_lst(t_stack **lst)
-{
-	if ((*lst)->next->type == 6)
-		(*lst) = (*lst)->next->next;
-	else
-		(*lst) = (*lst)->next;
-}
 
 void	herdog_v1(t_int *lor_int, int fd1)
 {

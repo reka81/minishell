@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:19:36 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:47:06 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	one_command(t_hxh *final_linked, t_env **environment,
 			|| check_if_value(final_linked->value))
 			export(final_linked, *environment, var, exit_status);
 		else if (!strcmp(final_linked->value[0], "env"))
-			env_cmd(*environment);
+			env_cmd2(*environment, final_linked->output);
 		else if (!strcmp(final_linked->value[0], "cd"))
 			cd_cmd(final_linked, *environment, exit_status);
 		else if (!strcmp(final_linked->value[0], "echo"))

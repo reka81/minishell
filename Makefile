@@ -57,7 +57,8 @@ SRCS = ./environment_fs.c \
 expanding_herdoc.c \
 ./expanding_her2.c \
 ./expanding_her3.c \
-./file_name.c
+./file_name.c \
+./redirections5.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h

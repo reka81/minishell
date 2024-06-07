@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:37:10 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:39:59 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:01:31 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void	rest_of_expanding6_her(t_counter *count_num, char *value,
 	}
 }
 
-void	setting_values_her(t_exp *expander, t_counter *count_num, int exit_status)
+void	setting_values_her(t_exp *expander,
+	t_counter *count_num, int exit_status)
 {
 	expander->dollar_flag = 50;
 	expander->exit_to_expand = 0;

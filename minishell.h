@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:41:23 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:48:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,4 +355,8 @@ void	rest_of_expanding4_her(t_exp *expander, char *str2,
 void	tb_expanded_her(char *value, t_counter *count_num,
 			char *str, t_exp *expander);
 char	*file_name(t_stack **lst);
+char	*str_setting(t_stack **tmp, char *str);
+void	ft_echo3(t_hxh *lst, int *exit_status);
+void	env_cmd2(t_env *environment, int output);
+
 #endif 

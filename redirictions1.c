@@ -6,20 +6,11 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:05:42 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 16:34:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:04:12 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*str_setting(t_stack **tmp, char *str)
-{
-	if (!str)
-		str = ft_strjoin((*tmp)->value, (*tmp)->next->value);
-	else
-		str = ft_strjoin(str, (*tmp)->next->value);
-	return (str);
-}
 
 char	*join_delm(t_stack **tmp, t_stack **lst, char *str, int *flag)
 {

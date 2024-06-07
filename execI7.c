@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 17:13:11 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:44:34 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 	else if (!ft_strcmp(final_linked->value[0], "unset"))
 		(ft_unset(final_linked, &environment, var->exit_status),
 			exit(*var->exit_status));
+	else if (!ft_strcmp(final_linked->value[0], "echo"))
+		(ft_echo(final_linked, var->exit_status), exit(*var->exit_status));
+	else if (!ft_strcmp(final_linked->value[0], "env"))
+		(env_cmd(environment), exit(0));
 	else
 	{
 		exec_cmd2(final_linked, var, env);

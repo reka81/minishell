@@ -6,11 +6,18 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 17:11:53 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:21:16 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	export_decision(char *variable, char *new,
+	t_env *tmp, t_env *environment)
+{
+	new = new_var_woutpls(variable);
+	tmp = check_if_var(environment, new);
+}
 
 int	normal_exporting(char *variable, char *value,
 	t_hxh *final_linked, t_env *environment)
@@ -18,7 +25,7 @@ int	normal_exporting(char *variable, char *value,
 	t_env	*tmp;
 	char	*new;
 
-	new = NULL;
+	(1) && (new = NULL, tmp = NULL);
 	if ((value[0] == '\0' && check_if_pls2(variable))
 		|| ft_isdigit(variable[0]) || check_if_dlm(variable))
 	{
@@ -33,8 +40,7 @@ int	normal_exporting(char *variable, char *value,
 	}
 	else
 	{
-		new = new_var_woutpls(variable);
-		tmp = check_if_var(environment, new);
+		export_decision(variable, new, tmp, environment);
 		if (!tmp)
 			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
 		else

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 17:23:02 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:00:19 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 			print_cmdnfound(final_linked, exit_status);
 		exit(127);
 	}
-	exit(1);
 }
 
 void	not_builtins(t_hxh *final_linked, t_exec1 *var,
@@ -100,7 +99,10 @@ void	not_builtins(t_hxh *final_linked, t_exec1 *var,
 	tcgetattr(STDIN_FILENO, &var->my_termios);
 	var->pid = fork();
 	if (var->pid == 0)
+	{
 		not_builtins_v2(final_linked, var, environment, exit_status);
+		exit(1);
+	}
 	else
 		checking_if_signal(fd_out, fd_in, exit_status, var);
 }
