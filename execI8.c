@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI8.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:18:28 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 21:22:01 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:23:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void	checking_if_signal(int fd_out, int fd_in,
 
 void	print_cmdnfound(t_hxh *final_linked, int *exit_status)
 {
-	dprintf(2, "bash : %s:command not found\n",
-		final_linked->value[0]);
+	ft_putstr_fd2("bash : ", 2);
+	ft_putstr_fd2(final_linked->value[0], 2);
+	ft_putstr_fd2(":command not found\n", 2);
 	*exit_status = 127;
 }
 
@@ -57,10 +58,11 @@ void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 	{
 		var->path = ft_strmcpy(var->path, final_linked->value[0]);
 		if (access(var->path, F_OK) == -1)
-			(dprintf(2, "bash: %s: No such file or directory\n",
-					var->path), exit(127));
+			(ft_putstr_fd2("bash : ", 2), ft_putstr_fd2(var->path, 2),
+				ft_putstr_fd2(": No such file or directory\n", 2), exit(127));
 		else if (access(var->path, R_OK) == -1)
-			(dprintf(2, "bash: %s: permision denied\n", var->path), exit(126));
+			(ft_putstr_fd2("bash: ", 2), ft_putstr_fd2(var->path, 2),
+				ft_putstr_fd2(": permision denied\n", 2), exit(126));
 	}
 	else
 		var->path = look_for_path(final_linked->value[0],
@@ -68,7 +70,8 @@ void	not_builtins_v2(t_hxh *final_linked, t_exec1 *var,
 	if (final_linked->shouldnt_run != 5)
 	{
 		if (stat(var->path, &st) == 0 && S_ISDIR(st.st_mode))
-			(dprintf(2, "bash: %s: is a directory\n", var->path), exit(126));
+			(ft_putstr_fd2("bash: ", 2), ft_putstr_fd2(var->path, 2),
+				ft_putstr_fd2(": is a directory\n", 2), exit(126));
 		if (execve(var->path, final_linked->value, var->env) == -1)
 			print_cmdnfound(final_linked, exit_status);
 		exit(127);

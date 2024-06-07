@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:46:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 21:26:41 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:31:51 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ int	check_if_dlm(char *str)
 
 void	print_exit(t_hxh *lst)
 {
-	dprintf(2, "exit\n");
-	dprintf(2, "bash: exit: %s: numeric argument required",
-		lst->value[1]);
+	ft_putstr_fd2("exit\n", 2);
+	ft_putstr_fd2("bash: exit: ", 2);
+	ft_putstr_fd2(lst->value[1], 2);
+	ft_putstr_fd2(": numeric argument required", 2);
 	exit(255);
 }
 
@@ -52,18 +53,18 @@ void	ft_exit(t_hxh *lst, int *exit_status)
 			{
 				if (lst->value[2] != NULL)
 				{
-					dprintf(2, "bash: exit: too many arguments\n");
+					ft_putstr_fd2("bash: exit: too many arguments\n", 2);
 					*exit_status = 1;
 					return ;
 				}
-				(exit(atoi(lst->value[1])), dprintf(2, "exit\n"));
+				(exit(atoi(lst->value[1])), ft_putstr_fd2("exit\n", 2));
 			}
 			else
 				print_exit(lst);
 		}
 		else
 		{
-			dprintf(2, "exit\n");
+			ft_putstr_fd2("exit\n", 2);
 			exit(0);
 		}
 	}
@@ -79,7 +80,7 @@ void	ft_exit2(t_hxh *lst, int *exit_status)
 			{
 				if (lst->value[2] != NULL)
 				{
-					dprintf(2, "bash: exit: too many arguments\n");
+					ft_putstr_fd2("bash: exit: too many arguments\n", 2);
 					*exit_status = 1;
 					return ;
 				}
@@ -87,8 +88,9 @@ void	ft_exit2(t_hxh *lst, int *exit_status)
 			}
 			else
 			{
-				dprintf(2, "bash: exit: %s: numeric argument required",
-					lst->value[1]);
+				ft_putstr_fd2("bash: exit: ", 2);
+				ft_putstr_fd2(lst->value[1], 2);
+				ft_putstr_fd2(": numeric argument required", 2);
 				exit(255);
 			}
 		}
@@ -99,8 +101,10 @@ void	ft_exit2(t_hxh *lst, int *exit_status)
 
 void	exp_n_valid(t_hxh *final_linked, char *value)
 {
-	dprintf(2, "bash: export: `%s': not a valid identifier\n", value);
+	(ft_putstr_fd2("bash: export: `", 2), ft_putstr_fd2(value, 2),
+		ft_putstr_fd2("': not a valid identifier\n", 2));
 	if (final_linked->value[2])
-		dprintf(2, "bash: export: `%s': not a valid identifier\n",
-			final_linked->value[2]);
+		(ft_putstr_fd2("bash: export: `", 2),
+			ft_putstr_fd2(final_linked->value[2], 2),
+			ft_putstr_fd2("': not a valid identifier\n", 2));
 }

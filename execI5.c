@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 21:19:47 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:11:53 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	normal_exporting(char *variable, char *value,
 	if ((value[0] == '\0' && check_if_pls2(variable))
 		|| ft_isdigit(variable[0]) || check_if_dlm(variable))
 	{
-		dprintf(2, "bash: export: `%s': not a valid identifier\n", variable);
+		(ft_putstr_fd2("bash: export: `", 2), ft_putstr_fd2(variable, 2),
+			ft_putstr_fd2("': not a valid identifier\n", 2));
 		return (1);
 	}
 	else if (variable[0] == '\0')

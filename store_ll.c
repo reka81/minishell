@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:41:15 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:36:57 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void	creating_list(t_stack **lst, t_int *lor_int,
 {
 	char	*var;
 
+	lor_int->env = environment;
 	init2(lor_int);
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
-		(1) && (lor_int->val = NULL, var = NULL);
-		lor_int->chen = NULL;
+		(1) && (lor_int->val = NULL, var = NULL, lor_int->chen = NULL);
 		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
 		if (lor_int->k == 20 || lor_int->k == 30)
 		{
@@ -72,7 +72,7 @@ void	creating_list(t_stack **lst, t_int *lor_int,
 			if (ft_strcmp("broken", lor_int->chen) == 0
 				|| ft_strcmp("invalid", lor_int->chen) == 0)
 				break ;
-			dprintf(2, "%s\n", lor_int->chen);
+			ft_putstr_fd2(lor_int->chen, 2);
 			break ;
 		}
 		if (*lst == NULL)
@@ -94,13 +94,13 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 	lor_int->i = 0;
 	lor_int->n = 1;
 	lor_int->chen = NULL;
-	(void)exit_status;
+	(1) && (lor_int->exit_status = exit_status, last_pipe = 0);
 	while (lst != NULL)
 	{
 		creating_list(&lst, lor_int, environment, &last_pipe);
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
-		if (last_pipe)
+		if (last_pipe == 1)
 			(init2(lor_int),
 				ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen)));
 		if (lst == NULL)

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:19:24 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:22:39 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,38 @@ void	herdog_v1(t_int *lor_int, int fd1)
 	lor_int->in = lor_int->fd;
 }
 
+void	herdog_loop(char *ll, char *her, t_int *lor_int, int flag)
+{
+	while (1)
+	{
+		her = NULL;
+		ll = readline (">");
+		if (!ll)
+			break ;
+		if (ft_strcmp(lor_int->zz, ll) == 0)
+		{
+			free(ll);
+			break ;
+		}
+		if (flag == 0)
+			her = expanding_her(ll, *lor_int->exit_status, lor_int->env);
+		if (!her)
+			(ft_putstr_fd(ll, lor_int->fd), free(ll));
+		else
+			(ft_putstr_fd(her, lor_int->fd), free(ll));
+	}
+}
+
 void	herdog(t_stack **lst, t_int *lor_int)
 {
 	char	*ll;
 	int		fd1;
+	char	*her;
+	int		flag;
 
+	flag = 0;
 	ll = NULL;
+	her = NULL;
 	if (ft_strcmp((*lst)->value, "<<") == 0)
 	{
 		lor_int->ten = ft_strjoin("file", ft_itoa(lor_int->n));
@@ -42,16 +68,8 @@ void	herdog(t_stack **lst, t_int *lor_int)
 		lor_int->fd = open(lor_int->ten, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		fd1 = open(lor_int->ten, O_RDWR);
 		unlink(lor_int->ten);
-		lor_int->zz = herdog_delm(lst);
-		while (1)
-		{
-			ll = readline (">");
-			if (!ll)
-				break ;
-			if (ft_strcmp(lor_int->zz, ll) == 0)
-				break ;
-			(ft_putstr_fd(ll, lor_int->fd), free(ll));
-		}
+		lor_int->zz = herdog_delm(lst, &flag);
+		herdog_loop(ll, her, lor_int, flag);
 		herdog_v1(lor_int, fd1);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execII1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:39:10 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 21:25:42 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:24:03 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	cd_cmd(t_hxh *final_linked, t_env *environment, int *exit_status)
 		}
 		else if (!getcwd(cwd, 1024))
 		{
-			dprintf(2, ERROR_GETCWD);
+			ft_putstr_fd2(ERROR_GETCWD, 2);
 			*exit_status = 1;
 			return ;
 		}

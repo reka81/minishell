@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 21:40:55 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:41:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ typedef struct s_int
 	int			i;
 	char		*chen;
 	char		*val;
+	t_env		*env;
+	int			*exit_status;
 }	t_int;
 
 typedef struct s_exec
@@ -181,7 +183,7 @@ char	*append(t_stack **lst, t_int *lor_int, int *i, char *chen);
 void	herdog(t_stack **lst, t_int *lor_int);
 char	*infile(t_stack **lst, t_int *lor_int, int *i, char *chen);
 char	*rederection(t_stack **lst, t_int *lor_int, int *i, char *chen);
-char	*herdog_delm(t_stack **lst);
+char	*herdog_delm(t_stack **lst, int *flag);
 int		num_herdog(t_stack *lol);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
@@ -335,5 +337,22 @@ void	last_pipe_num(t_stack **lst, int *last_pipe);
 void	waiting_for_children(int fd_out, int fd_in, t_exec1 *var);
 void	ft_echo2(int *i, t_hxh *lst);
 int		cmp_w_dlm2(char c);
-
+char	*expanding_her(char *value, int exit_status, t_env *environment);
+void	rest_of_expanding3_her(char *value, t_counter *count_num,
+			t_exp *expander, t_env *environment);
+void	rest_of_expanding2_her(char *value, t_counter *count_num, char *str2);
+void	rest_of_expanding_her(t_exp *expander, char *value,
+			char *str2, t_counter *count_num);
+void	rest_of_expanding6_her(t_counter *count_num, char *value,
+			t_exp *expander, t_env *environment);
+void	setting_values_her(t_exp *expander, t_counter *count_num,
+			int exit_status);
+void	check_str_null_her(t_exp *expander, char *value);
+int		cmp_delim_her(char c);
+void	rest_of_expanding5_her(char *value, t_counter *count_num, char *str2);
+void	rest_of_expanding4_her(t_exp *expander, char *str2,
+			t_counter *count_num);
+void	tb_expanded_her(char *value, t_counter *count_num,
+			char *str, t_exp *expander);
+char	*file_name(t_stack **lst);
 #endif 

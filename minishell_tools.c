@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:02:24 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/12 17:04:03 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:21:05 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*look_for_path(char *cmd, char *path)
 	char	**paths;
 	int		i;
 
+	if (cmd[0] == '\0')
+		return (NULL);
 	i = 0;
 	paths = ft_split(path, ':');
 	while (paths[i])

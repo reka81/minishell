@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:31:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:20:13 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:42:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,15 +116,6 @@ char	*rederection(t_stack **lst, t_int *lor_int, int *i, char *chen)
 		else
 			reder_open_file2(lst, lor_int, i, chen);
 		lor_int->out = lor_int->fd;
-		if ((*lst)->next)
-		{
-			if ((*lst)->next->type == 6)
-				(*lst) = (*lst)->next->next;
-			else
-				(*lst) = (*lst)->next;
-		}
-		else
-			(*lst) = (*lst)->next;
 	}
 	return (chen);
 }

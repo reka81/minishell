@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execI.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 21:14:48 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:07:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ void	runing_cmd(t_hxh *final_linked, char **env,
 	else if (final_linked->shouldnt_run != 5)
 	{
 		if (execve(var->path2, arg, env) == -1)
-			(dprintf(2, "bash : %s:command not found\n",
-					final_linked->value[0]), exit(127));
+		{
+			ft_putstr_fd2("bash : ", 2);
+			ft_putstr_fd2(final_linked->value[0], 2);
+			ft_putstr_fd2(":command not found\n", 2);
+			exit(127);
+		}
 	}
 }
 

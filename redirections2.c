@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 18:35:27 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:46:53 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 char	*infile_chen(t_stack **lst, t_int *lor_int, char *chen)
 {
-	if (access((*lst)->next->next->value, F_OK) == 0)
+	char	*str;
+
+	str = file_name(lst);
+	if (access(str, F_OK) == 0)
 	{
 		if (lor_int->in >= 3)
 			close(lor_int->fd);
-		lor_int->fd = open((*lst)->next->next->value, O_RDWR, 0644);
+		lor_int->fd = open(str, O_RDWR, 0644);
 		lor_int->in = lor_int->fd;
 		if (lor_int->fd < 0)
 		{
-			dprintf(2, "bash: %s: Permission denied\n",
-				(*lst)->next->next->value);
+			ft_putstr_fd2("bash: ", 2);
+			ft_putstr_fd2(str, 2);
+			ft_putstr_fd2(": Permission denied\n", 2);
 			chen = "invalid";
 		}
 	}
@@ -34,15 +38,20 @@ char	*infile_chen(t_stack **lst, t_int *lor_int, char *chen)
 
 char	*infile_chen2(t_stack **lst, t_int *lor_int, char *chen)
 {
-	if (access((*lst)->next->value, F_OK) == 0)
+	char	*str;
+
+	str = file_name(lst);
+	if (access(str, F_OK) == 0)
 	{
 		if (lor_int->in >= 3)
 			close(lor_int->fd);
-		lor_int->fd = open((*lst)->next->value, O_RDWR, 0644);
+		lor_int->fd = open(str, O_RDWR, 0644);
 		lor_int->in = lor_int->fd;
 		if (lor_int->fd < 0)
 		{
-			dprintf(2, "bash: %s: Permission denied\n", (*lst)->next->value);
+			ft_putstr_fd2("bash: ", 2);
+			ft_putstr_fd2(str, 2);
+			ft_putstr_fd2(": Permission denied\n", 2);
 			chen = "invalid";
 		}
 	}
@@ -102,15 +111,6 @@ char	*infile(t_stack **lst, t_int *lor_int, int *i, char *chen)
 		{
 			chen = infile_open_file1(lst, chen, i, lor_int);
 		}
-		if ((*lst)->next)
-		{
-			if ((*lst)->next->type == 6)
-				(*lst) = (*lst)->next->next;
-			else
-				(*lst) = (*lst)->next;
-		}
-		else
-			(*lst) = (*lst)->next;
 	}
 	return (chen);
 }
