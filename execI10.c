@@ -6,17 +6,18 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:52:47 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 19:00:58 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:35:32 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_decision(char *variable, char *new,
-	t_env *tmp, t_env *environment)
+char	*export_decision(char *variable, char *new,
+	t_env **tmp, t_env *environment)
 {
 	new = new_var_woutpls(variable);
-	tmp = check_if_var(environment, new);
+	*tmp = check_if_var(environment, new);
+	return (new);
 }
 
 void	join_or_not(char *value, char *variable, t_env *tmp)

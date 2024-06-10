@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:40:22 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:26:04 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:35:04 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,36 @@ char	*file_name(t_stack **lst)
 		*lst = tmp;
 	}
 	return (str);
+}
+
+int	lenv(t_env *environment)
+{
+	size_t	i;
+
+	i = 0;
+	while (environment)
+	{
+		if (ft_strlen(environment->value) > i)
+			i = ft_strlen(environment->value);
+		environment = environment->next;
+	}
+	return (i);
+}
+
+char	*find_value(t_stack *lst)
+{
+	char	*new;
+
+	new = lst->value;
+	if (lst->next)
+	{
+		if (lst->next->type == 6)
+		{
+			if (lst->next->next)
+				new = lst->next->next->value;
+		}
+		else
+			new = lst->next->value;
+	}
+	return (new);
 }

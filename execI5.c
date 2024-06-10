@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:59:19 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:32:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	normal_exporting(char *variable, char *value,
 	}
 	else
 	{
-		export_decision(variable, new, tmp, environment);
+		new = export_decision(variable, new, &tmp, environment);
 		if (!tmp)
 			ft_lstadd_back2(&environment, ft_lstnew2(new, value));
 		else

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:30:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 18:04:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:39:11 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ void	filling_env2(t_filling_env *fill, char **env)
 		fill->j++;
 		fill->e++;
 	}
-	fill->variable[fill->j] = '=';
-	fill->j++;
+	if (env[fill->i][fill->e] == '=')
+	{
+		fill->variable[fill->j] = '=';
+		fill->j++;
+	}
 	fill->variable[fill->j] = '\0';
 }
 

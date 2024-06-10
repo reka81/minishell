@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:33:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:47:19 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:36:10 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*rederection_handling(t_stack **lst, t_int *lor_int, char *chen)
 	if (*lst)
 	{
 		lor_int->val = (*lst)->value;
+		if ((*lst)->type == 3 && ft_strcmp((*lst)->value, "|") != 0)
+			lor_int->val = find_value(*lst);
 		(*lst) = (*lst)->next;
 	}
 	return (chen);
