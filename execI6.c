@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:04:55 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/31 15:19:58 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:23:28 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	dup_close3(int *fd)
 }
 
 void	expo2(t_hxh *final_linked,
-	t_env *environment, char *variable, char *value)
+	t_env *environment, t_exec *var, int *exit_status)
 {
-	export2(final_linked, environment, variable, value);
-	exit(0);
+	export2(final_linked, environment, var, exit_status);
+	exit(*exit_status);
 }
 
 void	execve1(char *path, char **arg, char **env)

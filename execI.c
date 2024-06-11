@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 06:54:28 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 19:00:54 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:08:14 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,15 @@ void	last_pipe(t_hxh *final_linked, char **env,
 	if (final_linked->output != 1)
 		(dup2(final_linked->output, 1), close(final_linked->output));
 	if (is_apath(final_linked->value[0]))
+	{
 		var->path2 = ft_strmcpy(var->path, final_linked->value[0]);
+		if (access(var->path2, F_OK) == -1)
+			(ft_putstr_fd2("bash : ", 2), ft_putstr_fd2(var->path2, 2),
+				ft_putstr_fd2(": No such file or directory\n", 2), exit(127));
+		else if (access(var->path2, R_OK) == -1)
+			(ft_putstr_fd2("bash: ", 2), ft_putstr_fd2(var->path2, 2),
+				ft_putstr_fd2(": permision denied\n", 2), exit(126));
+	}
 	else
 		var->path2 = look_for_path(final_linked->value[0],
 				ft_get_env("PATH", environment));

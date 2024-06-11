@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:47:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:02:32 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,5 @@ void	execution(t_env **environment, t_hxh *final_linked,
 		one_command(final_linked, environment, var, exit_status);
 	}
 	else
-	{
 		primary_pipes(var, final_linked, env, *environment);
-	}
 }

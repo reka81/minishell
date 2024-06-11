@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 21:49:57 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:10:26 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	creating_list(t_stack **lst, t_int *lor_int,
 			if (ft_strcmp("broken", lor_int->chen) == 0
 				|| ft_strcmp("invalid", lor_int->chen) == 0)
 				break ;
-			ft_putstr_fd2(lor_int->chen, 2);
+			(ft_putstr_fd2(lor_int->chen, 2), ft_putstr_fd2("\n", 2));
 			break ;
 		}
 		if (*lst == NULL)

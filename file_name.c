@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:40:22 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 22:09:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:26:55 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,11 @@ int	breaking_expanding(t_stack	*a)
 	{
 		if (a->next)
 		{
-			a->value = NULL;
-			i = 1;
+			if (a->next->type == 2 || a->next->type == 1)
+			{
+				a->value = NULL;
+				i = 1;
+			}
 		}
 	}
 	return (i);

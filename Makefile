@@ -54,7 +54,7 @@ SRCS = ./environment_fs.c \
 ./filling_chen.c\
 ./execII4.c\
 ./execI9.c \
-expanding_herdoc.c \
+./expanding_herdoc.c \
 ./expanding_her2.c \
 ./expanding_her3.c \
 ./file_name.c \

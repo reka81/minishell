@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:00:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/10 16:32:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,26 @@ void	no_args_export2(t_env *environment)
 	}
 }
 
+void	updating_exite_status(int check, int *exit_status)
+{
+	if (check == 1)
+		*exit_status = 1;
+	else
+		*exit_status = 0;
+}
+
 void	export2(t_hxh *final_linked, t_env *environment,
-	char *variable, char *value)
+			t_exec *var, int *exit_status)
 {
 	t_env	*tmp;
 	int		d;
+	int		check;
 
 	d = 1;
 	tmp = NULL;
+	check = 0;
 	if (check_if_value(final_linked->value))
-	{
 		afterwards_assignment(final_linked, environment, tmp);
-	}
 	else if (!final_linked->value[1])
 		no_args_export2(environment);
 	else
@@ -80,19 +88,14 @@ void	export2(t_hxh *final_linked, t_env *environment,
 		d = 1;
 		while (final_linked->value[d])
 		{
-			setting_var_and_val(&variable, &value, final_linked, d);
-			normal_exporting(variable, value, final_linked, environment);
+			setting_var_and_val(&var->variable, &var->value,
+				final_linked, d);
+			check = normal_exporting(var->variable, var->value,
+					final_linked, environment);
 			d++;
 		}
 	}
-}
-
-void	updating_exite_status(int check, int *exit_status)
-{
-	if (check == 1)
-		*exit_status = 1;
-	else
-		*exit_status = 0;
+	updating_exite_status(check, exit_status);
 }
 
 void	export(t_hxh *final_linked, t_env *environment,

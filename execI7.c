@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 19:00:40 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:05:56 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ void	exec_cmd2(t_hxh *final_linked, t_exec *var, char **env)
 void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
 	t_env *environment, char **env)
 {
+	if (is_apath(final_linked->value[0]))
+	{
+		if (access(var->path, F_OK) == -1)
+			(ft_putstr_fd2("bash : ", 2), ft_putstr_fd2(var->path, 2),
+				ft_putstr_fd2(": No such file or directory\n", 2), exit(127));
+		else if (access(var->path, R_OK) == -1)
+			(ft_putstr_fd2("bash: ", 2), ft_putstr_fd2(var->path, 2),
+				ft_putstr_fd2(": permision denied\n", 2), exit(126));
+	}
 	close(var->fd[0]);
 	if (final_linked->input != 0)
 		dup_close1(final_linked);

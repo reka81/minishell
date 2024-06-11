@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:52:47 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/10 17:20:39 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:17:14 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_echo3(t_hxh *lst, int *exit_status)
 void	checking_them2(t_exec *var, t_hxh *final_linked, t_env *environment)
 {
 	if (!ft_strcmp(var->arg[0], "export"))
-		expo2(final_linked, environment, var->variable, var->value);
+		expo2(final_linked, environment, var, var->exit_status);
 	else if (!ft_strcmp(var->arg[0], "exit"))
 		(ft_exit2(final_linked, var->exit_status), exit(*var->exit_status));
 	else if (!ft_strcmp(var->arg[0], "pwd"))
@@ -74,6 +74,9 @@ void	checking_them2(t_exec *var, t_hxh *final_linked, t_env *environment)
 		(ft_echo(final_linked, var->exit_status), exit(*var->exit_status));
 	else if (!ft_strcmp(final_linked->value[0], "env"))
 		(env_cmd(environment), exit(0));
+	else if (!ft_strcmp(final_linked->value[0], "cd"))
+		(cd_cmd(final_linked, environment, var->exit_status),
+			exit(*var->exit_status));
 }
 
 void	checking_them(t_hxh *final_linked, t_env *environment, t_exec1 *var)
@@ -92,4 +95,7 @@ void	checking_them(t_hxh *final_linked, t_env *environment, t_exec1 *var)
 		(ft_echo(final_linked, var->exit_status), exit(*var->exit_status));
 	else if (!ft_strcmp(final_linked->value[0], "env"))
 		(env_cmd(environment), exit(0));
+	else if (!ft_strcmp(final_linked->value[0], "cd"))
+		(cd_cmd(final_linked, environment, var->exit_status),
+			exit(*var->exit_status));
 }

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 17:58:16 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:22:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ int		normal_exporting(char *variable, char *value,
 			t_hxh *final_linked, t_env *environment);
 void	no_args_export2(t_env *environment);
 void	export2(t_hxh *final_linked, t_env *environment,
-			char *variable, char *value);
+			t_exec *var, int *exit_status);
 void	export(t_hxh *final_linked, t_env *environment,
 			t_exec1 *var, int *exit_status);
 char	**fill_args(t_hxh *final_linked);
@@ -252,7 +252,7 @@ void	dup_close1(t_hxh *final_linked);
 void	dup_close2(t_hxh *final_linked);
 void	dup_close3(int *fd);
 void	expo2(t_hxh *final_linked, t_env *environment,
-			char *variable, char *value);
+			t_exec *var, int *exit_status);
 void	execve1(char *path, char **arg, char **env);
 void	dup_close4(int *fd);
 void	ecexc_cmd1(t_exec *var, t_hxh *final_linked,
