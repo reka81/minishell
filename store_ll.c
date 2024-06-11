@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:36:57 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:49:57 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	increment_to_pipe(t_stack **lst)
 		(*lst) = (*lst)->next;
 }
 
-void	init2(t_int *lor_int)
+void	init2(t_int *lor_int, t_stack *lst)
 {
-	lor_int->str = zyalloc(sizeof(char *) * 100);
+	lor_int->str = zyalloc(sizeof(char *) * (ft_lstsize2(lst) + 1));
 	lor_int->str[0] = NULL;
 	lor_int->out = 1;
 	lor_int->in = 0;
@@ -57,7 +57,7 @@ void	creating_list(t_stack **lst, t_int *lor_int,
 	char	*var;
 
 	lor_int->env = environment;
-	init2(lor_int);
+	init2(lor_int, *lst);
 	while (*lst != NULL && ft_strcmp((*lst)->value, "|") != 0)
 	{
 		(1) && (lor_int->val = NULL, var = NULL, lor_int->chen = NULL);
@@ -101,7 +101,7 @@ t_hxh	*ft_store(t_stack *lol, t_env *environment, int *exit_status)
 		lor_int->str[lor_int->z] = NULL;
 		ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen));
 		if (last_pipe == 1)
-			(init2(lor_int),
+			(init2(lor_int, lol),
 				ft_lstadd_back1(&l, ft_lstnew1(lor_int, lor_int->chen)));
 		if (lst == NULL)
 			break ;

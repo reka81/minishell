@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaheddac <zaheddac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:04:55 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 20:37:47 by zaheddac         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:40:50 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	rest_of_expanding2(t_stack *a, t_counter *count_num, char *str2)
 	{
 		if (ft_isdigit (a->value[count_num->i]))
 			count_num->i++;
-		str2 = zyalloc(100);
 		count_num->j = 0;
 		while (a->value[count_num->i])
 		{

@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:33:27 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:58:16 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,4 +366,8 @@ char	*export_decision(char *variable, char *new,
 			t_env **tmp, t_env *environment);
 char	*find_value(t_stack *lst);
 int		lenv(t_env *environment);
+int		breaking_expanding(t_stack	*a);
+int		ft_lstsize1(t_env *lst);
+int		ft_lstsize2(t_stack *lst);
+
 #endif 

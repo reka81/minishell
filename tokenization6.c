@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:38:27 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/31 18:39:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:09:48 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	fill_env2(t_env **environment)
 	char	*variable;
 
 	i = 0;
-	value = zyalloc(50);
+	value = zyalloc(1024);
 	*environment = NULL;
 	while (i < 4)
 	{
 		if (i == 0)
 		{
 			variable = fill(variable, "PWD=");
-			getcwd(value, 50);
+			getcwd(value, 1024);
 			ft_lstadd_back7(environment, ft_lstnew5(variable, value));
 		}
 		fill_env3(variable, value, environment, i);

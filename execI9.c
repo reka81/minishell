@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:14:09 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/07 18:59:47 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:52:21 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**fill_args(t_hxh *final_linked)
 	int		i;
 	char	**arg;
 
-	arg = zyalloc(sizeof(char *) * 5);
+	arg = zyalloc(sizeof(char *) * (ft_lstsize(final_linked) * 2));
 	i = 0;
 	while (final_linked->value[i])
 	{

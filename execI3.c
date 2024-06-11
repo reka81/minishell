@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:31:47 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/05/23 21:36:33 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:50:18 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	afterwards_assignment(t_hxh *final_linked,
 
 	j = 0;
 	i = 0;
-	variable = zyalloc(strlen(final_linked->value[0]) + 1);
+	variable = zyalloc(ft_strlen(final_linked->value[0]) + 1);
 	store_var(final_linked, &i, variable);
 	variable[i] = '\0';
 	if (i > 0)
@@ -69,7 +69,7 @@ void	afterwards_assignment(t_hxh *final_linked,
 		i++;
 	}
 	j = 0;
-	value = zyalloc(strlen(final_linked->value[0]) + 1);
+	value = zyalloc(ft_strlen(final_linked->value[0]) + 1);
 	store_val(final_linked, &i, &j, value);
 	value[j] = '\0';
 	tmp = check_if_var2(environment, variable);

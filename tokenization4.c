@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:48:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/06 18:08:51 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:07:23 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*fill(char *str1, char *str2)
 {
 	int	i;
 
-	str1 = zyalloc(sizeof(char) * strlen(str2) + 1);
+	str1 = zyalloc(sizeof(char) * ft_strlen(str2) + 1);
 	i = 0;
 	while (str2[i])
 	{

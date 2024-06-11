@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:47:42 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/21 20:10:59 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:52:53 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_rm_equal(char *str)
 	int		i;
 	char	*nw_str;
 
-	nw_str = zyalloc(strlen(str) + 1);
+	nw_str = zyalloc(ft_strlen(str) + 1);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 	{

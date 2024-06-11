@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:38:46 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:39:54 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:27:18 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*expanding_her(char *value, int exit_status, t_env *environment)
 	expander = zyalloc(sizeof(t_exp));
 	count_num = zyalloc(sizeof(t_counter));
 	setting_values_her(expander, count_num, exit_status);
-	expander->str2 = zyalloc(100);
+	expander->str2 = zyalloc(lenv(environment) + ft_strlen(value) + 1);
 	while (value[count_num->i] != '$' && value[count_num->i])
 	{
 		expander->str2[count_num->i] = value[count_num->i];

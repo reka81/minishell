@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:19:07 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/05/30 21:23:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:01:42 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ char	**store_env_2darr(t_env *environment)
 	char	**strs;
 	int		i;
 
+	if (!environment)
+		return (NULL);
 	i = 0;
-	strs = zyalloc(1000);
+	strs = zyalloc((ft_lstsize1(environment) * 2) * sizeof(char *));
 	while (environment != NULL)
 	{
 		strs[i] = ft_strjoin(environment->variable, environment->value);

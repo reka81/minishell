@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 17:40:22 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:35:04 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 22:09:31 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	lenv(t_env *environment)
 	size_t	i;
 
 	i = 0;
+	if (!environment)
+		return (0);
 	while (environment)
 	{
 		if (ft_strlen(environment->value) > i)
@@ -92,4 +94,20 @@ char	*find_value(t_stack *lst)
 			new = lst->next->value;
 	}
 	return (new);
+}
+
+int	breaking_expanding(t_stack	*a)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(a->value, "$") == 0)
+	{
+		if (a->next)
+		{
+			a->value = NULL;
+			i = 1;
+		}
+	}
+	return (i);
 }

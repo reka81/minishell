@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:37:10 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:01:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/10 21:56:47 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	rest_of_expanding2_her(char *value, t_counter *count_num, char *str2)
 	{
 		if (ft_isdigit (value[count_num->i]))
 			count_num->i++;
-		str2 = zyalloc(100);
 		count_num->j = 0;
 		while (value[count_num->i])
 		{
