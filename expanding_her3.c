@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:38:46 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/11 13:27:18 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:26:20 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,13 @@ char	*expanding_her(char *value, int exit_status, t_env *environment)
 	expander->str2[count_num->i] = '\0';
 	rest_of_expanding6_her(count_num, value, expander, environment);
 	return (expander->str2);
+}
+
+void	i_set(t_exp **expander, t_counter **count_num,
+	int exit_status, int *flag)
+{
+	*expander = zyalloc(sizeof(t_exp));
+	*count_num = zyalloc(sizeof(t_counter));
+	*flag = 1;
+	setting_values(*expander, *count_num, exit_status);
 }

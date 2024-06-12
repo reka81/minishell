@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:46:12 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:31:51 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:13:52 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_exit(t_hxh *lst, int *exit_status)
 					*exit_status = 1;
 					return ;
 				}
-				(exit(atoi(lst->value[1])), ft_putstr_fd2("exit\n", 2));
+				(exit(ft_atoi(lst->value[1])), ft_putstr_fd2("exit\n", 2));
 			}
 			else
 				print_exit(lst);
@@ -84,7 +84,7 @@ void	ft_exit2(t_hxh *lst, int *exit_status)
 					*exit_status = 1;
 					return ;
 				}
-				exit(atoi(lst->value[1]));
+				exit(ft_atoi(lst->value[1]));
 			}
 			else
 			{

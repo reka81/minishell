@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:30:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 17:54:55 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:02:46 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	flaging_expandables(t_stack *a)
 {
 	while (a)
 	{
-		if (strcmp(a->value, "<<") == 0)
+		if (ft_strcmp(a->value, "<<") == 0 && a->type != 2 && a->type != 1)
 		{
 			if (a->next->type == 6)
 				a->next->next->should_be_exp = 1;
 			else
-				a->next->should_be_exp = 0;
+				a->next->should_be_exp = 1;
 		}
 		a = a->next;
 	}
@@ -90,14 +90,14 @@ char	*ft_update_pwd(t_env *environment, char *current_path, char *old_path)
 {
 	while (environment != NULL)
 	{
-		if (strcmp("PWD=", environment->variable) == 0)
+		if (ft_strcmp("PWD=", environment->variable) == 0)
 		{
 			current_path = getcwd(0, 0);
 			environment->value = current_path;
 		}
 		if (current_path && old_path)
 		{
-			if (strcmp("OLDPWD=", environment->variable) == 0
+			if (ft_strcmp("OLDPWD=", environment->variable) == 0
 				&& old_path != NULL
 				&& ft_strcmp(old_path, current_path) != 0)
 			{

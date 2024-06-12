@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:33:35 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 16:36:10 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:52:24 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,13 @@ char	*append(t_stack **lst, t_int *lor_int, int *i, char *chen)
 {
 	if (ft_strcmp((*lst)->value, ">>") == 0)
 	{
-		if ((*lst)->next->type == 6)
-			chen = append_open_file(lst, i, lor_int, chen);
+		if ((*lst)->next)
+		{
+			if ((*lst)->next->type == 6)
+				chen = append_open_file(lst, i, lor_int, chen);
+			else
+				chen = append_open_file2(lst, i, lor_int, chen);
+		}
 		else
 			chen = append_open_file2(lst, i, lor_int, chen);
 		lor_int->out = lor_int->fd;

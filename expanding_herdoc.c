@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 23:41:59 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 16:39:35 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:14:49 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	check_str_null_her(t_exp *expander, char *value)
 {
 	if (expander->str2[0] == '\0')
 	{
-		expander->str2 = NULL;
 		value = expander->str2;
 	}
 	if (expander->str2 != NULL)

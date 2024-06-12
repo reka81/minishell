@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:03:31 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:14:37 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	herdog_loop(char *ll, char *her, t_int *lor_int, int flag)
 		if (flag == 0)
 			her = expanding_her(ll, *lor_int->exit_status, lor_int->env);
 		if (!her)
+		{
 			(ft_putstr_fd(ll, lor_int->fd), free(ll));
+		}
 		else
 			(ft_putstr_fd(her, lor_int->fd), free(ll));
 	}
@@ -70,7 +72,8 @@ char	*append_open_file(t_stack **lst, int *i, t_int *lor_int, char *chen)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next->next == NULL
+		|| (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;
@@ -95,7 +98,8 @@ char	*append_open_file2(t_stack **lst, int *i, t_int *lor_int, char *chen)
 {
 	if (lor_int->out >= 3)
 		close(lor_int->fd);
-	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next == NULL
+		|| (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		lor_int->fd = 1;
 		*i = 2;

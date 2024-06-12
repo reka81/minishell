@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:31:45 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/07 17:42:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:56:05 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*rederection(t_stack **lst, t_int *lor_int, int *i, char *chen)
 				chen = reder_open_file2(lst, lor_int, i, chen);
 		}
 		else
-			reder_open_file2(lst, lor_int, i, chen);
+			chen = reder_open_file2(lst, lor_int, i, chen);
 		lor_int->out = lor_int->fd;
 	}
 	return (chen);

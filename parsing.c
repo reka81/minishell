@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 18:45:18 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/06 17:57:19 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:04:43 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_if_pipe(char *str, int len)
 		else
 			break ;
 	}
-	if (str[len] == '|')
+	if (str[len] == '|' || str[len] == '<' || str[len] == '>')
 		return (1);
 	else
 		return (0);
@@ -77,7 +77,7 @@ int	ft_pars(char *str)
 	int	len;
 	int	i;
 
-	len = strlen(str) - 1;
+	len = ft_strlen(str) - 1;
 	if (len < 0)
 		len = 0;
 	if (str[0] == ' ')

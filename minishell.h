@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/11 15:22:41 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:28:46 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,5 +369,8 @@ int		lenv(t_env *environment);
 int		breaking_expanding(t_stack	*a);
 int		ft_lstsize1(t_env *lst);
 int		ft_lstsize2(t_stack *lst);
-
+int		ft_atoi(char *str);
+void	i_set(t_exp **expander, t_counter **count_num,
+			int exit_status, int *flag);
+void	setting_values(t_exp *expander, t_counter *count_num, int exit_status);
 #endif 

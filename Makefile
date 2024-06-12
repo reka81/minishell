@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 RM = rm -f
 
 SRCS = ./environment_fs.c \
@@ -59,7 +59,8 @@ SRCS = ./environment_fs.c \
 ./expanding_her3.c \
 ./file_name.c \
 ./redirections5.c \
-./execI10.c
+./execI10.c \
+./ft_atoi.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h

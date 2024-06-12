@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:07:31 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/11 14:09:19 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:56:56 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*infile_chen2(t_stack **lst, t_int *lor_int, char *chen)
 
 char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next->next == NULL
+		|| (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		*i = 2;
 		return (NULL);
@@ -83,7 +84,8 @@ char	*infile_open_file(t_stack **lst, char *chen, int *i, t_int *lor_int)
 
 char	*infile_open_file1(t_stack **lst, char *chen, int *i, t_int *lor_int)
 {
-	if ((*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
+	if ((*lst)->next == NULL
+		|| (*lst)->prev_is_null == 20 || (*lst)->next->prev_is_null == 20)
 	{
 		*i = 2;
 		return (NULL);
@@ -105,12 +107,15 @@ char	*infile(t_stack **lst, t_int *lor_int, int *i, char *chen)
 {
 	if (ft_strcmp((*lst)->value, "<") == 0)
 	{
-		if ((*lst)->next->type == 6)
-			chen = infile_open_file(lst, chen, i, lor_int);
-		else
+		if ((*lst)->next)
 		{
-			chen = infile_open_file1(lst, chen, i, lor_int);
+			if ((*lst)->next->type == 6)
+				chen = infile_open_file(lst, chen, i, lor_int);
+			else
+				chen = infile_open_file1(lst, chen, i, lor_int);
 		}
+		else
+			chen = infile_open_file1(lst, chen, i, lor_int);
 	}
 	return (chen);
 }
