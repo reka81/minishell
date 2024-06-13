@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/13 20:05:36 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 00:33:44 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,4 +375,5 @@ void	i_set(t_exp **expander, t_counter **count_num,
 void	setting_values(t_exp *expander, t_counter *count_num, int exit_status);
 int		ft_lstsize3(t_hxh *lst);
 int		checking_parsing(t_stack *lst);
+int		break_its(t_stack **a, t_exp *expander, t_env *environment);
 #endif 
