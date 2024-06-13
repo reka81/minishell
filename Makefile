@@ -60,7 +60,8 @@ SRCS = ./environment_fs.c \
 ./file_name.c \
 ./redirections5.c \
 ./execI10.c \
-./ft_atoi.c
+./ft_atoi.c \
+./test.c
 
 OBJS = $(SRCS:.c=.o)
 DEPS = minishell.h

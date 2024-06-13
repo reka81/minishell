@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/13 18:49:18 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:10:30 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,23 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 	if (main_fun->l)
 	{
 		add_history(main_fun->l);
-		if (!double_pipe(main_fun->l)
-			&& !ds_quotes(main_fun->l) && !ft_pars(main_fun->l))
+		if (!ds_quotes(main_fun->l) && !ft_pars(main_fun->l))
 		{
 			tokenization(&a, main_fun->l);
-			flaging_expandables(a);
-			expanding(a, main_fun->exit_status, *environment);
-			print_ambigious(a);
-			while (check_if_null(a))
-				ft_rm_null(&a);
-			rest_of_main2(a, final_linked, environment, main_fun);
+			if (!checking_parsing(a))
+			{
+				flaging_expandables(a);
+				expanding(a, main_fun->exit_status, *environment);
+				print_ambigious(a);
+				while (check_if_null(a))
+					ft_rm_null(&a);
+				rest_of_main2(a, final_linked, environment, main_fun);
+			}
+			else
+			{
+				printf("bash : syntax error\n");
+				main_fun->exit_status = 258;
+			}
 		}
 		else
 			main_fun->exit_status = 258;
