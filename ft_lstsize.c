@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:25:15 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/10 22:16:57 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:04:54 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,22 @@ int	ft_lstsize2(t_stack *lst)
 	size = 0;
 	while (lst)
 	{
-		size += count_strings(lst->value, ' ');
+		size += (count_strings(lst->value, ' ') + 1);
 		lst = lst->next;
+	}
+	return (size);
+}
+
+int	ft_lstsize3(t_hxh *lst)
+{
+	int	size;
+
+	if (!lst)
+		return (0);
+	size = 0;
+	while (lst->value[size])
+	{
+		size++;
 	}
 	return (size);
 }

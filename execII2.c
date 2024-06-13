@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/11 16:59:00 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:52:49 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	ft_unset_v1(t_env **env, t_hxh *lst, int i, t_env *tmp3)
 	char	*str;
 	char	*str1;
 
+	if (ft_strcmp(lst->value[i], "_") == 0)
+	{
+		*env = tmp3;
+		return ;
+	}
 	while (*env != NULL)
 	{
 		str1 = ft_rm_equal(tmp3->variable);

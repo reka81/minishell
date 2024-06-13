@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 19:27:05 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/11 15:05:56 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:22:09 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int	execute_cmds(t_hxh *final_linked, char **env,
 	var->exit_status = exit_status;
 	if (var->pid == 0)
 	{
+		if (final_linked->value[0] == NULL)
+			exit(0);
 		var->arg = fill_args(final_linked);
 		if (is_apath(final_linked->value[0]))
 			var->path = ft_strmcpy(var->path, final_linked->value[0]);

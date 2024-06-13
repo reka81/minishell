@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/11 14:10:26 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:25:41 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	increment_to_pipe(t_stack **lst)
 
 void	init2(t_int *lor_int, t_stack *lst)
 {
-	lor_int->str = zyalloc(sizeof(char *) * (ft_lstsize2(lst) + 1));
+	lor_int->str = zyalloc(sizeof(char *) * (ft_lstsize2(lst) + 2));
 	lor_int->str[0] = NULL;
 	lor_int->out = 1;
 	lor_int->in = 0;

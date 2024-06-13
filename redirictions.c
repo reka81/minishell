@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:32:00 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/12 15:14:37 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:31:03 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	herdog_loop(char *ll, char *her, t_int *lor_int, int flag)
 		if (flag == 0)
 			her = expanding_her(ll, *lor_int->exit_status, lor_int->env);
 		if (!her)
-		{
 			(ft_putstr_fd(ll, lor_int->fd), free(ll));
-		}
 		else
 			(ft_putstr_fd(her, lor_int->fd), free(ll));
 	}
