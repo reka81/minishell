@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 15:30:37 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/12 14:02:46 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:14:46 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	filling_env(char **env, t_env **environment)
 		filling_env2(fill, env);
 		fill->j = 0;
 		fill->value = zyalloc(ft_strlen(env[fill->i]) + 1);
-		fill->e++;
+		if (env[fill->i][fill->e])
+			fill->e++;
 		while (env[fill->i][fill->e])
 		{
 			fill->value[fill->j] = env[fill->i][fill->e];
@@ -93,7 +94,12 @@ char	*ft_update_pwd(t_env *environment, char *current_path, char *old_path)
 		if (ft_strcmp("PWD=", environment->variable) == 0)
 		{
 			current_path = getcwd(0, 0);
-			environment->value = current_path;
+			if (!current_path)
+			{
+				ft_strmcpy(current_path, environment->value);
+			}
+			else
+				ft_strcmp(environment->value, current_path);
 		}
 		if (current_path && old_path)
 		{
