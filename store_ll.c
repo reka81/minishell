@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:26:44 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/13 23:36:06 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:32:16 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	creating_list(t_stack **lst, t_int *lor_int,
 
 	lor_int->env = environment;
 	init2(lor_int, *lst);
-	while (*lst != NULL && (ft_strcmp((*lst)->value, "|") != 0 || (*lst)->type != 3))
+	while (*lst != NULL && (ft_strcmp((*lst)->value, "|") != 0
+			|| (*lst)->type != 3))
 	{
-		(1) && (lor_int->val = NULL, var = NULL, lor_int->chen = NULL);
-		lor_int->chen = rederection_handling(lst, lor_int, lor_int->chen);
+		initing_values(lor_int, &var, lst);
 		if (lor_int->k == 20 || lor_int->k == 30)
 		{
 			imbigious_red(lor_int, environment, var);

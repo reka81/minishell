@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:24 by zaheddac          #+#    #+#             */
-/*   Updated: 2024/06/13 17:11:21 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:17:25 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,8 @@ void	handling_space_in_expanding(t_stack **lst, char **splitting,
 	{
 		splitting = ft_split((*lst)->next->value, ' ');
 		while (splitting[*j])
-		{
-			lor_int->str[lor_int->z] = splitting[*j];
-			(*j)++;
-			lor_int->z++;
-		}
+			(1) && (lor_int->str[lor_int->z] = splitting[*j],
+				(*j)++, lor_int->z++);
 	}
 	*j = 0;
 }

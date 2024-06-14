@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:37:19 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/13 20:10:30 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:32:35 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,8 @@ void	rest_of_main(t_main *main_fun, t_stack *a
 		{
 			tokenization(&a, main_fun->l);
 			if (!checking_parsing(a))
-			{
-				flaging_expandables(a);
-				expanding(a, main_fun->exit_status, *environment);
-				print_ambigious(a);
-				while (check_if_null(a))
-					ft_rm_null(&a);
-				rest_of_main2(a, final_linked, environment, main_fun);
-			}
+				(rest_of_main7(&a, main_fun, environment),
+					rest_of_main2(a, final_linked, environment, main_fun));
 			else
 			{
 				printf("bash : syntax error\n");

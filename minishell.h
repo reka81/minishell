@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:27:01 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/14 00:33:44 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:33:02 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,4 +376,7 @@ void	setting_values(t_exp *expander, t_counter *count_num, int exit_status);
 int		ft_lstsize3(t_hxh *lst);
 int		checking_parsing(t_stack *lst);
 int		break_its(t_stack **a, t_exp *expander, t_env *environment);
+void	rest_of_main7(t_stack **a, t_main *main_fun, t_env **environment);
+void	initing_values(t_int *lor_int, char **var, t_stack **lst);
+void	charing(char **str, char **str1, t_env **env, t_env *tmp3);
 #endif 

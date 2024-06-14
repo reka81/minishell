@@ -6,7 +6,7 @@
 /*   By: mettalbi <mettalbi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 20:10:39 by mettalbi          #+#    #+#             */
-/*   Updated: 2024/06/13 15:52:49 by mettalbi         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:31:57 by mettalbi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,12 @@ void	ft_unset_v1(t_env **env, t_hxh *lst, int i, t_env *tmp3)
 	}
 	while (*env != NULL)
 	{
-		str1 = ft_rm_equal(tmp3->variable);
-		str = ft_rm_equal((*env)->variable);
+		charing(&str, &str1, env, tmp3);
 		if (ft_strcmp(lst->value[i], str1) == 0)
-		{
-			tmp3 = tmp3->next;
-			*env = tmp3;
-		}
+			(1) && (tmp3 = tmp3->next, *env = tmp3);
 		else if (ft_strcmp(lst->value[i], str) == 0)
 		{
-			tmp1 = (*env)->next;
-			*env = tmp;
+			1 && (tmp1 = (*env)->next, *env = tmp);
 			(*env)->next = tmp1;
 		}
 		tmp = (*env);
